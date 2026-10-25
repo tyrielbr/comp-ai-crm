@@ -1,6 +1,7 @@
 "use client";
 
 import Calendar from "@carbon/icons-react/es/Calendar";
+import { tr } from "@crm/agro-i18n";
 import { Calendar as DayPicker } from "@crm/ui/components/calendar";
 import { Icon } from "@crm/ui/components/icon";
 import {
@@ -36,11 +37,11 @@ const dueFormat = new Intl.DateTimeFormat("en-US", {
 });
 
 const PLACEHOLDER = {
-	NOTE: "Log a note, call, email, meeting or task…",
-	CALL: "What came out of the call?",
-	EMAIL: "What was said?",
-	MEETING: "What came out of the meeting?",
-	TASK: "What needs doing?",
+	NOTE: tr("Log a note, call, email, meeting or task…"),
+	CALL: tr("What came out of the call?"),
+	EMAIL: tr("What was said?"),
+	MEETING: tr("What came out of the meeting?"),
+	TASK: tr("What needs doing?"),
 } satisfies Record<ComposableType, string>;
 
 export function ActivityComposer({ anchor }: { anchor: TimelineAnchor }) {
@@ -92,7 +93,7 @@ export function ActivityComposer({ anchor }: { anchor: TimelineAnchor }) {
 					value={draft}
 					onChange={(event) => setDraft(event.target.value)}
 					placeholder={PLACEHOLDER[type]}
-					aria-label="What happened"
+					aria-label={tr("What happened")}
 					onKeyDown={(event) => {
 						if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
 							event.preventDefault();
@@ -127,7 +128,7 @@ export function ActivityComposer({ anchor }: { anchor: TimelineAnchor }) {
 							<PopoverTrigger asChild>
 								<InputGroupButton variant="ghost" size="xs">
 									<Icon icon={Calendar} data-icon="inline-start" />
-									{dueAt ? dueFormat.format(dueAt) : "Due date"}
+									{dueAt ? dueFormat.format(dueAt) : tr("Due date")}
 								</InputGroupButton>
 							</PopoverTrigger>
 							<PopoverContent size="fit" align="start">
@@ -150,7 +151,9 @@ export function ActivityComposer({ anchor }: { anchor: TimelineAnchor }) {
 							disabled={create.isPending}
 						>
 							{create.isPending ? <Spinner /> : null}
-							{isTask ? "Add task" : `Log ${activityLabel(type).toLowerCase()}`}
+							{isTask
+								? tr("Add task")
+								: tr("Log {type}", { type: activityLabel(type).toLowerCase() })}
 						</InputGroupButton>
 					)}
 				</InputGroupAddon>

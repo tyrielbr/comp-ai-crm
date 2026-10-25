@@ -1,6 +1,7 @@
 "use client";
 
 import CalendarGlyph from "@carbon/icons-react/es/Calendar";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { Calendar } from "@crm/ui/components/calendar";
 import { Icon } from "@crm/ui/components/icon";
@@ -34,7 +35,7 @@ export function DueDateButton({
 			<PopoverTrigger asChild>
 				<InputGroupButton variant="ghost" size="xs" disabled={disabled}>
 					<Icon icon={CalendarGlyph} data-icon="inline-start" />
-					{selected ? formatDay(value) : "Due date"}
+					{selected ? formatDay(value) : tr("Due date")}
 				</InputGroupButton>
 			</PopoverTrigger>
 			<PopoverContent size="fit" align="start">
@@ -54,7 +55,7 @@ export function DueDateButton({
 							className="w-full justify-start"
 							onClick={() => choose("")}
 						>
-							Clear due date
+							{tr("Clear due date")}
 						</Button>
 					</div>
 				) : null}

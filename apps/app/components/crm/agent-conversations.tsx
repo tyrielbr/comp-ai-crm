@@ -3,6 +3,7 @@
 import Add from "@carbon/icons-react/es/Add";
 import ChevronDown from "@carbon/icons-react/es/ChevronDown";
 import TrashCan from "@carbon/icons-react/es/TrashCan";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	DropdownMenu,
@@ -40,7 +41,7 @@ export function ConversationPicker({
 	onNew: () => void;
 	busy: boolean;
 }) {
-	const label = current?.title ?? "New conversation";
+	const label = current?.title ?? tr("New conversation");
 
 	return (
 		<div className="flex min-w-0 items-center gap-2 border-b px-4 py-2 sm:px-5">
@@ -58,7 +59,7 @@ export function ConversationPicker({
 
 				<DropdownMenuContent align="start" className="w-72">
 					{conversations.length === 0 ? (
-						<DropdownMenuItem disabled>Nothing yet</DropdownMenuItem>
+						<DropdownMenuItem disabled>{tr("Nothing yet")}</DropdownMenuItem>
 					) : (
 						conversations.map((conversation) => (
 							<DropdownMenuItem
@@ -66,7 +67,7 @@ export function ConversationPicker({
 								onSelect={() => onSelect(conversation)}
 							>
 								<span className="min-w-0 flex-1 truncate">
-									{conversation.title ?? "Untitled"}
+									{conversation.title ?? tr("Untitled")}
 								</span>
 								<span className="shrink-0 text-muted-foreground text-xs">
 									<LocalDateTime
@@ -81,7 +82,7 @@ export function ConversationPicker({
 					<DropdownMenuSeparator />
 					<DropdownMenuItem onSelect={onNew}>
 						<Icon icon={Add} data-icon="inline-start" />
-						New conversation
+						{tr("New conversation")}
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
@@ -110,7 +111,7 @@ function Forget({
 			onSuccess: async () => {
 				await conversations.invalidate();
 				onDone();
-				toast.success("Conversation deleted.");
+				toast.success(tr("Conversation deleted."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),

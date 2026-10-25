@@ -114,10 +114,10 @@ function ReportedValue({ deal }: { deal: Deal }) {
 
 const CONTACT_COLUMNS = [
 	{ id: "name", header: "Name", width: "w-[28%]", className: "pl-5" },
-	{ id: "role", header: "Role", width: "w-[20%]" },
-	{ id: "title", header: "Title", width: "w-[22%]" },
-	{ id: "email", header: "Email", width: "w-[22%]" },
-	{ id: "remove", srLabel: "Remove", width: "w-10" },
+	{ id: "role", header: tr("Role"), width: "w-[20%]" },
+	{ id: "title", header: tr("Title"), width: "w-[22%]" },
+	{ id: "email", header: tr("Email"), width: "w-[22%]" },
+	{ id: "remove", srLabel: tr("Remove"), width: "w-10" },
 ];
 
 const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -148,7 +148,7 @@ export function DealSheet({ dealId }: { dealId: string }) {
 				},
 				{
 					value: "contacts",
-					label: "Contacts",
+					label: tr("Contacts"),
 					count: deal.contacts.length,
 					content: (
 						<DealContacts
@@ -161,12 +161,12 @@ export function DealSheet({ dealId }: { dealId: string }) {
 				},
 				{
 					value: "activity",
-					label: "Activity",
+					label: tr("Activity"),
 					content: <Timeline anchor={{ dealId: deal.id }} />,
 				},
 				{
 					value: "agent",
-					label: "Agent",
+					label: tr("Agent"),
 					content: <AgentPanel record={{ kind: "deal", id: deal.id }} />,
 					keepMounted: true,
 				},
@@ -213,8 +213,20 @@ export function DealSheet({ dealId }: { dealId: string }) {
 							name={deal.name}
 							consequence={tr(
 								deal.contacts.length === 1
-									? "Its stage history, notes and agent conversations go too. {company} and the person on it stay in the CRM."
-									: "Its stage history, notes and agent conversations go too. {company} and the people on it stay in the CRM.",
+									? tr(
+											tr(
+												tr(
+													"Its stage history, notes and agent conversations go too. {company} and the person on it stay in the CRM.",
+												),
+											),
+										)
+									: tr(
+											tr(
+												tr(
+													"Its stage history, notes and agent conversations go too. {company} and the people on it stay in the CRM.",
+												),
+											),
+										),
 								{ company: deal.company.name },
 							)}
 							archivedAt={deal.archivedAt}
@@ -375,7 +387,11 @@ function DealOverview({ deal }: { deal: Deal }) {
 					label={tr("Description")}
 					value={deal.description}
 					placeholder={tr(
-						"What {company} is buying, why now, and what stands in the way.",
+						tr(
+							tr(
+								"What {company} is buying, why now, and what stands in the way.",
+							),
+						),
 						{ company: deal.company.name },
 					)}
 					saving={isSaving("description")}
@@ -493,12 +509,15 @@ function DealContacts({
 				{adding ? null : (
 					<DetailSheetEmpty
 						icon={UserMultiple}
-						title="No contacts on this deal"
-						description={`Nobody from ${deal.company.name} is attached yet. Bring the people you are selling to onto the deal and it says who to chase.`}
+						title={tr("No contacts on this deal")}
+						description={tr(
+							"Nobody from {company} is attached yet. Bring the people you are selling to onto the deal and it says who to chase.",
+							{ company: deal.company.name },
+						)}
 						action={
 							<Button variant="outline" size="sm" onClick={onAdd}>
 								<Icon icon={Add} data-icon="inline-start" />
-								Add contact
+								{tr("Add contact")}
 							</Button>
 						}
 					/>
@@ -530,9 +549,11 @@ function DealContacts({
 						</TableCell>
 						<TableCell className="truncate px-1 py-2.5">
 							<InlineTextCell
-								label={`Role on this deal for ${contactName(contact)}`}
+								label={tr("Role on this deal for {name}", {
+									name: contactName(contact),
+								})}
 								value={contact.role}
-								placeholder="Champion"
+								placeholder={tr("Champion")}
 								saving={
 									setRole.isPending &&
 									setRole.variables?.contactId === contact.id
@@ -569,18 +590,20 @@ function DealContacts({
 									>
 										<Icon icon={Close} />
 										<span className="sr-only">
-											Take {contactName(contact)} off this deal
+											{tr("Take {name} off this deal", {
+												name: contactName(contact),
+											})}
 										</span>
 									</Button>
 								</TooltipTrigger>
-								<TooltipContent>Take off this deal</TooltipContent>
+								<TooltipContent>{tr("Take off this deal")}</TooltipContent>
 							</Tooltip>
 						</TableCell>
 					</SimpleTableRow>
 				))}
 
 				<AddRow
-					label="Add contact"
+					label={tr("Add contact")}
 					columns={CONTACT_COLUMNS.length}
 					onClick={onAdd}
 				/>

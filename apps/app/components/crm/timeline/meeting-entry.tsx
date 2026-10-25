@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { AttendeeList } from "@crm/ui/components/attendee-list";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -69,7 +70,7 @@ export function MeetingEntry({
 					rel="noreferrer"
 					className="text-muted-foreground text-xs underline underline-offset-3 hover:text-foreground"
 				>
-					Join call
+					{tr("Join call")}
 				</a>
 			) : null}
 		</div>

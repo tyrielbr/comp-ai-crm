@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { DatePicker } from "@crm/ui/components/date-picker";
 import { Field, FieldLabel } from "@crm/ui/components/field";
@@ -48,7 +49,7 @@ function QuickAddForm({
 					disabled={pending}
 					onClick={onCancel}
 				>
-					Cancel
+					{tr("Cancel")}
 				</Button>
 				<Button type="submit" size="sm" disabled={pending || !ready}>
 					{pending ? <Spinner /> : null}
@@ -85,7 +86,7 @@ export function QuickAddContact({
 		trpc.contacts.create.mutationOptions({
 			onSuccess: async (contact) => {
 				await cache.contact(contact.id);
-				toast.success(`${contact.firstName} added.`);
+				toast.success(tr("{name} added.", { name: contact.firstName }));
 				onDone();
 			},
 			onError: (error) => toast.error(error.message),
@@ -94,7 +95,7 @@ export function QuickAddContact({
 
 	return (
 		<QuickAddForm
-			submitLabel="Add contact"
+			submitLabel={tr("Add contact")}
 			pending={create.isPending}
 			ready={firstName.trim() !== ""}
 			onCancel={onDone}
@@ -110,7 +111,7 @@ export function QuickAddContact({
 			}
 		>
 			<Field>
-				<FieldLabel htmlFor={firstNameId}>First name</FieldLabel>
+				<FieldLabel htmlFor={firstNameId}>{tr("First name")}</FieldLabel>
 				<Input
 					id={firstNameId}
 					autoFocus
@@ -120,7 +121,7 @@ export function QuickAddContact({
 				/>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={lastNameId}>Last name</FieldLabel>
+				<FieldLabel htmlFor={lastNameId}>{tr("Last name")}</FieldLabel>
 				<Input
 					id={lastNameId}
 					value={lastName}
@@ -129,7 +130,7 @@ export function QuickAddContact({
 				/>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={emailId}>Email</FieldLabel>
+				<FieldLabel htmlFor={emailId}>{tr("Email")}</FieldLabel>
 				<Input
 					id={emailId}
 					type="email"
@@ -139,12 +140,12 @@ export function QuickAddContact({
 				/>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={titleId}>Title</FieldLabel>
+				<FieldLabel htmlFor={titleId}>{tr("Title")}</FieldLabel>
 				<Input
 					id={titleId}
 					value={title}
 					onChange={(event) => setTitle(event.target.value)}
-					placeholder="Head of Security"
+					placeholder={tr("Head of Security")}
 					autoComplete="off"
 				/>
 			</Field>
@@ -182,8 +183,8 @@ export function AttachDealContact({
 				await cache.deal(dealId);
 				toast.success(
 					person
-						? `${contactName(person)} is on the deal.`
-						: "Added to the deal.",
+						? tr("{name} is on the deal.", { name: contactName(person) })
+						: tr("Added to the deal."),
 				);
 				onDone();
 			},
@@ -194,14 +195,14 @@ export function AttachDealContact({
 	const nobody = !options.isPending && candidates.length === 0;
 
 	const placeholder = options.isPending
-		? "Loading…"
+		? tr("Loading…")
 		: nobody
-			? `Everybody at ${companyName} is already on it`
-			: "Choose somebody";
+			? tr("Everybody at {company} is already on it", { company: companyName })
+			: tr("Choose somebody");
 
 	return (
 		<QuickAddForm
-			submitLabel="Add to deal"
+			submitLabel={tr("Add to deal")}
 			pending={attach.isPending}
 			ready={contactId !== ""}
 			onCancel={onDone}
@@ -210,7 +211,7 @@ export function AttachDealContact({
 			}
 		>
 			<Field>
-				<FieldLabel htmlFor={personId}>Person</FieldLabel>
+				<FieldLabel htmlFor={personId}>{tr("Person")}</FieldLabel>
 				<Select value={contactId} onValueChange={setContactId}>
 					<SelectTrigger id={personId} className="w-full" disabled={nobody}>
 						<SelectValue placeholder={placeholder} />
@@ -226,12 +227,12 @@ export function AttachDealContact({
 				</Select>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={roleId}>Role</FieldLabel>
+				<FieldLabel htmlFor={roleId}>{tr("Role")}</FieldLabel>
 				<Input
 					id={roleId}
 					value={role}
 					onChange={(event) => setRole(event.target.value)}
-					placeholder="Champion"
+					placeholder={tr("Champion")}
 					autoComplete="off"
 				/>
 			</Field>
@@ -268,7 +269,7 @@ export function QuickAddDeal({
 		trpc.deals.create.mutationOptions({
 			onSuccess: async (deal) => {
 				await cache.deal(deal.id);
-				toast.success(`${deal.name} created.`);
+				toast.success(tr("{name} created.", { name: deal.name }));
 				onDone();
 			},
 			onError: (error) => toast.error(error.message),
@@ -277,7 +278,7 @@ export function QuickAddDeal({
 
 	const submit = () => {
 		if (!owner) {
-			toast.error("Could not work out who should own this deal.");
+			toast.error(tr("Could not work out who should own this deal."));
 			return;
 		}
 
@@ -285,7 +286,7 @@ export function QuickAddDeal({
 		if (amount.trim() !== "") {
 			const parsed = Number.parseFloat(amount);
 			if (!Number.isFinite(parsed) || parsed < 0) {
-				toast.error("Amount has to be a number.");
+				toast.error(tr("Amount has to be a number."));
 				return;
 			}
 			amountCents = Math.round(parsed * 100);
@@ -302,14 +303,14 @@ export function QuickAddDeal({
 
 	return (
 		<QuickAddForm
-			submitLabel="Create deal"
+			submitLabel={tr("Create deal")}
 			pending={create.isPending}
 			ready={name.trim() !== ""}
 			onCancel={onDone}
 			onSubmit={submit}
 		>
 			<Field className="sm:col-span-2">
-				<FieldLabel htmlFor={nameId}>Name</FieldLabel>
+				<FieldLabel htmlFor={nameId}>{tr("Name")}</FieldLabel>
 				<Input
 					id={nameId}
 					autoFocus
@@ -320,7 +321,7 @@ export function QuickAddDeal({
 				/>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={amountId}>Amount</FieldLabel>
+				<FieldLabel htmlFor={amountId}>{tr("Amount")}</FieldLabel>
 				<Input
 					id={amountId}
 					value={amount}
@@ -330,12 +331,12 @@ export function QuickAddDeal({
 				/>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={closeId}>Expected close</FieldLabel>
+				<FieldLabel htmlFor={closeId}>{tr("Expected close")}</FieldLabel>
 				<DatePicker
 					id={closeId}
 					value={closeDate}
 					onChange={setCloseDate}
-					placeholder="No date yet"
+					placeholder={tr("No date yet")}
 				/>
 			</Field>
 		</QuickAddForm>

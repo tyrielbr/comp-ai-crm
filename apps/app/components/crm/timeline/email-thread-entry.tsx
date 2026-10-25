@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import {
 	Accordion,
 	AccordionContent,
@@ -45,7 +46,9 @@ export function EmailThreadEntry({
 		>
 			<AccordionItem value={threadId}>
 				<AccordionTrigger variant="subtle">
-					{messageCount === 1 ? "1 message" : `${messageCount} messages`}
+					{messageCount === 1
+						? tr("1 message")
+						: tr("{count} messages", { count: messageCount })}
 				</AccordionTrigger>
 
 				<AccordionContent>

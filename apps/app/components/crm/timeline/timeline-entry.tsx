@@ -1,6 +1,7 @@
 "use client";
 
 import Edit from "@carbon/icons-react/es/Edit";
+import { tr } from "@crm/agro-i18n";
 import { DealStage } from "@crm/db/enums";
 import { Button } from "@crm/ui/components/button";
 import { Checkbox } from "@crm/ui/components/checkbox";
@@ -78,7 +79,7 @@ export function TimelineEntry({
 		return (
 			<li className="flex gap-2.5 py-2">
 				<span className="mt-0.5 shrink-0 text-muted-foreground">
-					<Checkbox checked={done} disabled aria-label="Task status" />
+					<Checkbox checked={done} disabled aria-label={tr("Task status")} />
 				</span>
 				<div className="min-w-0 flex-1">
 					<TaskEditor task={entry} onClose={closeEditor} />
@@ -94,8 +95,8 @@ export function TimelineEntry({
 	const synced = entry.meta?.synced === true;
 	const author = synced
 		? entry.emailThread
-			? "via Gmail"
-			: "via Calendar"
+			? tr("via Gmail")
+			: tr("via Calendar")
 		: entry.createdBy.name;
 
 	const headline = change
@@ -118,7 +119,7 @@ export function TimelineEntry({
 					<Checkbox
 						checked={done}
 						disabled={complete.isPending}
-						aria-label={done ? "Mark as not done" : "Mark as done"}
+						aria-label={done ? tr("Mark as not done") : tr("Mark as done")}
 						onCheckedChange={(checked) =>
 							complete.mutate({ id: entry.id, completed: checked === true })
 						}
@@ -209,7 +210,7 @@ export function TimelineEntry({
 								tone={overdue ? "error" : "info"}
 								label={
 									<>
-										{overdue ? "Overdue" : "Due"}{" "}
+										{overdue ? tr("Overdue") : tr("Due")}{" "}
 										<LocalDay date={entry.dueAt} />
 									</>
 								}

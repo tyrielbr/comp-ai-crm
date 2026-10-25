@@ -6,6 +6,7 @@ import Email from "@carbon/icons-react/es/Email";
 import Events from "@carbon/icons-react/es/Events";
 import Task from "@carbon/icons-react/es/Task";
 import Time from "@carbon/icons-react/es/Time";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import type { CarbonIcon } from "@crm/ui/components/icon";
 import { Spinner } from "@crm/ui/components/spinner";
@@ -32,43 +33,48 @@ export type TimelineAnchor =
 	| { dealId: string };
 
 const TAB_LABELS = {
-	all: "All",
-	notes: "Notes",
-	email: "Email",
-	meetings: "Meetings",
-	upcoming: "Upcoming",
-	done: "Done",
+	all: tr("All"),
+	notes: tr("Notes"),
+	email: tr("Email"),
+	meetings: tr("Meetings"),
+	upcoming: tr("Upcoming"),
+	done: tr("Done"),
 } satisfies Record<TimelineTab, string>;
 
 const EMPTY_STATES = {
 	all: {
-		title: "Nothing has happened yet",
-		description:
+		title: tr("Nothing has happened yet"),
+		description: tr(
 			"Calls, notes, emails and meetings all land here. Log the first one above, or wait for Gmail and Calendar to sync.",
+		),
 	},
 	notes: {
-		title: "No notes",
-		description:
+		title: tr("No notes"),
+		description: tr(
 			"Notes are what you write down for the next person to read — what they care about, who else is involved, what you promised.",
+		),
 	},
 	email: {
-		title: "No email",
-		description:
+		title: tr("No email"),
+		description: tr(
 			"Threads appear here as they are synced from Gmail. Nothing from before this mailbox was connected is imported.",
+		),
 	},
 	meetings: {
-		title: "No meetings",
-		description:
+		title: tr("No meetings"),
+		description: tr(
 			"Calendar events with someone from this record on them show up here, past and upcoming.",
+		),
 	},
 	upcoming: {
-		title: "Nothing outstanding",
-		description:
+		title: tr("Nothing outstanding"),
+		description: tr(
 			"Tasks you have not finished appear here, and at the top of the All tab until they are done.",
+		),
 	},
 	done: {
-		title: "Nothing finished yet",
-		description: "Tasks move here once you tick them off.",
+		title: tr("Nothing finished yet"),
+		description: tr("Tasks move here once you tick them off."),
 	},
 } satisfies Record<TimelineTab, { title: string; description: string }>;
 
@@ -96,8 +102,8 @@ function dayLabel(day: string, local: boolean): string {
 		: new Date(Date.now() - 86_400_000);
 	const yesterday = dayKey(yesterdayDate.toISOString(), local);
 
-	if (day === today) return "Today";
-	if (day === yesterday) return "Yesterday";
+	if (day === today) return tr("Today");
+	if (day === yesterday) return tr("Yesterday");
 	return dayFormat.format(new Date(`${day}T00:00:00`));
 }
 
@@ -225,7 +231,7 @@ export function Timeline({ anchor }: { anchor: TimelineAnchor }) {
 				<div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-4">
 					{pinnedEntries.length > 0 ? (
 						<TimelineDay
-							label="Outstanding"
+							label={tr("Outstanding")}
 							entries={pinnedEntries}
 							anchor={anchor}
 						/>
@@ -249,7 +255,7 @@ export function Timeline({ anchor }: { anchor: TimelineAnchor }) {
 							onClick={() => history.fetchNextPage()}
 						>
 							{history.isFetchingNextPage ? <Spinner /> : null}
-							Show older
+							{tr("Show older")}
 						</Button>
 					) : null}
 				</div>

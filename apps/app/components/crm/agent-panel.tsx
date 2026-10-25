@@ -7,6 +7,7 @@ import LogoGithub from "@carbon/icons-react/es/LogoGithub";
 import LogoLinkedin from "@carbon/icons-react/es/LogoLinkedin";
 import Send from "@carbon/icons-react/es/Send";
 import Warning from "@carbon/icons-react/es/Warning";
+import { tr } from "@crm/agro-i18n";
 import {
 	Attachment,
 	AttachmentContent,
@@ -267,18 +268,21 @@ function Thread({
 
 			{thread?.status === "working" && !busy ? (
 				<p className="border-t px-4 py-2 text-pretty text-muted-foreground text-xs sm:px-5">
-					Still working on the last question. Your next one can go in when it
-					finishes.
+					{tr(
+						tr(
+							"Still working on the last question. Your next one can go in when it finishes.",
+						),
+					)}
 				</p>
 			) : null}
 
 			{ended ? (
 				<div className="flex flex-col items-start gap-3 border-t px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-2">
 					<p className="text-pretty text-muted-foreground text-xs">
-						This conversation has ended.
+						{tr("This conversation has ended.")}
 					</p>
 					<Button variant="outline" size="sm" onClick={onNewThread}>
-						Start a new conversation
+						{tr("Start a new conversation")}
 					</Button>
 				</div>
 			) : null}
@@ -360,9 +364,9 @@ function Idle({
 
 function Failure({ message }: { message: string }) {
 	const hint = message.includes("not reachable")
-		? "Start it with `bun run dev`, or check AGENT_URL."
+		? tr("Start it with `bun run dev`, or check AGENT_URL.")
 		: message.includes("not configured")
-			? "Set AGENT_BRIDGE_SECRET for both the app and the agent."
+			? tr("Set AGENT_BRIDGE_SECRET for both the app and the agent.")
 			: null;
 
 	return (

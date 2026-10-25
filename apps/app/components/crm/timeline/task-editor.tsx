@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { InputGroupButton } from "@crm/ui/components/input-group";
 import { Spinner } from "@crm/ui/components/spinner";
 import { useMutation } from "@tanstack/react-query";
@@ -42,7 +43,7 @@ export function TaskEditor({
 		<ActivityForm
 			value={draft}
 			onValueChange={setDraft}
-			ariaLabel="Task"
+			ariaLabel={tr("Task")}
 			onSubmit={submit}
 			onEscape={onClose}
 		>
@@ -59,7 +60,7 @@ export function TaskEditor({
 				disabled={update.isPending}
 				onClick={onClose}
 			>
-				Cancel
+				{tr("Cancel")}
 			</InputGroupButton>
 			<InputGroupButton
 				type="submit"
@@ -68,7 +69,7 @@ export function TaskEditor({
 				disabled={!text || update.isPending}
 			>
 				{update.isPending ? <Spinner /> : null}
-				Save
+				{tr("Save")}
 			</InputGroupButton>
 		</ActivityForm>
 	);
