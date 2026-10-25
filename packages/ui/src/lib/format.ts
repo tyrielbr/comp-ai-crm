@@ -1,4 +1,4 @@
-import { tr } from "@crm/agro-i18n";
+import { DATE_LOCALE, tr } from "@crm/agro-i18n";
 import { AGRO_INTL_LOCALE } from "@crm/agro-i18n/format";
 
 const countNumberFormat = new Intl.NumberFormat(AGRO_INTL_LOCALE);
@@ -65,7 +65,7 @@ export function formatPercent(rate: number): string {
 	return percentFormat.format(rate);
 }
 
-const dayFormat = new Intl.DateTimeFormat("en-US", {
+const dayFormat = new Intl.DateTimeFormat(DATE_LOCALE, {
 	month: "short",
 	day: "numeric",
 	year: "numeric",

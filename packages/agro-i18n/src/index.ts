@@ -20,6 +20,9 @@ const passthrough =
 	(globalThis as { process?: { env?: Record<string, string | undefined> } })
 		.process?.env?.NODE_ENV === "test";
 
+/** Locale para datas: pt-BR no app; en-US nos testes do upstream (mesma regra do tr). */
+export const DATE_LOCALE: string = passthrough ? "en-US" : AGRO_LOCALE;
+
 type Vars = Record<string, string | number | boolean | null | undefined>;
 
 /** Traduz `source` (texto em inglês). Suporta interpolação `{nome}`. */

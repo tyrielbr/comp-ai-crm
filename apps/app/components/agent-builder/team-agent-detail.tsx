@@ -4,7 +4,7 @@ import OverflowMenuVertical from "@carbon/icons-react/es/OverflowMenuVertical";
 import Pause from "@carbon/icons-react/es/Pause";
 import Play from "@carbon/icons-react/es/Play";
 import TrashCan from "@carbon/icons-react/es/TrashCan";
-import { tr } from "@crm/agro-i18n";
+import { DATE_LOCALE, tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -52,7 +52,7 @@ type AgentDetail = RouterOutputs["agents"]["byId"];
 type ReviewVersion = AgentDetail["reviewVersion"];
 type Runs = RouterOutputs["agents"]["history"];
 type Activity = RouterOutputs["agents"]["activity"];
-const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const DATE_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
 	month: "short",
 	day: "numeric",
 	hour: "numeric",
@@ -61,7 +61,7 @@ const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
 	timeZone: "UTC",
 	timeZoneName: "short",
 });
-const _TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const _TIME_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
 	hour: "2-digit",
 	minute: "2-digit",
 	second: "2-digit",

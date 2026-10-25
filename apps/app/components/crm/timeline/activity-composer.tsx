@@ -1,7 +1,7 @@
 "use client";
 
 import Calendar from "@carbon/icons-react/es/Calendar";
-import { tr } from "@crm/agro-i18n";
+import { DATE_LOCALE, tr } from "@crm/agro-i18n";
 import { Calendar as DayPicker } from "@crm/ui/components/calendar";
 import { Icon } from "@crm/ui/components/icon";
 import {
@@ -31,7 +31,7 @@ const TYPES = ["NOTE", "CALL", "EMAIL", "MEETING", "TASK"] as const;
 
 type ComposableType = (typeof TYPES)[number];
 
-const dueFormat = new Intl.DateTimeFormat("en-US", {
+const dueFormat = new Intl.DateTimeFormat(DATE_LOCALE, {
 	month: "short",
 	day: "numeric",
 });

@@ -1,4 +1,4 @@
-import { tr } from "@crm/agro-i18n";
+import { DATE_LOCALE, tr } from "@crm/agro-i18n";
 import type { ProviderBrand } from "@crm/ui/lib/provider-brand";
 import type { EveToolOutput } from "@crm/validation/eve-tool";
 import { z } from "zod";
@@ -260,7 +260,7 @@ function detailLabel(key: string) {
 function dateLabel(value: string) {
 	const date = new Date(value);
 	if (Number.isNaN(date.getTime())) return value;
-	return new Intl.DateTimeFormat("en-US", {
+	return new Intl.DateTimeFormat(DATE_LOCALE, {
 		month: "short",
 		day: "numeric",
 		year: "numeric",

@@ -5,7 +5,7 @@ import ChevronUp from "@carbon/icons-react/es/ChevronUp";
 import Download from "@carbon/icons-react/es/Download";
 import Renew from "@carbon/icons-react/es/Renew";
 import WarningAlt from "@carbon/icons-react/es/WarningAlt";
-import { tr } from "@crm/agro-i18n";
+import { DATE_LOCALE, tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -48,7 +48,7 @@ const eventSummary = z
 
 const auditChange = z.object({ before: z.json(), after: z.json() });
 
-const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const DATE_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
 	month: "short",
 	day: "numeric",
 	hour: "numeric",
@@ -57,7 +57,7 @@ const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
 	timeZone: "UTC",
 	timeZoneName: "short",
 });
-const TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const TIME_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
 	hour: "2-digit",
 	minute: "2-digit",
 	second: "2-digit",
