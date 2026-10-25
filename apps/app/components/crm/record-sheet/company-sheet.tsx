@@ -54,6 +54,7 @@ import {
 	type DetailSheetTab,
 } from "@/components/detail-sheet";
 import { LocalDay } from "@/components/local-date-time";
+import { showStandardField } from "@/lib/agro-fields";
 import { OPEN_STAGES } from "@/lib/deal-stage";
 import { ENRICHMENT_POLL_MS, isEnriching } from "@/lib/enrichment-status";
 import { savingField } from "@/lib/pending-field";
@@ -363,22 +364,26 @@ function CompanyOverview({ company }: { company: Company }) {
 								saving={isSaving("name")}
 								onSave={(name) => name && save({ name })}
 							/>
-							<InlineField
-								label={tr("Domain")}
-								value={company.domain}
-								type="url"
-								placeholder="fazendaexemplo.com.br"
-								saving={isSaving("domain")}
-								onSave={(domain) => save({ domain })}
-							/>
-							<InlineField
-								label={tr("Website")}
-								value={company.website}
-								type="url"
-								placeholder="https://fazendaexemplo.com.br"
-								saving={isSaving("website")}
-								onSave={(website) => save({ website })}
-							/>
+							{showStandardField("COMPANY", "domain", company.domain) ? (
+								<InlineField
+									label={tr("Domain")}
+									value={company.domain}
+									type="url"
+									placeholder="fazendaexemplo.com.br"
+									saving={isSaving("domain")}
+									onSave={(domain) => save({ domain })}
+								/>
+							) : null}
+							{showStandardField("COMPANY", "website", company.website) ? (
+								<InlineField
+									label={tr("Website")}
+									value={company.website}
+									type="url"
+									placeholder="https://fazendaexemplo.com.br"
+									saving={isSaving("website")}
+									onSave={(website) => save({ website })}
+								/>
+							) : null}
 							<InlineField
 								label={tr("Phone")}
 								value={company.phone}
@@ -399,12 +404,14 @@ function CompanyOverview({ company }: { company: Company }) {
 								saving={isSaving("city")}
 								onSave={(city) => save({ city })}
 							/>
-							<InlineField
-								label={tr("Country")}
-								value={company.country}
-								saving={isSaving("country")}
-								onSave={(country) => save({ country })}
-							/>
+							{showStandardField("COMPANY", "country", company.country) ? (
+								<InlineField
+									label={tr("Country")}
+									value={company.country}
+									saving={isSaving("country")}
+									onSave={(country) => save({ country })}
+								/>
+							) : null}
 							<InlineSelectField
 								label={tr("Owner")}
 								value={company.owner?.id ?? UNASSIGNED}

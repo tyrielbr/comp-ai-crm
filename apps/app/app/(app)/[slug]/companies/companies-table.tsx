@@ -27,6 +27,7 @@ import { SavedViewsMenu } from "@/components/data-table/saved-views-menu";
 import { useTableQuery } from "@/components/data-table/use-table-query";
 import { LocalRelativeTime } from "@/components/local-date-time";
 import { ACTIVITY_FACET_OPTIONS } from "@/lib/activity-recency";
+import { HIDDEN_WHEN_EMPTY } from "@/lib/agro-fields";
 import {
 	ENRICHMENT_FACET_OPTIONS,
 	ENRICHMENT_POLL_MS,
@@ -171,6 +172,12 @@ const ARCHIVED_COLUMN: DataTableColumn<CompanyRow> = {
 	),
 };
 
+// Agro: sem coluna Domínio na lista (ver lib/agro-fields.ts).
+const AGRO_COLUMNS = COLUMNS.filter(
+	(column) =>
+		!(HIDDEN_WHEN_EMPTY.COMPANY as readonly string[]).includes(column.id),
+);
+
 export function CompaniesTable() {
 	const openRecord = useOpenRecord();
 	const trpc = useTRPC();
@@ -238,8 +245,8 @@ export function CompaniesTable() {
 	const columns = useMemo(
 		() =>
 			input.archived
-				? [...COLUMNS, ARCHIVED_COLUMN, ...fieldColumns]
-				: [...COLUMNS, ...fieldColumns],
+				? [...AGRO_COLUMNS, ARCHIVED_COLUMN, ...fieldColumns]
+				: [...AGRO_COLUMNS, ...fieldColumns],
 		[fieldColumns, input.archived],
 	);
 

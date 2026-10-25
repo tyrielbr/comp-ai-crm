@@ -67,11 +67,9 @@ function CreateCompanyForm() {
 		parseAsBoolean.withDefault(false),
 	);
 	const [name, setName] = useState("");
-	const [domain, setDomain] = useState("");
 	const [ownerId, setOwnerId] = useState(UNASSIGNED);
 
 	const nameId = useId();
-	const domainId = useId();
 
 	const users = useQuery(trpc.users.list.queryOptions());
 
@@ -82,7 +80,6 @@ function CreateCompanyForm() {
 				toast.success(`${company.name} added.`);
 				await setOpen(null);
 				setName("");
-				setDomain("");
 				setOwnerId(UNASSIGNED);
 				openRecord({ kind: "company", id: company.id });
 			},
@@ -99,9 +96,7 @@ function CreateCompanyForm() {
 				<SheetHeader>
 					<SheetTitle>{tr("New company")}</SheetTitle>
 					<SheetDescription>
-						{tr(
-							"Give it a name and a domain. The agent fills in the logo, description, industry, address and socials.",
-						)}
+						{tr("Give it a name. The agent fills in what it can find.")}
 					</SheetDescription>
 				</SheetHeader>
 
@@ -112,7 +107,6 @@ function CreateCompanyForm() {
 						event.preventDefault();
 						create.mutate({
 							name,
-							domain: domain || undefined,
 							ownerId: ownerId === UNASSIGNED ? null : ownerId,
 						});
 					}}
@@ -124,28 +118,13 @@ function CreateCompanyForm() {
 								id={nameId}
 								value={name}
 								onChange={(event) => setName(event.target.value)}
-								placeholder={tr("Stripe")}
+								placeholder={tr("Fazenda Boa Vista")}
 								autoComplete="off"
 								required
 							/>
 						</Field>
 
-						<Field>
-							<FieldLabel htmlFor={domainId}>{tr("Domain")}</FieldLabel>
-							<Input
-								id={domainId}
-								value={domain}
-								onChange={(event) => setDomain(event.target.value)}
-								placeholder="stripe.com"
-								autoComplete="off"
-								inputMode="url"
-							/>
-							<FieldDescription>
-								{tr(
-									"A full URL is fine — it is reduced to the bare host, which has to be unique.",
-								)}
-							</FieldDescription>
-						</Field>
+						{/* Agro: Domínio oculto (fazendas raramente têm site); ver lib/agro-fields.ts */}
 
 						<Field>
 							<FieldLabel htmlFor="create-company-owner">

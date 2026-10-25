@@ -1385,7 +1385,7 @@
 	"Copy {label}": "Copiar {label}",
 	"{name} created": "{name} criada",
 	"Standard fields": "Campos padrão",
-	"reorder and hide only": "só reordenar e ocultar",
+	"reorder and hide only": "fixos; os marcados ficam ocultos quando vazios",
 	"Suggested fields": "Campos sugeridos",
 	"one click to add": "um clique para adicionar",
 	"Custom fields": "Campos personalizados",
@@ -1447,5 +1447,8 @@
 	"Outbound": "Outbound",
 	"Event": "Evento",
 	"ICP fit score": "Nota de aderência ao perfil",
-	"BDR owner": "Responsável de prospecção"
+	"BDR owner": "Responsável de prospecção",
+	"hidden when empty": "oculto quando vazio",
+	"Give it a name. The agent fills in what it can find.": "Informe o nome. O agente completa o que encontrar.",
+	"Fazenda Boa Vista": "Fazenda Boa Vista"
 }

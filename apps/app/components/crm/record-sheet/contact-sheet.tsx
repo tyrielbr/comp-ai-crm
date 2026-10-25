@@ -53,6 +53,7 @@ import {
 	type DetailSheetTab,
 } from "@/components/detail-sheet";
 import { LocalDateTime, LocalRelativeDate } from "@/components/local-date-time";
+import { showStandardField } from "@/lib/agro-fields";
 import { factsByField } from "@/lib/contact-facts";
 import { ENRICHMENT_POLL_MS, isEnriching } from "@/lib/enrichment-status";
 import { savingField } from "@/lib/pending-field";
@@ -365,30 +366,36 @@ function ContactOverview({ contact }: { contact: Contact }) {
 						saving={isSaving("phone")}
 						onSave={(phone) => save({ phone })}
 					/>
-					<InlineField
-						label={tr("LinkedIn")}
-						value={contact.linkedinUrl}
-						type="url"
-						saving={isSaving("linkedinUrl")}
-						onSave={(linkedinUrl) => save({ linkedinUrl })}
-						{...agentProps("linkedinUrl")}
-					/>
-					<InlineField
-						label="X"
-						value={contact.twitterUrl}
-						type="url"
-						saving={isSaving("twitterUrl")}
-						onSave={(twitterUrl) => save({ twitterUrl })}
-						{...agentProps("twitterUrl")}
-					/>
-					<InlineField
-						label={tr("GitHub")}
-						value={contact.githubUrl}
-						type="url"
-						saving={isSaving("githubUrl")}
-						onSave={(githubUrl) => save({ githubUrl })}
-						{...agentProps("githubUrl")}
-					/>
+					{showStandardField("CONTACT", "linkedinUrl", contact.linkedinUrl) ? (
+						<InlineField
+							label={tr("LinkedIn")}
+							value={contact.linkedinUrl}
+							type="url"
+							saving={isSaving("linkedinUrl")}
+							onSave={(linkedinUrl) => save({ linkedinUrl })}
+							{...agentProps("linkedinUrl")}
+						/>
+					) : null}
+					{showStandardField("CONTACT", "twitterUrl", contact.twitterUrl) ? (
+						<InlineField
+							label="X"
+							value={contact.twitterUrl}
+							type="url"
+							saving={isSaving("twitterUrl")}
+							onSave={(twitterUrl) => save({ twitterUrl })}
+							{...agentProps("twitterUrl")}
+						/>
+					) : null}
+					{showStandardField("CONTACT", "githubUrl", contact.githubUrl) ? (
+						<InlineField
+							label={tr("GitHub")}
+							value={contact.githubUrl}
+							type="url"
+							saving={isSaving("githubUrl")}
+							onSave={(githubUrl) => save({ githubUrl })}
+							{...agentProps("githubUrl")}
+						/>
+					) : null}
 					<InlineCompanyField
 						value={contact.company?.id ?? NONE}
 						company={contact.company}

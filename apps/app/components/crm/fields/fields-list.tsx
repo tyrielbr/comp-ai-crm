@@ -35,6 +35,7 @@ import { Spinner } from "@crm/ui/components/spinner";
 import { FIELD_TEMPLATES } from "@crm/validation/field-templates";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { HIDDEN_WHEN_EMPTY_LABELS } from "@/lib/agro-fields";
 import { useCrmCache } from "@/lib/trpc/cache";
 import { useTRPC } from "@/lib/trpc/client";
 import type { RouterOutputs } from "@/lib/trpc/types";
@@ -217,7 +218,10 @@ export function FieldsList({
 								key={field}
 								className="px-5 py-1 text-muted-foreground text-xs"
 							>
-								{field}
+								{tr(field)}
+								{HIDDEN_WHEN_EMPTY_LABELS[entity]?.includes(field)
+									? ` · ${tr("hidden when empty")}`
+									: ""}
 							</li>
 						))}
 					</ul>
