@@ -96,6 +96,7 @@ export function InlineField({
 			size="sm"
 			className={CONTROL}
 			disabled={saving}
+			title={tr("Click to edit")}
 			onClick={() => {
 				setDraft(value ?? "");
 				setEditing(true);

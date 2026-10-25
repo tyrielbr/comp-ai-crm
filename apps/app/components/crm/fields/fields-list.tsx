@@ -5,7 +5,7 @@ import ChevronRight from "@carbon/icons-react/es/ChevronRight";
 import OverflowMenuVertical from "@carbon/icons-react/es/OverflowMenuVertical";
 import Renew from "@carbon/icons-react/es/Renew";
 import Warning from "@carbon/icons-react/es/Warning";
-import { tr } from "@crm/agro-i18n";
+import { tr, trPlural } from "@crm/agro-i18n";
 import { fieldKeyFromLabel, typeLabel } from "@crm/db/fields-shape";
 import { Badge } from "@crm/ui/components/badge";
 import { Button } from "@crm/ui/components/button";
@@ -73,12 +73,12 @@ function summaryOf(field: Field): string {
 		parts.push(
 			field.agentBrief ??
 				(field.options.length > 0
-					? `${field.options.length} options`
+					? trPlural(field.options.length, "{count} option", "{count} options")
 					: field.label),
 		);
 	} else {
 		parts.push(MANUAL_ONLY);
-		if (field.required) parts.push("required");
+		if (field.required) parts.push(tr("required"));
 	}
 
 	if (field.showOnTable) parts.push(TABLE_NOTE);
@@ -199,7 +199,9 @@ export function FieldsList({
 
 	const existingKeys = new Set(all.map((field) => field.key));
 	const suggestions = FIELD_TEMPLATES[entity].filter(
-		(template) => !existingKeys.has(fieldKeyFromLabel(template.label)),
+		(template) =>
+			!existingKeys.has(fieldKeyFromLabel(template.label)) &&
+			!existingKeys.has(fieldKeyFromLabel(tr(template.label))),
 	);
 
 	return (
@@ -233,9 +235,9 @@ export function FieldsList({
 									className="flex items-center gap-2.5 px-5 py-1.5"
 								>
 									<span className="flex-1 truncate text-muted-foreground text-xs">
-										{template.label}
+										{tr(template.label)}
 										{template.options && template.options.length > 0
-											? ` · ${template.options.join(", ")}`
+											? ` · ${template.options.map((option) => tr(option)).join(", ")}`
 											: ` · ${tr(typeLabel(template.type))}`}
 									</span>
 									<Button
@@ -245,10 +247,10 @@ export function FieldsList({
 										onClick={() =>
 											addSuggested.mutate({
 												entity,
-												label: template.label,
+												label: tr(template.label),
 												type: template.type,
 												options: (template.options ?? []).map((label) => ({
-													label,
+													label: tr(label),
 												})),
 												agentFilled:
 													template.type !== "USER" &&

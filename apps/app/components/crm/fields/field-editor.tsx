@@ -345,7 +345,7 @@ export function FieldEditor({
 										<SortableItem
 											key={optionId(option, index)}
 											id={optionId(option, index)}
-											label={option.label || "option"}
+											label={option.label || tr("option")}
 										>
 											<Input
 												aria-label={optionLabel(index)}
