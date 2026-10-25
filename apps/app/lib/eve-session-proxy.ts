@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	publicEveEventData,
 	publicEveEventInput,
@@ -220,7 +221,7 @@ export function eveProxyEventLine(line: string): string {
 	try {
 		value = JSON.parse(line);
 	} catch {
-		throw new Error("The agent stream contains invalid JSON.");
+		throw new Error(tr("The agent stream contains invalid JSON."));
 	}
 
 	const control = streamControl.safeParse(value);
@@ -228,7 +229,7 @@ export function eveProxyEventLine(line: string): string {
 
 	const event = eventEnvelope.safeParse(value);
 	if (!event.success)
-		throw new Error("The agent stream contains an invalid event.");
+		throw new Error(tr("The agent stream contains an invalid event."));
 
 	const { type, meta } = event.data;
 	const safe = publicEveEventData(type, event.data.data);
@@ -256,14 +257,14 @@ export function eveProxyStream(
 					encoder.encode(pending).byteLength >
 					EVE_SESSION_PROXY.stream.maxLineBytes
 				) {
-					throw new Error("The agent stream line is too large.");
+					throw new Error(tr("The agent stream line is too large."));
 				}
 				for (const line of lines) {
 					if (
 						encoder.encode(line).byteLength >
 						EVE_SESSION_PROXY.stream.maxLineBytes
 					) {
-						throw new Error("The agent stream line is too large.");
+						throw new Error(tr("The agent stream line is too large."));
 					}
 					controller.enqueue(encoder.encode(`${eveProxyEventLine(line)}\n`));
 				}
@@ -274,7 +275,7 @@ export function eveProxyStream(
 					encoder.encode(pending).byteLength >
 					EVE_SESSION_PROXY.stream.maxLineBytes
 				) {
-					throw new Error("The agent stream line is too large.");
+					throw new Error(tr("The agent stream line is too large."));
 				}
 				if (pending)
 					controller.enqueue(encoder.encode(eveProxyEventLine(pending)));

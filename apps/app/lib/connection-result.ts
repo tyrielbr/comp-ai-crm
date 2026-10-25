@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { ProviderBrand } from "@crm/ui/lib/provider-brand";
 import type { EveToolOutput } from "@crm/validation/eve-tool";
 import { z } from "zod";
@@ -249,10 +250,10 @@ function detailValue(key: string, value: JsonValue) {
 }
 
 function detailLabel(key: string) {
-	if (key === "database_count") return "Databases";
-	if (key === "mcp_access_level" || key === "access_level") return "Access";
-	if (key === "updated_at") return "Updated";
-	if (key === "created_at") return "Created";
+	if (key === "database_count") return tr("Databases");
+	if (key === "mcp_access_level" || key === "access_level") return tr("Access");
+	if (key === "updated_at") return tr("Updated");
+	if (key === "created_at") return tr("Created");
 	return humanise(key);
 }
 
@@ -294,7 +295,7 @@ function scalarText(value: JsonValue | undefined) {
 
 function limitedScalar(value: JsonValue | undefined, limit: number) {
 	const boolean = booleanValue.safeParse(value);
-	if (boolean.success) return boolean.data ? "Yes" : "No";
+	if (boolean.success) return boolean.data ? tr("Yes") : tr("No");
 	const number = numberValue.safeParse(value);
 	if (number.success) return String(number.data);
 	const text = stringValue.safeParse(value);
@@ -351,12 +352,12 @@ function titleOf(tool: string, collectionKey: string | null) {
 	const action = namespacedAction.startsWith(`${provider}_`)
 		? namespacedAction.slice(provider.length + 1)
 		: namespacedAction;
-	if (action === "whoami" || action === "get_self") return "Account";
+	if (action === "whoami" || action === "get_self") return tr("Account");
 	const subject = action.replace(
 		/^(list|get|search|find|fetch|query|show|read)_/,
 		"",
 	);
-	return subject ? humanise(subject) : "Result";
+	return subject ? humanise(subject) : tr("Result");
 }
 
 function countLabel(count: number, title: string) {

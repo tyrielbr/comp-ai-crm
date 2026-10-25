@@ -216,14 +216,18 @@ export function DealSheet({ dealId }: { dealId: string }) {
 									? tr(
 											tr(
 												tr(
-													"Its stage history, notes and agent conversations go too. {company} and the person on it stay in the CRM.",
+													tr(
+														"Its stage history, notes and agent conversations go too. {company} and the person on it stay in the CRM.",
+													),
 												),
 											),
 										)
 									: tr(
 											tr(
 												tr(
-													"Its stage history, notes and agent conversations go too. {company} and the people on it stay in the CRM.",
+													tr(
+														"Its stage history, notes and agent conversations go too. {company} and the people on it stay in the CRM.",
+													),
 												),
 											),
 										),
@@ -301,7 +305,7 @@ function DealOverview({ deal }: { deal: Deal }) {
 
 				{deal.closedReason ? (
 					<DetailSheetProperties>
-						<DetailSheetProperty label={tr("Closed")}>
+						<DetailSheetProperty label={tr("Closed on")}>
 							{deal.closedAt ? (
 								<LocalDateTime date={deal.closedAt} options={DATE_OPTIONS} />
 							) : (
@@ -389,7 +393,9 @@ function DealOverview({ deal }: { deal: Deal }) {
 					placeholder={tr(
 						tr(
 							tr(
-								"What {company} is buying, why now, and what stands in the way.",
+								tr(
+									"What {company} is buying, why now, and what stands in the way.",
+								),
 							),
 						),
 						{ company: deal.company.name },
@@ -419,7 +425,7 @@ function WhereItStands({ deal }: { deal: Deal }) {
 				</DetailSheetProperty>
 
 				{deal.closedAt ? (
-					<DetailSheetProperty label={tr("Closed")}>
+					<DetailSheetProperty label={tr("Closed on")}>
 						<LocalDateTime date={deal.closedAt} options={DATE_OPTIONS} />
 					</DetailSheetProperty>
 				) : null}
@@ -511,7 +517,9 @@ function DealContacts({
 						icon={UserMultiple}
 						title={tr("No contacts on this deal")}
 						description={tr(
-							"Nobody from {company} is attached yet. Bring the people you are selling to onto the deal and it says who to chase.",
+							tr(
+								"Nobody from {company} is attached yet. Bring the people you are selling to onto the deal and it says who to chase.",
+							),
 							{ company: deal.company.name },
 						)}
 						action={

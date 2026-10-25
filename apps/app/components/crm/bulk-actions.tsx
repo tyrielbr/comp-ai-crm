@@ -46,9 +46,12 @@ export function reportBulk(
 
 	if (result.failed > 0) {
 		toast.error(
-			`${done(result.succeeded)} ${result.failed} ${
-				result.failed === 1 ? "was" : "were"
-			} left alone${result.message ? ` — ${result.message}` : "."}`,
+			`${done(result.succeeded)} ${tr(
+				result.failed === 1
+					? "{count} was left alone"
+					: "{count} were left alone",
+				{ count: result.failed },
+			)}${result.message ? ` — ${result.message}` : "."}`,
 		);
 		return;
 	}

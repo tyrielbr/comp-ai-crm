@@ -29,7 +29,9 @@ const COPY: RecordCopyByKind = {
 		field: "contactId",
 		title: tr("Ask about this person"),
 		blurb: tr(
-			"Every step is shown as it happens — including the leads it throws away.",
+			tr(
+				"Every step is shown as it happens — including the leads it throws away.",
+			),
 		),
 		placeholder: tr("Are they still there?"),
 		suggestions: [
@@ -43,7 +45,9 @@ const COPY: RecordCopyByKind = {
 		field: "companyId",
 		title: tr("Ask about this company"),
 		blurb: tr(
-			"It reads their site and our own history with them, and shows its working.",
+			tr(
+				"It reads their site and our own history with them, and shows its working.",
+			),
 		),
 		placeholder: tr("What do they sell?"),
 		suggestions: [
@@ -57,7 +61,9 @@ const COPY: RecordCopyByKind = {
 		field: "dealId",
 		title: tr("Ask about this deal"),
 		blurb: tr(
-			"It can read the thread, the meetings and the people on both sides of it.",
+			tr(
+				"It can read the thread, the meetings and the people on both sides of it.",
+			),
 		),
 		placeholder: tr("Where has this stalled?"),
 		suggestions: [

@@ -270,7 +270,9 @@ function Thread({
 				<p className="border-t px-4 py-2 text-pretty text-muted-foreground text-xs sm:px-5">
 					{tr(
 						tr(
-							"Still working on the last question. Your next one can go in when it finishes.",
+							tr(
+								"Still working on the last question. Your next one can go in when it finishes.",
+							),
 						),
 					)}
 				</p>

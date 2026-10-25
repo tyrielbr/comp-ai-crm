@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { vendorBySlug } from "@crm/mcp-integrations/catalog";
 import type { EveToolInput } from "@crm/validation/eve-tool";
 import { z } from "zod";
@@ -31,7 +32,9 @@ export function toolLabel(item: LabelInput): string {
 	if (match) {
 		const vendor = vendorBySlug(match[1]?.toLowerCase() ?? "");
 		if (!vendor) {
-			return item.pending ? "Using a connected tool" : "Used a connected tool";
+			return item.pending
+				? tr("Using a connected tool")
+				: tr("Used a connected tool");
 		}
 
 		return item.pending ? `Using ${vendor.name}` : `Used ${vendor.name}`;
@@ -49,7 +52,9 @@ export function toolLabel(item: LabelInput): string {
 			? vendorBySlug(input.data.connection.toLowerCase())
 			: null;
 		if (!input.success || !vendor) {
-			return item.pending ? "Using a connected tool" : "Used a connected tool";
+			return item.pending
+				? tr("Using a connected tool")
+				: tr("Used a connected tool");
 		}
 
 		const action = input.data.tool.replaceAll("_", " ");
@@ -59,11 +64,11 @@ export function toolLabel(item: LabelInput): string {
 	}
 
 	if (item.tool === "save_agent_draft") {
-		return item.pending ? "Saving draft" : "Saved draft";
+		return item.pending ? tr("Saving draft") : tr("Saved draft");
 	}
 
 	if (item.tool === "set_chat_title") {
-		return item.pending ? "Naming this chat" : "Named this chat";
+		return item.pending ? tr("Naming this chat") : tr("Named this chat");
 	}
 
 	return item.label;

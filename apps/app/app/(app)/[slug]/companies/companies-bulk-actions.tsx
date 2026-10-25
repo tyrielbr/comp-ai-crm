@@ -46,7 +46,9 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkAssignOwner.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.company();
-				reportBulk(result, (count) => `${companies(count)} reassigned.`);
+				reportBulk(result, (count) =>
+					tr("{items} reassigned.", { items: companies(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -57,9 +59,10 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkEnrich.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.company();
-				reportBulk(
-					result,
-					(count) => `Looking up ${companies(count)} — the table will update.`,
+				reportBulk(result, (count) =>
+					tr("Looking up {items} — the table will update.", {
+						items: companies(count),
+					}),
 				);
 				onDone();
 			},
@@ -71,7 +74,9 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkArchive.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "company", ids: variables.ids });
-				reportBulk(result, (count) => `${companies(count)} archived.`);
+				reportBulk(result, (count) =>
+					tr("{items} archived.", { items: companies(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -82,7 +87,9 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkRestore.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.company();
-				reportBulk(result, (count) => `${companies(count)} restored.`);
+				reportBulk(result, (count) =>
+					tr("{items} restored.", { items: companies(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -93,7 +100,9 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkPurge.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "company", ids: variables.ids });
-				reportBulk(result, (count) => `${companies(count)} deleted forever.`);
+				reportBulk(result, (count) =>
+					tr("{items} deleted forever.", { items: companies(count) }),
+				);
 				setConfirming(false);
 				onDone();
 			},
@@ -127,7 +136,9 @@ export function CompaniesBulkActions({
 				<BulkDeleteDialog
 					open={confirming}
 					onOpenChange={setConfirming}
-					title={`Delete ${companies(ids.length)} forever?`}
+					title={tr("Delete {items} forever?", {
+						items: companies(ids.length),
+					})}
 					description={tr("This cannot be undone.")}
 					onConfirm={() => purge.mutate({ ids })}
 				/>
@@ -142,7 +153,7 @@ export function CompaniesBulkActions({
 		<BulkActionsMenu pending={pending}>
 			<BulkOwnerMenu
 				users={users.data ?? []}
-				unassignedLabel="Nobody"
+				unassignedLabel={tr("Nobody")}
 				onSelect={(ownerId) => assignOwner.mutate({ ids, ownerId })}
 			/>
 			<DropdownMenuGroup>

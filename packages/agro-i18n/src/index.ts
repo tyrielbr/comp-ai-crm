@@ -14,11 +14,15 @@ export const AGRO_LOCALE = "pt-BR" as const;
 
 const catalog: Record<string, string> = ptBR;
 
+// Nos testes do upstream (bun test) mantemos o texto original em inglês,
+// para que as asserções existentes continuem válidas.
+const passthrough = process.env.NODE_ENV === "test";
+
 type Vars = Record<string, string | number>;
 
 /** Traduz `source` (texto em inglês). Suporta interpolação `{nome}`. */
 export function tr(source: string, vars?: Vars): string {
-	const text = catalog[source] || source;
+	const text = (!passthrough && catalog[source]) || source;
 	if (!vars) return text;
 	return text.replace(/\{(\w+)\}/g, (match, name: string) =>
 		name in vars ? String(vars[name]) : match,

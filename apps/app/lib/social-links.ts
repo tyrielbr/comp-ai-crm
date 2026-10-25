@@ -3,6 +3,7 @@ import LogoLinkedin from "@carbon/icons-react/es/LogoLinkedin";
 import LogoX from "@carbon/icons-react/es/LogoX";
 import Money from "@carbon/icons-react/es/Money";
 import UserMultiple from "@carbon/icons-react/es/UserMultiple";
+import { tr } from "@crm/agro-i18n";
 import type { CarbonIcon } from "@crm/ui/components/icon";
 
 type SocialLink<T> = { key: keyof T; label: string; icon: CarbonIcon };
@@ -22,17 +23,17 @@ export type ContactLinks = {
 };
 
 const COMPANY_LINKS: SocialLink<CompanyLinks>[] = [
-	{ key: "linkedinUrl", label: "LinkedIn", icon: LogoLinkedin },
+	{ key: "linkedinUrl", label: tr("LinkedIn"), icon: LogoLinkedin },
 	{ key: "twitterUrl", label: "X", icon: LogoX },
-	{ key: "githubUrl", label: "GitHub", icon: LogoGithub },
-	{ key: "pricingUrl", label: "Pricing", icon: Money },
-	{ key: "careersUrl", label: "Careers", icon: UserMultiple },
+	{ key: "githubUrl", label: tr("GitHub"), icon: LogoGithub },
+	{ key: "pricingUrl", label: tr("Pricing"), icon: Money },
+	{ key: "careersUrl", label: tr("Careers"), icon: UserMultiple },
 ];
 
 const CONTACT_LINKS: SocialLink<ContactLinks>[] = [
-	{ key: "linkedinUrl", label: "LinkedIn", icon: LogoLinkedin },
+	{ key: "linkedinUrl", label: tr("LinkedIn"), icon: LogoLinkedin },
 	{ key: "twitterUrl", label: "X", icon: LogoX },
-	{ key: "githubUrl", label: "GitHub", icon: LogoGithub },
+	{ key: "githubUrl", label: tr("GitHub"), icon: LogoGithub },
 ];
 
 function present<T extends Record<string, string | null>>(

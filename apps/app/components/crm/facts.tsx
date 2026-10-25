@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Provenance } from "@crm/ui/components/sourced-value";
 import { Suggestion } from "@crm/ui/components/suggestion";
 import { useMutation } from "@tanstack/react-query";
@@ -40,8 +41,8 @@ export function FactSuggestion({
 			onSuccess: (result) => {
 				toast.success(
 					result.applied
-						? "Added to the record."
-						: "Dismissed — it won't be suggested again.",
+						? tr("Added to the record.")
+						: tr("Dismissed — it won't be suggested again."),
 				);
 				return cache.contact(contactId, { settle: "record" });
 			},

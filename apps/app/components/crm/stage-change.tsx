@@ -155,10 +155,14 @@ export function CloseReasonDialog() {
 					<DialogDescription>
 						{stage === "CLOSED_LOST"
 							? tr(
-									"What did we lose it to? This is the only place that answer gets recorded.",
+									tr(
+										"What did we lose it to? This is the only place that answer gets recorded.",
+									),
 								)
 							: tr(
-									"Why is this not a fit? It goes on the timeline so nobody re-runs the same deal.",
+									tr(
+										"Why is this not a fit? It goes on the timeline so nobody re-runs the same deal.",
+									),
 								)}
 					</DialogDescription>
 				</DialogHeader>

@@ -1,6 +1,7 @@
 "use client";
 
 import Add from "@carbon/icons-react/es/Add";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Field,
@@ -43,7 +44,7 @@ function AddButton(props: ComponentProps<typeof Button>) {
 	return (
 		<Button {...props}>
 			<Icon icon={Add} data-icon="inline-start" />
-			New company
+			{tr("New company")}
 		</Button>
 	);
 }
@@ -96,10 +97,11 @@ function CreateCompanyForm() {
 			</SheetTrigger>
 			<SheetContent side="right">
 				<SheetHeader>
-					<SheetTitle>New company</SheetTitle>
+					<SheetTitle>{tr("New company")}</SheetTitle>
 					<SheetDescription>
-						Give it a name and a domain. The agent fills in the logo,
-						description, industry, address and socials.
+						{tr(
+							"Give it a name and a domain. The agent fills in the logo, description, industry, address and socials.",
+						)}
 					</SheetDescription>
 				</SheetHeader>
 
@@ -117,19 +119,19 @@ function CreateCompanyForm() {
 				>
 					<FieldGroup>
 						<Field>
-							<FieldLabel htmlFor={nameId}>Name</FieldLabel>
+							<FieldLabel htmlFor={nameId}>{tr("Name")}</FieldLabel>
 							<Input
 								id={nameId}
 								value={name}
 								onChange={(event) => setName(event.target.value)}
-								placeholder="Stripe"
+								placeholder={tr("Stripe")}
 								autoComplete="off"
 								required
 							/>
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={domainId}>Domain</FieldLabel>
+							<FieldLabel htmlFor={domainId}>{tr("Domain")}</FieldLabel>
 							<Input
 								id={domainId}
 								value={domain}
@@ -139,19 +141,22 @@ function CreateCompanyForm() {
 								inputMode="url"
 							/>
 							<FieldDescription>
-								A full URL is fine — it is reduced to the bare host, which has
-								to be unique.
+								{tr(
+									"A full URL is fine — it is reduced to the bare host, which has to be unique.",
+								)}
 							</FieldDescription>
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor="create-company-owner">Owner</FieldLabel>
+							<FieldLabel htmlFor="create-company-owner">
+								{tr("Owner")}
+							</FieldLabel>
 							<Select value={ownerId} onValueChange={setOwnerId}>
 								<SelectTrigger id="create-company-owner">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value={UNASSIGNED}>Unassigned</SelectItem>
+									<SelectItem value={UNASSIGNED}>{tr("Unassigned")}</SelectItem>
 									{(users.data ?? []).map((user) => (
 										<SelectItem key={user.id} value={user.id}>
 											{user.name}
@@ -170,10 +175,10 @@ function CreateCompanyForm() {
 						disabled={create.isPending || name.trim() === ""}
 					>
 						{create.isPending ? <Spinner /> : null}
-						Add company
+						{tr("Add company")}
 					</Button>
 					<SheetClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant="outline">{tr("Cancel")}</Button>
 					</SheetClose>
 				</SheetFooter>
 			</SheetContent>

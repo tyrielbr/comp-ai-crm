@@ -1,3 +1,5 @@
+import { tr } from "@crm/agro-i18n";
+
 const ISSUER = "crm-app";
 const AUDIENCE = "crm-agent";
 
@@ -32,7 +34,7 @@ export async function mintBridgeToken(
 	record: { contactId?: string; companyId?: string; dealId?: string } = {},
 ): Promise<string> {
 	const secret = process.env.AGENT_BRIDGE_SECRET;
-	if (!secret) throw new Error("AGENT_BRIDGE_SECRET is not set.");
+	if (!secret) throw new Error(tr("AGENT_BRIDGE_SECRET is not set."));
 
 	const now = Math.floor(Date.now() / 1000);
 

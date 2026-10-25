@@ -79,7 +79,7 @@ export function CompanyPicker({
 			selectedOption={current}
 			disabled={disabled}
 			placeholder={placeholder}
-			searchPlaceholder="Search companies…"
+			searchPlaceholder={tr("Search companies…")}
 			empty={
 				companies.isFetching ? tr("Searching…") : tr("No company matches.")
 			}

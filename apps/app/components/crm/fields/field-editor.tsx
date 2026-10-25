@@ -2,6 +2,7 @@
 
 import Add from "@carbon/icons-react/es/Add";
 import Close from "@carbon/icons-react/es/Close";
+import { tr } from "@crm/agro-i18n";
 import {
 	FIELD_TYPES,
 	fieldKeyFromLabel,
@@ -88,16 +89,16 @@ type Draft = {
 };
 
 const TYPE_HINTS = {
-	TEXT: "Text — a short line",
-	LONG_TEXT: "Long text — a paragraph",
-	NUMBER: "Number",
-	DATE: "Date",
-	CHECKBOX: "Checkbox — yes or no",
-	SELECT: "Select — one of a fixed list",
+	TEXT: tr("Text — a short line"),
+	LONG_TEXT: tr("Long text — a paragraph"),
+	NUMBER: tr("Number"),
+	DATE: tr("Date"),
+	CHECKBOX: tr("Checkbox — yes or no"),
+	SELECT: tr("Select — one of a fixed list"),
 	URL: "URL",
-	EMAIL: "Email",
-	PHONE: "Phone",
-	USER: "User — someone in the workspace",
+	EMAIL: tr("Email"),
+	PHONE: tr("Phone"),
+	USER: tr("User — someone in the workspace"),
 } satisfies Record<(typeof FIELD_TYPES)[number], string>;
 
 function optionId(option: { id?: string }, index: number): string {
@@ -133,7 +134,7 @@ function Coverage({ field }: { field: FieldRecord }) {
 	const backfill = useMutation(
 		trpc.fields.backfill.mutationOptions({
 			onSuccess: async () => {
-				toast.success("Your agents will pick this up.");
+				toast.success(tr("Your agents will pick this up."));
 				await cache.fieldCoverage(field.id);
 			},
 			onError: (error) => toast.error(error.message),
@@ -153,7 +154,11 @@ function Coverage({ field }: { field: FieldRecord }) {
 					<StatusIndicator
 						tone="primary"
 						className="font-medium text-foreground"
-						label={`Filled on ${filled} of ${total} ${noun}`}
+						label={tr("Filled on {filled} of {total} {noun}", {
+							filled,
+							total,
+							noun: tr(noun),
+						})}
 					/>
 					<span className="pl-4 text-muted-foreground text-xs">
 						{covered ? ALL_FILLED : `${total - filled} still to go`}
@@ -444,7 +449,7 @@ export function FieldEditor({
 						<AlertDialogHeader>
 							<AlertDialogTitle>Archive {field.label}?</AlertDialogTitle>
 							<AlertDialogDescription>
-								Hidden everywhere. Its values are kept.
+								{tr("Hidden everywhere. Its values are kept.")}
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>
@@ -453,7 +458,7 @@ export function FieldEditor({
 								variant="destructive"
 								onClick={() => archive.mutate({ id: field.id })}
 							>
-								Archive field
+								{tr("Archive field")}
 							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>

@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { ProviderBrand } from "@crm/ui/lib/provider-brand";
 import {
 	type AgentConnectionRequestStatus,
@@ -82,48 +83,48 @@ const authorizationCompleted = z.object({
 type ToolVerbs = Record<string, string>;
 
 const VERBS: ToolVerbs = {
-	read_crm_history: "Read our emails and meetings with them",
-	read_company_history: "Read everything we have on the company",
-	read_deal_history: "Read the deal and where it has been",
-	search_crm: "Looked the record up in the CRM",
-	resolve_linkedin_profile: "Searched for their LinkedIn profile",
-	get_linkedin_profile: "Read a LinkedIn profile",
-	get_contact_work_history: "Read their work history",
-	fetch_contact_photo: "Fetched their profile picture",
-	find_contact_socials: "Searched for their other profiles",
-	set_contact_socials: "Checked a profile against the account itself",
-	identify_contact: "Put a name to the address",
-	record_fact: "Recorded what it found",
-	write_brief: "Wrote the background",
-	write_workspace_profile: "Wrote up who we are",
-	research_person: "Researched them on the web",
-	research_company: "Read the company's site",
-	enrich_company: "Looked up the company",
-	schedule_recheck: "Decided when to look again",
-	record_job_change: "Raised a job change",
-	list_deals: "Reviewed the deal pipeline",
-	list_outstanding_work: "Looked for outstanding work",
-	set_chat_title: "Named this chat",
-	list_fields: "Read what this workspace tracks",
-	set_field_value: "Filled in a custom field",
-	manage_fields: "Changed what the CRM tracks",
-	mcp: "Used an approved connected tool",
-	archive_field: "Asked to retire a field",
+	read_crm_history: tr("Read our emails and meetings with them"),
+	read_company_history: tr("Read everything we have on the company"),
+	read_deal_history: tr("Read the deal and where it has been"),
+	search_crm: tr("Looked the record up in the CRM"),
+	resolve_linkedin_profile: tr("Searched for their LinkedIn profile"),
+	get_linkedin_profile: tr("Read a LinkedIn profile"),
+	get_contact_work_history: tr("Read their work history"),
+	fetch_contact_photo: tr("Fetched their profile picture"),
+	find_contact_socials: tr("Searched for their other profiles"),
+	set_contact_socials: tr("Checked a profile against the account itself"),
+	identify_contact: tr("Put a name to the address"),
+	record_fact: tr("Recorded what it found"),
+	write_brief: tr("Wrote the background"),
+	write_workspace_profile: tr("Wrote up who we are"),
+	research_person: tr("Researched them on the web"),
+	research_company: tr("Read the company's site"),
+	enrich_company: tr("Looked up the company"),
+	schedule_recheck: tr("Decided when to look again"),
+	record_job_change: tr("Raised a job change"),
+	list_deals: tr("Reviewed the deal pipeline"),
+	list_outstanding_work: tr("Looked for outstanding work"),
+	set_chat_title: tr("Named this chat"),
+	list_fields: tr("Read what this workspace tracks"),
+	set_field_value: tr("Filled in a custom field"),
+	manage_fields: tr("Changed what the CRM tracks"),
+	mcp: tr("Used an approved connected tool"),
+	archive_field: tr("Asked to retire a field"),
 
-	load_skill: "Read its instructions for this",
-	web_search: "Searched the web",
-	web_fetch: "Read a web page",
-	todo: "Updated its plan",
-	ask_question: "Asked a question",
-	agent: "Handed part of the job to a helper",
-	connection_search: "Looked for a tool it could use",
-	connection_execute: "Used a connected tool",
-	request_connection: "Checked a connection",
-	bash: "Ran a command",
-	read_file: "Read a file",
-	write_file: "Wrote a file",
-	glob: "Looked for files",
-	grep: "Searched inside the files",
+	load_skill: tr("Read its instructions for this"),
+	web_search: tr("Searched the web"),
+	web_fetch: tr("Read a web page"),
+	todo: tr("Updated its plan"),
+	ask_question: tr("Asked a question"),
+	agent: tr("Handed part of the job to a helper"),
+	connection_search: tr("Looked for a tool it could use"),
+	connection_execute: tr("Used a connected tool"),
+	request_connection: tr("Checked a connection"),
+	bash: tr("Ran a command"),
+	read_file: tr("Read a file"),
+	write_file: tr("Wrote a file"),
+	glob: tr("Looked for files"),
+	grep: tr("Searched inside the files"),
 };
 
 export type TranscriptMessage = {
@@ -385,7 +386,7 @@ export function describe(part: EveMessagePart): string {
 		state === "input-available" ||
 		state === "approval-requested";
 
-	return VERBS[tool] ?? (pending ? "Working on it" : "Finished a step");
+	return VERBS[tool] ?? (pending ? tr("Working on it") : tr("Finished a step"));
 }
 
 export function outcomeTone(part: EveMessagePart): Tone {
@@ -498,10 +499,10 @@ function input(part: EveMessagePart): EveToolInput {
 function errorTextOf(part: EveMessagePart): string | null {
 	if (!("state" in part)) return null;
 	if (part.state === "output-denied") {
-		return "This step was not approved.";
+		return tr("This step was not approved.");
 	}
 	if (part.state === "output-error") {
-		return "This step failed. Ask again to retry.";
+		return tr("This step failed. Ask again to retry.");
 	}
 	return null;
 }

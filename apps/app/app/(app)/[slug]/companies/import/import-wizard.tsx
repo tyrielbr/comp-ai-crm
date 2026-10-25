@@ -1,6 +1,7 @@
 "use client";
 
 import Upload from "@carbon/icons-react/es/Upload";
+import { tr } from "@crm/agro-i18n";
 import { Alert, AlertDescription, AlertTitle } from "@crm/ui/components/alert";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -57,14 +58,14 @@ const IMPORT_FIELDS: Array<{
 	value: CompanyImportField;
 	label: string;
 }> = [
-	{ value: "name", label: "Name" },
-	{ value: "website", label: "Website or domain" },
-	{ value: "phone", label: "Phone" },
-	{ value: "city", label: "City" },
-	{ value: "stateCode", label: "State or region" },
-	{ value: "industry", label: "Industry" },
-	{ value: "subIndustry", label: "Sub-industry" },
-	{ value: "description", label: "Description" },
+	{ value: "name", label: tr("Name") },
+	{ value: "website", label: tr("Website or domain") },
+	{ value: "phone", label: tr("Phone") },
+	{ value: "city", label: tr("City") },
+	{ value: "stateCode", label: tr("State or region") },
+	{ value: "industry", label: tr("Industry") },
+	{ value: "subIndustry", label: tr("Sub-industry") },
+	{ value: "description", label: tr("Description") },
 ];
 
 const FIELD_LABELS = new Map(
@@ -82,7 +83,7 @@ export function ImportWizard({ companiesUrl }: { companiesUrl: string }) {
 	const cache = useCrmCache();
 	const [state, dispatch] = useReducer(reduceImportWizard, {
 		step: "upload",
-		message: "Choose a CSV file.",
+		message: tr("Choose a CSV file."),
 	});
 	const [reading, setReading] = useState(false);
 
@@ -100,10 +101,10 @@ export function ImportWizard({ companiesUrl }: { companiesUrl: string }) {
 		setReading(true);
 		try {
 			if (file.size > COMPANY_IMPORT.maxFileBytes) {
-				throw new Error("The CSV file is larger than 5 MB.");
+				throw new Error(tr("The CSV file is larger than 5 MB."));
 			}
 			if (!file.name.toLowerCase().endsWith(".csv")) {
-				throw new Error("Choose a file with a .csv extension.");
+				throw new Error(tr("Choose a file with a .csv extension."));
 			}
 			const parsed = parseCsv(await file.text());
 			dispatch({
@@ -117,7 +118,7 @@ export function ImportWizard({ companiesUrl }: { companiesUrl: string }) {
 				message:
 					error instanceof Error
 						? error.message
-						: "The CSV file cannot be read.",
+						: tr("The CSV file cannot be read."),
 			});
 		} finally {
 			setReading(false);
@@ -136,7 +137,7 @@ export function ImportWizard({ companiesUrl }: { companiesUrl: string }) {
 				message:
 					error instanceof Error
 						? error.message
-						: "The column mapping is invalid.",
+						: tr("The column mapping is invalid."),
 			});
 		}
 	}
@@ -188,24 +189,25 @@ function UploadStep({
 			<CardHeader>
 				<CardTitle>
 					<h2 ref={focusElement} tabIndex={-1}>
-						Choose a CSV file
+						{tr("Choose a CSV file")}
 					</h2>
 				</CardTitle>
 				<CardDescription>
-					The first row must contain column names. Files can contain 5,000
-					companies and must stay under 5 MB.
+					{tr(
+						"The first row must contain column names. Files can contain 5,000 companies and must stay under 5 MB.",
+					)}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				{error ? (
 					<Alert variant="destructive">
-						<AlertTitle>The file cannot be used</AlertTitle>
+						<AlertTitle>{tr("The file cannot be used")}</AlertTitle>
 						<AlertDescription>{error}</AlertDescription>
 					</Alert>
 				) : null}
 				<FieldGroup>
 					<Field data-disabled={reading || undefined}>
-						<FieldLabel htmlFor={inputId}>CSV file</FieldLabel>
+						<FieldLabel htmlFor={inputId}>{tr("CSV file")}</FieldLabel>
 						<Input
 							id={inputId}
 							type="file"
@@ -218,7 +220,7 @@ function UploadStep({
 							}}
 						/>
 						<FieldDescription>
-							You can review every column before the import starts.
+							{tr("You can review every column before the import starts.")}
 						</FieldDescription>
 					</Field>
 				</FieldGroup>
@@ -269,17 +271,17 @@ function MapStep({
 			<CardHeader>
 				<CardTitle>
 					<h2 ref={focusElement} tabIndex={-1}>
-						Match the columns
+						{tr("Match the columns")}
 					</h2>
 				</CardTitle>
 				<CardDescription>
-					Each company field can use one CSV column. Name is required.
+					{tr("Each company field can use one CSV column. Name is required.")}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				{error ? (
 					<Alert variant="destructive">
-						<AlertTitle>The import cannot start</AlertTitle>
+						<AlertTitle>{tr("The import cannot start")}</AlertTitle>
 						<AlertDescription>{error}</AlertDescription>
 					</Alert>
 				) : null}
@@ -287,8 +289,8 @@ function MapStep({
 					<Table>
 						<TableHeader>
 							<TableRow>
-								<TableHead>CSV column</TableHead>
-								<TableHead>Company field</TableHead>
+								<TableHead>{tr("CSV column")}</TableHead>
+								<TableHead>{tr("Company field")}</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
@@ -317,7 +319,9 @@ function MapStep({
 												</SelectTrigger>
 												<SelectContent>
 													<SelectGroup>
-														<SelectItem value={SKIP}>Do not import</SelectItem>
+														<SelectItem value={SKIP}>
+															{tr("Do not import")}
+														</SelectItem>
 														{IMPORT_FIELDS.map((option) => (
 															<SelectItem
 																key={option.value}
@@ -360,7 +364,7 @@ function MapStep({
 									<TableRow key={key}>
 										{mappedColumns.map(({ column, key: columnKey }) => (
 											<TableCell key={columnKey}>
-												{row[column] || "Empty"}
+												{row[column] || tr("Empty")}
 											</TableCell>
 										))}
 									</TableRow>
@@ -373,10 +377,10 @@ function MapStep({
 			<CardFooter>
 				<Button onClick={onImport} disabled={pending || !hasName}>
 					{pending ? <Spinner data-icon="inline-start" /> : null}
-					{pending ? "Importing" : `Import ${parsed.rows.length} companies`}
+					{pending ? tr("Importing") : `Import ${parsed.rows.length} companies`}
 				</Button>
 				<Button variant="outline" onClick={onBack} disabled={pending}>
-					Back
+					{tr("Back")}
 				</Button>
 			</CardFooter>
 		</Card>
@@ -401,7 +405,7 @@ function ResultStep({
 			<CardHeader>
 				<CardTitle>
 					<h2 ref={focusElement} tabIndex={-1}>
-						Import complete
+						{tr("Import complete")}
 					</h2>
 				</CardTitle>
 				<CardDescription>
@@ -411,17 +415,19 @@ function ResultStep({
 			{result.skips.length > 0 ? (
 				<CardContent>
 					<Alert>
-						<AlertTitle>Skipped rows</AlertTitle>
+						<AlertTitle>{tr("Skipped rows")}</AlertTitle>
 						<AlertDescription>
-							Fix these rows in the CSV file before importing them again.
+							{tr(
+								"Fix these rows in the CSV file before importing them again.",
+							)}
 						</AlertDescription>
 					</Alert>
 					<CardPanel size="content">
 						<Table>
 							<TableHeader>
 								<TableRow>
-									<TableHead>Row</TableHead>
-									<TableHead>Reason</TableHead>
+									<TableHead>{tr("Row")}</TableHead>
+									<TableHead>{tr("Reason")}</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
@@ -438,11 +444,11 @@ function ResultStep({
 			) : null}
 			<CardFooter divider={result.skips.length > 0 ? "top" : "none"}>
 				<Button asChild>
-					<Link href={companiesUrl}>View companies</Link>
+					<Link href={companiesUrl}>{tr("View companies")}</Link>
 				</Button>
 				<Button variant="outline" onClick={onRestart}>
 					<Icon icon={Upload} data-icon="inline-start" />
-					Import another file
+					{tr("Import another file")}
 				</Button>
 			</CardFooter>
 		</Card>

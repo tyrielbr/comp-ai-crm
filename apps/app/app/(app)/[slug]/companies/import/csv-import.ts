@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	COMPANY_IMPORT,
 	type CompanyImportRow,
@@ -95,7 +96,10 @@ export function parseCsv(text: string): ParsedCsv {
 	}
 	if (dataRecords.length > COMPANY_IMPORT.maxRows) {
 		throw new Error(
-			`The CSV file has ${dataRecords.length} rows. The limit is ${COMPANY_IMPORT.maxRows}.`,
+			tr("The CSV file has {rows} rows. The limit is {max}.", {
+				rows: dataRecords.length,
+				max: COMPANY_IMPORT.maxRows,
+			}),
 		);
 	}
 

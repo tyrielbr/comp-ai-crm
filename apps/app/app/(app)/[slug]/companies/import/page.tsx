@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -13,7 +14,7 @@ import { workspaceUrl } from "@/lib/workspace-url";
 import { ImportWizard } from "./import-wizard";
 
 export const metadata: Metadata = {
-	title: "Import Companies",
+	title: tr("Import Companies"),
 };
 
 export default function ImportCompaniesPage({
@@ -23,9 +24,9 @@ export default function ImportCompaniesPage({
 		<PageShell>
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Import companies</PageShellTitle>
+					<PageShellTitle>{tr("Import companies")}</PageShellTitle>
 					<PageShellDescription>
-						Upload a CSV file and match its columns to company fields.
+						{tr("Upload a CSV file and match its columns to company fields.")}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

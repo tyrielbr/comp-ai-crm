@@ -65,7 +65,9 @@ export function DealsBulkActions({
 		trpc.deals.bulkAssignOwner.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.deal();
-				reportBulk(result, (count) => `${deals(count)} reassigned.`);
+				reportBulk(result, (count) =>
+					tr("{items} reassigned.", { items: deals(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -76,7 +78,9 @@ export function DealsBulkActions({
 		trpc.deals.bulkSetStage.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.deal();
-				reportBulk(result, (count) => `${deals(count)} moved.`);
+				reportBulk(result, (count) =>
+					tr("{items} moved.", { items: deals(count) }),
+				);
 				setClosing(null);
 				setReason("");
 				onDone();
@@ -89,7 +93,9 @@ export function DealsBulkActions({
 		trpc.deals.bulkArchive.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "deal", ids: variables.ids });
-				reportBulk(result, (count) => `${deals(count)} archived.`);
+				reportBulk(result, (count) =>
+					tr("{items} archived.", { items: deals(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -100,7 +106,9 @@ export function DealsBulkActions({
 		trpc.deals.bulkRestore.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.deal();
-				reportBulk(result, (count) => `${deals(count)} restored.`);
+				reportBulk(result, (count) =>
+					tr("{items} restored.", { items: deals(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -111,7 +119,9 @@ export function DealsBulkActions({
 		trpc.deals.bulkPurge.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "deal", ids: variables.ids });
-				reportBulk(result, (count) => `${deals(count)} deleted forever.`);
+				reportBulk(result, (count) =>
+					tr("{items} deleted forever.", { items: deals(count) }),
+				);
 				setConfirming(false);
 				onDone();
 			},
@@ -145,9 +155,11 @@ export function DealsBulkActions({
 				<BulkDeleteDialog
 					open={confirming}
 					onOpenChange={setConfirming}
-					title={`Delete ${deals(ids.length)} forever?`}
+					title={tr("Delete {items} forever?", { items: deals(ids.length) })}
 					description={tr(
-						"Everything filed against them — activity, notes, the amounts in your pipeline — goes too. This cannot be undone.",
+						tr(
+							"Everything filed against them — activity, notes, the amounts in your pipeline — goes too. This cannot be undone.",
+						),
 					)}
 					onConfirm={() => purge.mutate({ ids })}
 				/>
@@ -209,12 +221,16 @@ export function DealsBulkActions({
 					<DialogHeader>
 						<DialogTitle>
 							{closing === "CLOSED_LOST"
-								? `Close ${deals(ids.length)} as lost`
-								: `Mark ${deals(ids.length)} as unqualified`}
+								? tr("Close {items} as lost", { items: deals(ids.length) })
+								: tr("Mark {items} as unqualified", {
+										items: deals(ids.length),
+									})}
 						</DialogTitle>
 						<DialogDescription>
 							{tr(
-								"The same reason goes on every one of them, so keep it to what they have in common.",
+								tr(
+									"The same reason goes on every one of them, so keep it to what they have in common.",
+								),
 							)}
 						</DialogDescription>
 					</DialogHeader>

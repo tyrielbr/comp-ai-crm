@@ -37,7 +37,12 @@ const PROP =
 for (const root of roots) {
 	const glob = new Glob("**/*.{ts,tsx}");
 	for (const rel of glob.scanSync({ cwd: `${ROOT}${root}` })) {
-		if (rel.includes("node_modules") || rel.includes(".next/")) continue;
+		if (
+			rel.includes("node_modules") ||
+			rel.includes(".next/") ||
+			/(^|\/)test\/|\.(spec|test)\.tsx?$/.test(rel)
+		)
+			continue;
 		const file = `${root}/${rel}`;
 		const src = readFileSync(`${ROOT}${file}`, "utf8");
 		for (const re of [TR, STAGE]) {

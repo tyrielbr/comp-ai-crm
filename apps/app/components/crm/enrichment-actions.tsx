@@ -2,6 +2,7 @@
 
 import MagicWand from "@carbon/icons-react/es/MagicWand";
 import Renew from "@carbon/icons-react/es/Renew";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { Icon } from "@crm/ui/components/icon";
 import { Spinner } from "@crm/ui/components/spinner";
@@ -26,8 +27,8 @@ export function EnrichmentActions({
 				await cache.company(companyId);
 				toast.success(
 					result.queued
-						? "Looking it up — this page will update when it finishes."
-						: "Already running.",
+						? tr("Looking it up — this page will update when it finishes.")
+						: tr("Already running."),
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -40,8 +41,10 @@ export function EnrichmentActions({
 				await cache.activity();
 				toast.success(
 					result.queued
-						? "Researching — the brief lands on the timeline when it finishes."
-						: "Already researching.",
+						? tr(
+								"Researching — the brief lands on the timeline when it finishes.",
+							)
+						: tr("Already researching."),
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -90,8 +93,10 @@ export function ContactEnrichmentAction({ contactId }: { contactId: string }) {
 				await cache.contact(contactId);
 				toast.success(
 					result.queued
-						? "Taking another look — this page will update when it finishes."
-						: "Already running.",
+						? tr(
+								"Taking another look — this page will update when it finishes.",
+							)
+						: tr("Already running."),
 				);
 			},
 			onError: (error) => toast.error(error.message),

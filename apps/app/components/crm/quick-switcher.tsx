@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import {
 	Command,
 	CommandDialog,
@@ -22,9 +23,9 @@ import { SEARCH_PARAM } from "@/lib/search-param-keys";
 import { useTRPC } from "@/lib/trpc/client";
 
 const GROUP_LABEL = {
-	company: "Companies",
-	contact: "Contacts",
-	deal: "Deals",
+	company: tr("Companies"),
+	contact: tr("Contacts"),
+	deal: tr("Deals"),
 } as const;
 
 const KINDS = ["company", "contact", "deal"] as const;
@@ -69,20 +70,20 @@ export function QuickSwitcher() {
 		<CommandDialog
 			open={open}
 			onOpenChange={(next) => setOpen(next || null)}
-			title="Search"
-			description="Jump to a company, contact or deal"
+			title={tr("Search")}
+			description={tr("Jump to a company, contact or deal")}
 		>
 			<Command shouldFilter={false}>
 				<CommandInput
-					placeholder="Search companies, contacts and deals…"
+					placeholder={tr("Search companies, contacts and deals…")}
 					value={query}
 					onValueChange={setQuery}
 				/>
 				<CommandList>
 					<CommandEmpty>
 						{query.trim().length < 2
-							? "Type at least two characters."
-							: "Nothing matches."}
+							? tr("Type at least two characters.")
+							: tr("Nothing matches.")}
 					</CommandEmpty>
 
 					{KINDS.map((kind) => {

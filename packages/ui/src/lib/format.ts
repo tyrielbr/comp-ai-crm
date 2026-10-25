@@ -1,10 +1,14 @@
+import { tr } from "@crm/agro-i18n";
 import { AGRO_INTL_LOCALE } from "@crm/agro-i18n/format";
+
+const countNumberFormat = new Intl.NumberFormat(AGRO_INTL_LOCALE);
+const formatCountNumber = (count: number) => countNumberFormat.format(count);
 export function formatCount(
 	count: number,
 	noun: string,
 	plural = `${noun}s`,
 ): string {
-	return `${count} ${count === 1 ? noun : plural}`;
+	return `${formatCountNumber(count)} ${tr(count === 1 ? noun : plural)}`;
 }
 
 const WELL_FORMED_CURRENCY_CODE = /^[A-Za-z]{3}$/;

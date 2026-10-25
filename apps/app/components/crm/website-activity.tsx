@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { useQuery } from "@tanstack/react-query";
 import {
 	DetailSheetProperties,
@@ -52,9 +53,9 @@ export function WebsiteActivity({
 	const campaign = last?.campaign ?? first?.campaign ?? null;
 
 	return (
-		<DetailSheetSection title="Website activity">
+		<DetailSheetSection title={tr("Website activity")}>
 			<DetailSheetProperties>
-				<DetailSheetProperty label="Page views">
+				<DetailSheetProperty label={tr("Page views")}>
 					<span className="tabular-nums">
 						{activity.views.toLocaleString()}
 					</span>
@@ -67,13 +68,13 @@ export function WebsiteActivity({
 				</DetailSheetProperty>
 
 				{first ? (
-					<DetailSheetProperty label="Original source">
+					<DetailSheetProperty label={tr("Original source")}>
 						{channel(first)}
 					</DetailSheetProperty>
 				) : null}
 
 				{topPage ? (
-					<DetailSheetProperty label="Top page">
+					<DetailSheetProperty label={tr("Top page")}>
 						<span className="flex min-w-0 items-baseline gap-1">
 							<span className="truncate font-mono" title={topPage.path}>
 								{topPage.path}
@@ -87,19 +88,21 @@ export function WebsiteActivity({
 				) : null}
 
 				{channelChanged ? (
-					<DetailSheetProperty label="Latest source">
+					<DetailSheetProperty label={tr("Latest source")}>
 						{channel(last)}
 					</DetailSheetProperty>
 				) : null}
 
 				{first?.at ? (
-					<DetailSheetProperty label="First seen">
+					<DetailSheetProperty label={tr("First seen")}>
 						<LocalRelativeTime date={first.at} />
 					</DetailSheetProperty>
 				) : null}
 
 				{campaign ? (
-					<DetailSheetProperty label="Campaign">{campaign}</DetailSheetProperty>
+					<DetailSheetProperty label={tr("Campaign")}>
+						{campaign}
+					</DetailSheetProperty>
 				) : null}
 			</DetailSheetProperties>
 		</DetailSheetSection>
@@ -107,7 +110,7 @@ export function WebsiteActivity({
 }
 
 function channel(touch: Touch | null): string {
-	if (!touch) return "Unknown";
+	if (!touch) return tr("Unknown");
 	if (!touch.medium || touch.medium === "direct") return touch.source;
 	return `${touch.source} · ${touch.medium}`;
 }
