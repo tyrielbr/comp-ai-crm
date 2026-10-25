@@ -57,6 +57,9 @@ export function formatMoneyCompact(cents: number, currency = "usd"): string {
 		style: "currency",
 		currency: displayCurrencyCode(currency),
 		notation: "compact",
+		// Explicit min/max: Node and browser ICU differ on the currency default
+		// minimum (2) under compact notation, causing hydration mismatches.
+		minimumFractionDigits: 0,
 		maximumFractionDigits: cents % 100_000 === 0 ? 0 : 1,
 	}).format(cents / 100);
 }
