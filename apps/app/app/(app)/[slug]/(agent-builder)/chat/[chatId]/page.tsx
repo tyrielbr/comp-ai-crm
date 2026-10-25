@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { vendors } from "@crm/mcp-integrations/catalog";
 import { providerBrand } from "@crm/ui/lib/provider-brand";
 import type { Metadata } from "next";
@@ -9,7 +10,7 @@ import { isSharedChatToken } from "@/lib/chat-route";
 import { getServerTrpcClient } from "@/lib/trpc/server";
 import { nullIfMissing } from "../../missing-record";
 
-export const metadata: Metadata = { title: "Agent chat" };
+export const metadata: Metadata = { title: tr("Agent chat") };
 
 const supportedConnections = vendors.map((vendor) => ({
 	slug: vendor.slug,

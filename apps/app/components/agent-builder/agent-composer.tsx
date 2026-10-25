@@ -11,6 +11,7 @@ import Partnership from "@carbon/icons-react/es/Partnership";
 import Search from "@carbon/icons-react/es/Search";
 import StopFilled from "@carbon/icons-react/es/StopFilled";
 import User from "@carbon/icons-react/es/User";
+import { tr } from "@crm/agro-i18n";
 import {
 	AsyncButtonContent,
 	useAsyncAction,
@@ -85,7 +86,7 @@ type PendingSubmission = {
 const CREATE_AGENT_COMMAND = {
 	commandType: "CREATE_AGENT" as const,
 	invocation: "/Create agent",
-	label: "Create agent",
+	label: tr("Create agent"),
 };
 
 type ComposerCommand = typeof CREATE_AGENT_COMMAND;
@@ -446,8 +447,9 @@ export function AgentComposer({
 		action: async () => {
 			await onStop?.();
 		},
-		onSuccess: () => toast.success("Stop requested."),
-		onError: () => toast.error("The agent could not be stopped. Try again."),
+		onSuccess: () => toast.success(tr("Stop requested.")),
+		onError: () =>
+			toast.error(tr("The agent could not be stopped. Try again.")),
 	});
 	const locked = disabled || submitAction.pending;
 	const canSend =
@@ -551,7 +553,7 @@ export function AgentComposer({
 						size="icon-sm"
 						disabled={stopAction.pending}
 						aria-busy={stopAction.pending}
-						aria-label="Stop reply"
+						aria-label={tr("Stop reply")}
 						onClick={() => stopAction.run()}
 						className="rounded-full"
 					>
@@ -572,8 +574,8 @@ export function AgentComposer({
 						aria-busy={submitAction.pending || state.attachmentsReading}
 						aria-label={
 							state.attachmentsReading
-								? "Preparing attachments"
-								: "Send message"
+								? tr("Preparing attachments")
+								: tr("Send message")
 						}
 						onClick={submit}
 						className="rounded-full"
@@ -585,8 +587,8 @@ export function AgentComposer({
 							pendingLabel={
 								<span className="sr-only">
 									{state.attachmentsReading
-										? "Preparing attachments"
-										: "Sending"}
+										? tr("Preparing attachments")
+										: tr("Sending")}
 								</span>
 							}
 							successLabel={<span className="sr-only">Sent</span>}
@@ -638,8 +640,8 @@ function ComposerEditor({
 	const parts = composerEditorParts(state);
 	const placeholder =
 		mode === "home"
-			? "Ask about your CRM or automate a task…"
-			: "Send a message";
+			? tr("Ask about your CRM or automate a task…")
+			: tr("Send a message");
 	const commit = () => {
 		const root = editorRef.current;
 		if (!root || composingRef.current) return;
@@ -656,11 +658,11 @@ function ComposerEditor({
 			ref={editorRef}
 			role="textbox"
 			tabIndex={0}
-			aria-label="Message the agent builder"
+			aria-label={tr("Message the agent builder")}
 			aria-multiline="true"
 			disabled={disabled}
 			loading={loading}
-			loadingLabel="Sending message"
+			loadingLabel={tr("Sending message")}
 			data-empty={state.draft.length === 0 && state.anchors.length === 0}
 			data-placeholder={placeholder}
 			spellCheck
@@ -1296,7 +1298,7 @@ function ResourcePicker({
 				<Button
 					variant="ghost"
 					size="icon-sm"
-					aria-label="Tag CRM records and integrations"
+					aria-label={tr("Tag CRM records and integrations")}
 					disabled={disabled}
 				>
 					<Icon icon={Add} />
@@ -1313,8 +1315,8 @@ function ResourcePicker({
 									value: event.target.value,
 								})
 							}
-							placeholder="Search CRM"
-							aria-label="Search CRM"
+							placeholder={tr("Search CRM")}
+							aria-label={tr("Search CRM")}
 							disabled={disabled}
 						/>
 						<InputGroupAddon>
@@ -1325,7 +1327,7 @@ function ResourcePicker({
 				<div className="max-h-72 overflow-y-auto p-1">
 					{connectedGoogle.map((source) => {
 						const calendar = source.source === "calendar";
-						const label = calendar ? "Google Calendar" : "Gmail";
+						const label = calendar ? tr("Google Calendar") : tr("Gmail");
 						return (
 							<ResourceButton
 								key={source.source}
@@ -1346,7 +1348,7 @@ function ResourcePicker({
 					})}
 					<SkeletonSwap
 						loading={loading}
-						label="CRM records"
+						label={tr("CRM records")}
 						skeleton={<ResourceResultsSkeleton />}
 					>
 						{resources.map((resource) => (
@@ -1361,7 +1363,7 @@ function ResourcePicker({
 						))}
 						{ready && connectedGoogle.length === 0 && resources.length === 0 ? (
 							<p className="px-3 py-5 text-center text-muted-foreground text-xs">
-								No matching records.
+								{tr("No matching records.")}
 							</p>
 						) : null}
 					</SkeletonSwap>
@@ -1401,7 +1403,7 @@ function AttachmentPicker({
 				onPicked(attachmentContextKey(lastAccepted));
 			}
 		} catch {
-			toast.error("Those files could not be attached. Try again.");
+			toast.error(tr("Those files could not be attached. Try again."));
 		} finally {
 			dispatch({ type: "attachments.reading.finished" });
 		}
@@ -1423,7 +1425,7 @@ function AttachmentPicker({
 			<Button
 				variant="ghost"
 				size="icon-sm"
-				aria-label="Attach files"
+				aria-label={tr("Attach files")}
 				disabled={disabled}
 				onClick={() => input.current?.click()}
 			>
@@ -1457,7 +1459,7 @@ function CommandPicker({
 				<Button
 					variant="ghost"
 					size="icon-sm"
-					aria-label="Open slash commands"
+					aria-label={tr("Open slash commands")}
 					disabled={disabled}
 					className="font-mono text-sm"
 				>
@@ -1554,15 +1556,17 @@ async function readFiles(
 			continue;
 		}
 		if (file.size > 2_000_000) {
-			toast.error(`${file.name} is larger than 2 MB.`);
+			toast.error(tr("{name} is larger than 2 MB.", { name: file.name }));
 			continue;
 		}
 		if (file.name.length > 180) {
-			toast.error("That file name is too long.");
+			toast.error(tr("That file name is too long."));
 			continue;
 		}
 		if (file.type.length > 120) {
-			toast.error(`${file.name} has an unsupported file type.`);
+			toast.error(
+				tr("{name} has an unsupported file type.", { name: file.name }),
+			);
 			continue;
 		}
 		acceptedFiles.push(file);
@@ -1580,7 +1584,7 @@ async function readFiles(
 					),
 				};
 			} catch {
-				toast.error(`${file.name} could not be read.`);
+				toast.error(tr("{name} could not be read.", { name: file.name }));
 				return null;
 			}
 		}),

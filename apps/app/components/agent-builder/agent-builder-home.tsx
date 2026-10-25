@@ -1,6 +1,7 @@
 "use client";
 
 import ArrowRight from "@carbon/icons-react/es/ArrowRight";
+import { tr } from "@crm/agro-i18n";
 import { Icon } from "@crm/ui/components/icon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -11,9 +12,9 @@ import { useWorkspaceUrl } from "@/lib/use-workspace-url";
 import { AgentComposer, type BuilderComposerPrompt } from "./agent-composer";
 
 const SUGGESTIONS = [
-	"Brief every deal owner before a renewal call",
-	"Flag deals with no activity for 14 days",
-	"Hand new customers from Sales to Onboarding",
+	tr("Brief every deal owner before a renewal call"),
+	tr("Flag deals with no activity for 14 days"),
+	tr("Hand new customers from Sales to Onboarding"),
 ];
 
 export function AgentBuilderHome({ name }: { name: string }) {
@@ -50,8 +51,9 @@ export function AgentBuilderHome({ name }: { name: string }) {
 					What can I help with, {firstName(name)}?
 				</h1>
 				<p className="max-w-xl text-balance text-muted-foreground text-sm">
-					Ask about your CRM, tag a record or integration, or describe an agent
-					to build to automate a task.
+					{tr(
+						"Ask about your CRM, tag a record or integration, or describe an agent to build to automate a task.",
+					)}
 				</p>
 			</div>
 
@@ -63,13 +65,14 @@ export function AgentBuilderHome({ name }: { name: string }) {
 					onSubmit={submit}
 				/>
 				<p className="flex h-8 items-center px-px text-muted-foreground text-xs">
-					Chats and agent drafts stay private to you. Deploying an agent makes
-					it available to the whole team.
+					{tr(
+						"Chats and agent drafts stay private to you. Deploying an agent makes it available to the whole team.",
+					)}
 				</p>
 
 				<div className="pt-1">
 					<p className="flex h-7 items-center text-muted-foreground text-xs">
-						Suggested agents
+						{tr("Suggested agents")}
 					</p>
 					{SUGGESTIONS.map((suggestion) => (
 						<button

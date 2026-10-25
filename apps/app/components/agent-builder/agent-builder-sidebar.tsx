@@ -5,6 +5,7 @@ import Bot from "@carbon/icons-react/es/Bot";
 import CheckmarkFilled from "@carbon/icons-react/es/CheckmarkFilled";
 import CircleFilled from "@carbon/icons-react/es/CircleFilled";
 import Renew from "@carbon/icons-react/es/Renew";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { Icon } from "@crm/ui/components/icon";
 import { cn } from "@crm/ui/lib/utils";
@@ -82,7 +83,7 @@ export function AgentBuilderSidebar({
 				<Button asChild variant="ghost" size="icon-xs">
 					<Link
 						href={workspaceUrl("/chat")}
-						aria-label="New agent chat"
+						aria-label={tr("New agent chat")}
 						onClick={onNavigate}
 					>
 						<Icon icon={Add} />
@@ -94,12 +95,12 @@ export function AgentBuilderSidebar({
 				{groups.map((group) => (
 					<div key={group.label}>
 						<div className="flex h-8 items-end pb-1 pl-2 font-medium text-[11px] text-muted-foreground uppercase tracking-[0.08em]">
-							{group.label}
+							{tr(group.label)}
 						</div>
 						{group.items.map((conversation) => {
 							const href = workspaceUrl(`/chat/${conversation.id}`);
 							const active = pathname === href;
-							const title = conversation.title ?? "Untitled chat";
+							const title = conversation.title ?? tr("Untitled chat");
 							return (
 								<div
 									key={conversation.id}
@@ -141,7 +142,7 @@ export function AgentBuilderSidebar({
 
 				{groups.length === 0 ? (
 					<p className="px-2 py-3 text-muted-foreground text-xs">
-						No chats in the last 7 days.
+						{tr("No chats in the last 7 days.")}
 					</p>
 				) : null}
 

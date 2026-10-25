@@ -3,6 +3,7 @@
 import Close from "@carbon/icons-react/es/Close";
 import OverflowMenuVertical from "@carbon/icons-react/es/OverflowMenuVertical";
 import TrashCan from "@carbon/icons-react/es/TrashCan";
+import { tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -57,7 +58,7 @@ export function DeleteChatAction({
 			onSuccess: async () => {
 				await cache.conversationRemoved(conversationId);
 				setConfirming(false);
-				toast.success("Chat deleted.");
+				toast.success(tr("Chat deleted."));
 				onDeleted?.();
 
 				if (returnToChatList) {
@@ -102,7 +103,7 @@ export function DeleteChatAction({
 							onSelect={() => setConfirming(true)}
 						>
 							<Icon icon={TrashCan} />
-							Delete chat
+							{tr("Delete chat")}
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -118,13 +119,14 @@ export function DeleteChatAction({
 					<AlertDialogHeader>
 						<AlertDialogTitle>Delete {title}?</AlertDialogTitle>
 						<AlertDialogDescription>
-							This permanently deletes the chat, its messages, attachments, and
-							shared link. Any agent created from it stays available.
+							{tr(
+								"This permanently deletes the chat, its messages, attachments, and shared link. Any agent created from it stays available.",
+							)}
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={removeAction.pending}>
-							Cancel
+							{tr("Cancel")}
 						</AlertDialogCancel>
 						<Button
 							variant="destructive"
@@ -134,11 +136,11 @@ export function DeleteChatAction({
 						>
 							<AsyncButtonContent
 								status={removeAction.status}
-								pendingLabel="Deleting"
-								successLabel="Deleted"
-								errorLabel="Try again"
+								pendingLabel={tr("Deleting")}
+								successLabel={tr("Deleted")}
+								errorLabel={tr("Try again")}
 							>
-								Delete chat
+								{tr("Delete chat")}
 							</AsyncButtonContent>
 						</Button>
 					</AlertDialogFooter>

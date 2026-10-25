@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { TeamAgentsIndex } from "@/components/agent-builder/team-agents-index";
@@ -13,16 +14,18 @@ import {
 import { HydrateClient } from "@/lib/trpc/hydrate";
 import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 
-export const metadata: Metadata = { title: "Agents" };
+export const metadata: Metadata = { title: tr("Agents") };
 
 export default function AgentsPage() {
 	return (
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Team agents</PageShellTitle>
+					<PageShellTitle>{tr("Team agents")}</PageShellTitle>
 					<PageShellDescription>
-						Durable automations created from private agent-builder chats.
+						{tr(
+							"Durable automations created from private agent-builder chats.",
+						)}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

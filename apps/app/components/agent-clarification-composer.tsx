@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { AsyncButtonContent } from "@crm/ui/components/async-action";
 import { Button } from "@crm/ui/components/button";
 import { CHAT_COMPOSER_SURFACE_CLASS_NAME } from "@crm/ui/components/chat-composer";
@@ -65,7 +66,7 @@ export function AgentClarificationComposer({
 			setTransportError(
 				error instanceof Error && error.message.trim()
 					? error.message
-					: "Unable to submit. Check your connection and try again.",
+					: tr("Unable to submit. Check your connection and try again."),
 			);
 		}
 	};
@@ -79,8 +80,8 @@ export function AgentClarificationComposer({
 				<FieldLegend>{question.prompt}</FieldLegend>
 				<FieldDescription>
 					{options.length > 0
-						? "Choose an answer, then submit."
-						: "Add the detail the agent needs to continue."}
+						? tr("Choose an answer, then submit.")
+						: tr("Add the detail the agent needs to continue.")}
 				</FieldDescription>
 				{options.length > 0 ? (
 					<RadioGroup
@@ -115,8 +116,10 @@ export function AgentClarificationComposer({
 				) : null}
 				{showFreeform ? (
 					<Input
-						aria-label={options.length > 0 ? "Another answer" : "Your answer"}
-						placeholder="Add the detail the agent needs"
+						aria-label={
+							options.length > 0 ? tr("Another answer") : tr("Your answer")
+						}
+						placeholder={tr("Add the detail the agent needs")}
 						value={freeformValue}
 						disabled={pending}
 						onChange={(event) => {
@@ -132,9 +135,9 @@ export function AgentClarificationComposer({
 				<Button type="submit" disabled={pending} aria-busy={pending} size="sm">
 					<AsyncButtonContent
 						status={pending ? "pending" : "idle"}
-						pendingLabel="Submitting"
+						pendingLabel={tr("Submitting")}
 					>
-						Submit answer
+						{tr("Submit answer")}
 					</AsyncButtonContent>
 				</Button>
 			</div>

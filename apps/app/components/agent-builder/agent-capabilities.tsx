@@ -3,6 +3,7 @@
 import Add from "@carbon/icons-react/es/Add";
 import Close from "@carbon/icons-react/es/Close";
 import Warning from "@carbon/icons-react/es/Warning";
+import { tr } from "@crm/agro-i18n";
 import { Alert, AlertDescription, AlertTitle } from "@crm/ui/components/alert";
 import { Button } from "@crm/ui/components/button";
 import { Icon } from "@crm/ui/components/icon";
@@ -73,7 +74,7 @@ export function AgentCapabilities({
 					queryKey: trpc.agents.byId.pathKey(),
 				});
 				reset();
-				toast.success("Saved. A new version is live.");
+				toast.success(tr("Saved. A new version is live."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -83,7 +84,7 @@ export function AgentCapabilities({
 		trpc.slack.joinChannel.mutationOptions({
 			onSuccess: async () => {
 				await channels.reload();
-				toast.success("Asked someone to invite Comp AI.");
+				toast.success(tr("Asked someone to invite Comp AI."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -93,9 +94,10 @@ export function AgentCapabilities({
 		return (
 			<Alert variant="warning">
 				<Icon icon={Warning} />
-				<AlertTitle>This version's manifest cannot be read</AlertTitle>
+				<AlertTitle>{tr("This version's manifest cannot be read")}</AlertTitle>
 				<AlertDescription>
-					{capabilities.problem ?? "The manifest is not in a shape we know."}
+					{capabilities.problem ??
+						tr("The manifest is not in a shape we know.")}
 				</AlertDescription>
 			</Alert>
 		);
@@ -119,9 +121,9 @@ export function AgentCapabilities({
 		shownResources.length === 0 &&
 		capabilities.dataScope?.mode !== "WORKSPACE";
 	const blocked = everyActionOff
-		? "Leave one action on. An agent that does nothing cannot be saved."
+		? tr("Leave one action on. An agent that does nothing cannot be saved.")
 		: scopeEmptied
-			? "Add one record. An empty list opens every record in the workspace."
+			? tr("Add one record. An empty list opens every record in the workspace.")
 			: null;
 
 	const save = () => {
@@ -161,13 +163,13 @@ export function AgentCapabilities({
 								}}
 							>
 								<Button size="sm" variant="outline">
-									Create a channel
+									{tr("Create a channel")}
 								</Button>
 							</CreateChannelDialog>
 						) : null
 					}
-					summary="One channel. Comp AI joins it when you save."
-					title="Lives in"
+					summary={tr("One channel. Comp AI joins it when you save.")}
+					title={tr("Lives in")}
 				>
 					<ChannelPicker
 						canInviteItself={canInviteItself}
@@ -183,8 +185,8 @@ export function AgentCapabilities({
 			) : null}
 
 			<Section
-				summary="If it is off here, it cannot do it."
-				title="What it can do there"
+				summary={tr("If it is off here, it cannot do it.")}
+				title={tr("What it can do there")}
 			>
 				<div className="flex flex-col">
 					{capabilities.actions.map((action) => (
@@ -215,7 +217,7 @@ export function AgentCapabilities({
 					))}
 					{capabilities.actions.length === 0 ? (
 						<p className="text-muted-foreground text-sm">
-							Nothing outside the CRM.
+							{tr("Nothing outside the CRM.")}
 						</p>
 					) : null}
 				</div>
@@ -223,8 +225,10 @@ export function AgentCapabilities({
 
 			{capabilities.mcp.length > 0 ? (
 				<Section
-					summary="Every tool is fixed in this version. Changed tools stop until review."
-					title="Connected tools"
+					summary={tr(
+						"Every tool is fixed in this version. Changed tools stop until review.",
+					)}
+					title={tr("Connected tools")}
 				>
 					<div className="flex flex-col">
 						{capabilities.mcp.flatMap((grant) =>
@@ -251,15 +255,15 @@ export function AgentCapabilities({
 
 			<Section
 				summary={
-					capabilities.dataScope?.summary || "What it reads to do its job."
+					capabilities.dataScope?.summary || tr("What it reads to do its job.")
 				}
-				title="What it can see"
+				title={tr("What it can see")}
 			>
 				<div className="flex flex-wrap gap-2">
 					{shownResources.length === 0 &&
 					capabilities.dataScope?.mode === "WORKSPACE" ? (
 						<span className="flex h-7 items-center rounded-md border px-2.5 text-sm">
-							Every record in the workspace
+							{tr("Every record in the workspace")}
 						</span>
 					) : null}
 
@@ -314,16 +318,19 @@ export function AgentCapabilities({
 				description={
 					blocked ??
 					(channelChanged
-						? `Comp AI joins #${to}. It stays in #${from} until you remove it.`
-						: "The old version stays in the history.")
+						? tr(
+								"Comp AI joins #{to}. It stays in #{from} until you remove it.",
+								{ to, from },
+							)
+						: tr("The old version stays in the history."))
 				}
 				open={dirty}
 				title={
 					blocked
-						? "This change cannot be saved"
+						? tr("This change cannot be saved")
 						: channelChanged
-							? `Moving from #${from} to #${to}`
-							: "Changing what this agent can do"
+							? tr("Moving from #{from} to #{to}", { from, to })
+							: tr("Changing what this agent can do")
 				}
 			>
 				<Button
@@ -332,14 +339,14 @@ export function AgentCapabilities({
 					size="sm"
 					variant="outline"
 				>
-					Discard
+					{tr("Discard")}
 				</Button>
 				<Button
 					disabled={revise.isPending || blocked !== null}
 					onClick={save}
 					size="sm"
 				>
-					{revise.isPending ? "Saving…" : "Save"}
+					{revise.isPending ? tr("Saving…") : tr("Save")}
 				</Button>
 			</SaveBar>
 		</div>
@@ -363,7 +370,7 @@ function ResourcePicker({ onPick }: { onPick: (resource: Resource) => void }) {
 					type="button"
 				>
 					<Icon className="size-3" icon={Add} motion="none" />
-					Add a record type
+					{tr("Add a record type")}
 				</button>
 			</PopoverTrigger>
 
@@ -371,7 +378,7 @@ function ResourcePicker({ onPick }: { onPick: (resource: Resource) => void }) {
 				<input
 					className="w-full border-b bg-transparent px-3 py-2.5 text-sm outline-none"
 					onChange={(event) => setQuery(event.target.value)}
-					placeholder="Search records and integrations"
+					placeholder={tr("Search records and integrations")}
 					value={query}
 				/>
 				<div className="flex max-h-64 flex-col overflow-y-auto py-1">
@@ -399,7 +406,7 @@ function ResourcePicker({ onPick }: { onPick: (resource: Resource) => void }) {
 					))}
 					{(results.data ?? []).length === 0 ? (
 						<p className="px-3 py-2 text-muted-foreground text-sm">
-							Nothing matches.
+							{tr("Nothing matches.")}
 						</p>
 					) : null}
 				</div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Checkmark from "@carbon/icons-react/es/Checkmark";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Dialog,
@@ -81,7 +82,7 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 						: null,
 					allowed,
 				},
-				"This agent",
+				tr("This agent"),
 			);
 
 			create.mutate({
@@ -95,7 +96,7 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 			toast.error(
 				error instanceof InvalidInput
 					? error.message
-					: "Could not hand this to the builder.",
+					: tr("Could not hand this to the builder."),
 			);
 		}
 	};
@@ -106,40 +107,43 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 
 			<DialogContent className="sm:max-w-(--container-sheet)">
 				<DialogHeader>
-					<DialogTitle>New agent</DialogTitle>
+					<DialogTitle>{tr("New agent")}</DialogTitle>
 					<DialogDescription>
-						Say what it is and where it lives. The builder writes the rest. You
-						can change all of this later.
+						{tr(
+							"Say what it is and where it lives. The builder writes the rest. You can change all of this later.",
+						)}
 					</DialogDescription>
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-name">Name</Label>
+						<Label htmlFor="agent-name">{tr("Name")}</Label>
 						<Input
 							id="agent-name"
 							onChange={(event) => setName(event.target.value)}
-							placeholder="Renewal prep brief"
+							placeholder={tr("Renewal prep brief")}
 							value={name}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-job">What it should do</Label>
+						<Label htmlFor="agent-job">{tr("What it should do")}</Label>
 						<Textarea
 							id="agent-job"
 							onChange={(event) => setJob(event.target.value)}
-							placeholder="A week before a renewal, gather the account history and post a short brief for whoever owns the deal."
+							placeholder={tr(
+								"A week before a renewal, gather the account history and post a short brief for whoever owns the deal.",
+							)}
 							rows={3}
 							value={job}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-channel">Lives in</Label>
+						<Label htmlFor="agent-channel">{tr("Lives in")}</Label>
 						<Select onValueChange={setChannelId} value={channelId}>
 							<SelectTrigger id="agent-channel">
-								<SelectValue placeholder="Pick a Slack channel" />
+								<SelectValue placeholder={tr("Pick a Slack channel")} />
 							</SelectTrigger>
 							<SelectContent>
 								{rows.map((row) => (
@@ -152,14 +156,17 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 						<p className="text-muted-foreground text-xs">
 							{channel
 								? channel.isMember
-									? `Comp AI is already in #${channel.name}.`
-									: `Comp AI is not in #${channel.name} yet. It joins when you create this.`
-								: "Leave this empty and the builder will ask."}
+									? tr("Comp AI is already in #{name}.", { name: channel.name })
+									: tr(
+											"Comp AI is not in #{name} yet. It joins when you create this.",
+											{ name: channel.name },
+										)
+								: tr("Leave this empty and the builder will ask.")}
 						</p>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label>Allowed to</Label>
+						<Label>{tr("Allowed to")}</Label>
 						<div className="flex flex-wrap gap-2">
 							{schemas.agents.permissions.map((entry) => {
 								const on = allowed.includes(entry.id);
@@ -195,17 +202,17 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 
 				<DialogFooter className="items-center">
 					<p className="mr-auto text-muted-foreground text-xs">
-						Nothing sends until you turn it on.
+						{tr("Nothing sends until you turn it on.")}
 					</p>
 					<Button
 						disabled={create.isPending}
 						onClick={() => setOpen(false)}
 						variant="outline"
 					>
-						Cancel
+						{tr("Cancel")}
 					</Button>
 					<Button disabled={!ready || create.isPending} onClick={hand}>
-						{create.isPending ? "Handing over…" : "Hand to the builder"}
+						{create.isPending ? tr("Handing over…") : tr("Hand to the builder")}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

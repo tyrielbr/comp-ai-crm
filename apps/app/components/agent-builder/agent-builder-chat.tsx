@@ -15,6 +15,7 @@ import ThumbsDown from "@carbon/icons-react/es/ThumbsDown";
 import ThumbsUp from "@carbon/icons-react/es/ThumbsUp";
 import User from "@carbon/icons-react/es/User";
 import WarningAlt from "@carbon/icons-react/es/WarningAlt";
+import { tr } from "@crm/agro-i18n";
 import {
 	AsyncButtonContent,
 	useAsyncAction,
@@ -547,7 +548,7 @@ export function AgentBuilderChat({
 									className="flex items-center gap-2 text-muted-foreground text-sm"
 								>
 									<ThinkingIndicator />
-									<span>Restoring this chat…</span>
+									<span>{tr("Restoring this chat…")}</span>
 								</div>
 							</ChatMessage>
 						</ChatThreadItem>
@@ -651,7 +652,7 @@ export function AgentBuilderChat({
 								onContinue={() =>
 									send({
 										commandType: "CHAT",
-										message: "Continue with my request.",
+										message: tr("Continue with my request."),
 										resources: [],
 										attachments: [],
 									})
@@ -856,7 +857,9 @@ function SharedAgentChat({
 		<main className="flex min-h-0 flex-1 flex-col">
 			<header className="flex h-12 shrink-0 items-center gap-3 border-b px-5">
 				<h1 className="min-w-0 flex-1 truncate font-medium text-sm">
-					{conversation.agent?.name ?? conversation.title ?? "Agent builder"}
+					{conversation.agent?.name ??
+						conversation.title ??
+						tr("Agent builder")}
 				</h1>
 				<span className="text-muted-foreground text-xs">Read-only</span>
 			</header>
@@ -866,8 +869,9 @@ function SharedAgentChat({
 					<div className="rounded-lg border bg-card px-4 py-3 text-sm">
 						<p className="font-medium">Shared by {conversation.ownerName}</p>
 						<p className="mt-1 text-muted-foreground text-xs">
-							You can read this builder chat, but only its owner can continue or
-							change it.
+							{tr(
+								"You can read this builder chat, but only its owner can continue or change it.",
+							)}
 						</p>
 					</div>
 				</ChatThreadItem>
@@ -930,7 +934,7 @@ function ChatHeader({
 			<div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
 				<h1 className="truncate font-medium text-sm">{title}</h1>
 				<span className="hidden shrink-0 text-muted-foreground text-xs sm:inline">
-					Private
+					{tr("Private")}
 				</span>
 				{working ? (
 					<span className="flex shrink-0 items-center gap-2 text-muted-foreground text-xs">
@@ -941,13 +945,13 @@ function ChatHeader({
 						/>
 						<span className="sr-only">Working in background</span>
 						<span aria-hidden="true" className="hidden sm:inline">
-							Working in background
+							{tr("Working in background")}
 						</span>
 					</span>
 				) : null}
 			</div>
 			<Button asChild variant="ghost" size="icon-sm">
-				<Link href={workspaceUrl("/chat")} aria-label="Start a new chat">
+				<Link href={workspaceUrl("/chat")} aria-label={tr("Start a new chat")}>
 					<Icon icon={Add} />
 				</Link>
 			</Button>
@@ -976,7 +980,7 @@ function UserSubmission({
 	sending?: boolean;
 }) {
 	const message = submission.message;
-	const messageText = message.text ?? "Message unavailable";
+	const messageText = message.text ?? tr("Message unavailable");
 	const command =
 		submission.commandType === "CREATE_AGENT"
 			? consumeBuilderCommand(messageText)
@@ -991,7 +995,7 @@ function UserSubmission({
 			error={
 				failed ? (
 					<div className="flex items-center justify-end gap-2">
-						<span>This message could not be sent.</span>
+						<span>{tr("This message could not be sent.")}</span>
 						{onRetry ? (
 							<Button
 								variant="outline"
@@ -1000,7 +1004,7 @@ function UserSubmission({
 								aria-busy={retrying}
 								onClick={onRetry}
 							>
-								{retrying ? "Sending" : "Send again"}
+								{retrying ? tr("Sending") : tr("Send again")}
 							</Button>
 						) : null}
 					</div>
@@ -1016,12 +1020,12 @@ function UserSubmission({
 				{response ? (
 					<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
 						<Icon icon={Reply} className="size-3.5" />
-						<span>Answer to follow-up</span>
+						<span>{tr("Answer to follow-up")}</span>
 					</div>
 				) : null}
 				{submission.commandType === "CREATE_AGENT" ? (
 					<div className="flex flex-wrap gap-1">
-						<ChatCommandChip label="Create agent" icon={Application} />
+						<ChatCommandChip label={tr("Create agent")} icon={Application} />
 					</div>
 				) : null}
 				<p className="wrap-break-word">{text}</p>
@@ -1088,7 +1092,7 @@ function AssistantMessage({
 							className="flex items-center gap-2 text-muted-foreground text-sm"
 						>
 							<ThinkingIndicator />
-							<span>Thinking…</span>
+							<span>{tr("Thinking…")}</span>
 						</div>
 					);
 				}
@@ -1155,7 +1159,7 @@ function FollowUpTranscriptItem({
 			<div className="flex items-center justify-between gap-3 text-xs">
 				<span className="font-medium">Follow-up</span>
 				<span className="text-muted-foreground">
-					{answered ? "Answered" : "Waiting for your answer"}
+					{answered ? tr("Answered") : tr("Waiting for your answer")}
 				</span>
 			</div>
 			<Markdown className="mt-1.5 wrap-break-word text-sm leading-5">
@@ -1176,18 +1180,18 @@ const PERMISSION_MODES: ReadonlyArray<{
 }> = [
 	{
 		value: "manual",
-		label: "Manual",
-		description: "Ask before every change.",
+		label: tr("Manual"),
+		description: tr("Ask before every change."),
 	},
 	{
 		value: "auto",
-		label: "Auto",
-		description: "Ask only before sensitive changes.",
+		label: tr("Auto"),
+		description: tr("Ask only before sensitive changes."),
 	},
 	{
 		value: "bypass",
-		label: "Bypass",
-		description: "Run changes without asking.",
+		label: tr("Bypass"),
+		description: tr("Run changes without asking."),
 	},
 ];
 
@@ -1209,14 +1213,14 @@ function PermissionModeMenu({
 					variant="ghost"
 					size="sm"
 					disabled={pending}
-					aria-label={`Permission mode: ${selected?.label ?? "Manual"}`}
+					aria-label={`Permission mode: ${selected?.label ?? tr("Manual")}`}
 				>
 					<Icon icon={Security} data-icon="inline-start" />
-					{selected?.label ?? "Manual"}
+					{selected?.label ?? tr("Manual")}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="start" className="w-64">
-				<DropdownMenuLabel>Permission mode</DropdownMenuLabel>
+				<DropdownMenuLabel>{tr("Permission mode")}</DropdownMenuLabel>
 				<DropdownMenuRadioGroup
 					value={mode}
 					onValueChange={(value) => {
@@ -1254,7 +1258,7 @@ function AgentApprovalCard({
 	const label = toolLabel({
 		tool: approval.action.toolName,
 		input: approval.action.input,
-		label: "Requested a change",
+		label: tr("Requested a change"),
 		pending: true,
 	});
 
@@ -1280,10 +1284,10 @@ function AgentApprovalCard({
 					size="sm"
 					onClick={() => onDecision("cancel")}
 				>
-					Decline
+					{tr("Decline")}
 				</Button>
 				<Button type="button" size="sm" onClick={() => onDecision("approve")}>
-					{pending ? "Approving" : "Approve"}
+					{pending ? tr("Approving") : tr("Approve")}
 				</Button>
 			</div>
 		</fieldset>
@@ -1316,10 +1320,10 @@ function AgentSessionLimitCard({
 					size="sm"
 					onClick={() => onDecision("stop")}
 				>
-					Stop
+					{tr("Stop")}
 				</Button>
 				<Button type="button" size="sm" onClick={() => onDecision("continue")}>
-					{pending ? "Continuing" : "Continue"}
+					{pending ? tr("Continuing") : tr("Continue")}
 				</Button>
 			</div>
 		</fieldset>
@@ -1332,10 +1336,10 @@ function CopyResponseAction({ markdown }: { markdown: string }) {
 			<Button
 				variant="ghost"
 				size="icon-xs"
-				aria-label="Copy response as Markdown"
+				aria-label={tr("Copy response as Markdown")}
 				onClick={() => {
 					void navigator.clipboard.writeText(markdown);
-					toast.success("Response copied as Markdown.");
+					toast.success(tr("Response copied as Markdown."));
 				}}
 			>
 				<Icon icon={Copy} />
@@ -1375,10 +1379,10 @@ function ResponseActions({
 			<Button
 				variant="ghost"
 				size="icon-xs"
-				aria-label="Copy response as Markdown"
+				aria-label={tr("Copy response as Markdown")}
 				onClick={() => {
 					void navigator.clipboard.writeText(markdown);
-					toast.success("Response copied as Markdown.");
+					toast.success(tr("Response copied as Markdown."));
 				}}
 			>
 				<Icon icon={Copy} />
@@ -1386,7 +1390,7 @@ function ResponseActions({
 			<Button
 				variant="ghost"
 				size="icon-xs"
-				aria-label="Rate response helpful"
+				aria-label={tr("Rate response helpful")}
 				aria-pressed={rating === "UP"}
 				className={cn(rating === "UP" && "bg-muted text-foreground")}
 				onClick={() => choose("UP")}
@@ -1396,7 +1400,7 @@ function ResponseActions({
 			<Button
 				variant="ghost"
 				size="icon-xs"
-				aria-label="Rate response not helpful"
+				aria-label={tr("Rate response not helpful")}
 				aria-pressed={rating === "DOWN"}
 				className={cn(rating === "DOWN" && "bg-muted text-foreground")}
 				onClick={() => choose("DOWN")}
@@ -1426,7 +1430,7 @@ function BuildingAgentCard({
 			<div className="overflow-hidden rounded-lg border bg-card">
 				<div className="flex items-center gap-2 px-4 pt-4">
 					<span className="min-w-0 flex-1 font-medium text-sm">
-						Building the agent
+						{tr("Building the agent")}
 					</span>
 					<span className="shrink-0 font-mono text-muted-foreground text-xs">
 						{completed} of 4
@@ -1482,10 +1486,10 @@ function BuildingAgentCard({
 										{done && artifact
 											? artifact.replace("agent/", "")
 											: done
-												? "Done"
+												? tr("Done")
 												: active
-													? "Working"
-													: "Queued"}
+													? tr("Working")
+													: tr("Queued")}
 									</span>
 								</div>
 								{active && writingPath ? (
@@ -1499,7 +1503,7 @@ function BuildingAgentCard({
 				</ol>
 				<footer className="flex items-center gap-2 border-t bg-muted px-4 py-3">
 					<p className="min-w-0 flex-1 text-pretty text-muted-foreground text-xs">
-						Runs in the background
+						{tr("Runs in the background")}
 					</p>
 				</footer>
 			</div>
@@ -1572,9 +1576,9 @@ function AgentConnectionCard({
 						</p>
 						<p className="text-pretty text-muted-foreground text-sm">
 							{connected
-								? "Continue the request with this connection."
+								? tr("Continue the request with this connection.")
 								: connecting
-									? "Reading the available tools."
+									? tr("Reading the available tools.")
 									: connection.description}
 						</p>
 					</div>
@@ -1590,7 +1594,7 @@ function AgentConnectionCard({
 								aria-pressed={accessMode === "read_only"}
 								onClick={() => setAccessMode("read_only")}
 							>
-								Read only
+								{tr("Read only")}
 							</Button>
 							<Button
 								variant={accessMode === "read_write" ? "secondary" : "ghost"}
@@ -1598,17 +1602,17 @@ function AgentConnectionCard({
 								aria-pressed={accessMode === "read_write"}
 								onClick={() => setAccessMode("read_write")}
 							>
-								Read and write
+								{tr("Read and write")}
 							</Button>
 						</div>
 					) : (
 						<p className="text-muted-foreground text-xs">
-							Connection access needs an administrator.
+							{tr("Connection access needs an administrator.")}
 						</p>
 					)}
 					{connected ? (
 						<Button size="sm" onClick={() => void onContinue()}>
-							Continue
+							{tr("Continue")}
 						</Button>
 					) : canConnect ? (
 						<Button
@@ -1617,14 +1621,14 @@ function AgentConnectionCard({
 							aria-busy={connecting || start.isPending}
 							onClick={connect}
 						>
-							{connecting || start.isPending ? "Connecting" : "Connect"}
+							{connecting || start.isPending ? tr("Connecting") : tr("Connect")}
 						</Button>
 					) : (
 						<Button asChild size="sm" variant="outline">
 							<Link
 								href={workspaceUrl(`/settings/connections/${connection.slug}`)}
 							>
-								Open settings
+								{tr("Open settings")}
 							</Link>
 						</Button>
 					)}
@@ -1647,14 +1651,20 @@ function BuilderFailureCard({
 }) {
 	const message =
 		failure.kind === "cancelled"
-			? "You stopped this request. Ask again when you are ready."
+			? tr("You stopped this request. Ask again when you are ready.")
 			: failure.kind === "rate-limit"
-				? "Vercel AI Gateway rate-limited this model before it could start. Try again in a moment or add AI Gateway credits in Vercel."
+				? tr(
+						"Vercel AI Gateway rate-limited this model before it could start. Try again in a moment or add AI Gateway credits in Vercel.",
+					)
 				: failure.kind === "restricted"
-					? "This model requires paid AI Gateway credits. Add credits in Vercel, then try again."
+					? tr(
+							"This model requires paid AI Gateway credits. Add credits in Vercel, then try again.",
+						)
 					: failure.kind === "credits"
-						? "Vercel AI Gateway has no available credits. Add credits in Vercel, then try again."
-						: "The builder could not finish this request. Try again.";
+						? tr(
+								"Vercel AI Gateway has no available credits. Add credits in Vercel, then try again.",
+							)
+						: tr("The builder could not finish this request. Try again.");
 
 	return (
 		<div
@@ -1665,7 +1675,9 @@ function BuilderFailureCard({
 				<Icon icon={WarningAlt} className="mt-0.5 size-4 text-destructive" />
 				<div className="min-w-0 flex-1">
 					<p className="font-medium text-sm">
-						{creatingAgent ? "Agent creation stopped" : "Response stopped"}
+						{creatingAgent
+							? tr("Agent creation stopped")
+							: tr("Response stopped")}
 					</p>
 					<p className="mt-0.5 text-pretty text-muted-foreground text-xs leading-5">
 						{message}
@@ -1682,9 +1694,9 @@ function BuilderFailureCard({
 				>
 					<AsyncButtonContent
 						status={retrying ? "pending" : "idle"}
-						pendingLabel="Asking"
+						pendingLabel={tr("Asking")}
 					>
-						Ask again
+						{tr("Ask again")}
 					</AsyncButtonContent>
 				</Button>
 			) : null}
@@ -1711,14 +1723,14 @@ function ReviewAgentCard({
 	return (
 		<div className="flex flex-col gap-5">
 			<p className="max-w-[640px] text-pretty text-sm leading-5">
-				Your private draft is ready to review.
+				{tr("Your private draft is ready to review.")}
 			</p>
 			<AgentCardShell name={manifest.name ?? agent.name} status="Private">
 				<div className="flex flex-col gap-2 p-4">
-					<ReviewRow label="When" value={manifest.trigger} />
-					<ReviewRow label="Find" value={manifest.looksAt} />
-					<ReviewRow label="Then" value={manifest.action} />
-					<ReviewRow label="Scope">
+					<ReviewRow label={tr("When")} value={manifest.trigger} />
+					<ReviewRow label={tr("Find")} value={manifest.looksAt} />
+					<ReviewRow label={tr("Then")} value={manifest.action} />
+					<ReviewRow label={tr("Scope")}>
 						<AgentScopeBadges
 							scopes={manifest.access}
 							fallback="Bounded CRM read access"
@@ -1731,7 +1743,7 @@ function ReviewAgentCard({
 							href={workspaceUrl(`/agents/${agent.id}`)}
 							transitionTypes={["nav-forward"]}
 						>
-							View details
+							{tr("View details")}
 							<Icon icon={ArrowRight} data-icon="inline-end" />
 						</Link>
 					</Button>
@@ -1816,7 +1828,7 @@ function DeployedAgentCard({
 				await queryClient.invalidateQueries({
 					queryKey: trpc.agents.history.pathKey(),
 				});
-				toast.success("Agent run queued.");
+				toast.success(tr("Agent run queued."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -1834,21 +1846,23 @@ function DeployedAgentCard({
 	const nextRun =
 		enabledTriggers.length === 1 ? enabledTriggers[0]?.nextRunAt : null;
 	const triggerSummary =
-		enabledTriggers.map((trigger) => trigger.name).join(" · ") || "Manual only";
+		enabledTriggers.map((trigger) => trigger.name).join(" · ") ||
+		tr("Manual only");
 
 	return (
 		<div className="flex flex-col gap-[18px]">
 			<div className="flex flex-col gap-1">
 				<p className="text-sm leading-5">{agent.name} is live.</p>
 				<p className="text-muted-foreground text-sm leading-5">
-					I created the Eve agent, applied its bounded CRM and integration
-					access, and made it live for the team.
+					{tr(
+						"I created the Eve agent, applied its bounded CRM and integration access, and made it live for the team.",
+					)}
 				</p>
 			</div>
 			<AgentCardShell name={agent.name} status="Live">
 				<div className="flex flex-col gap-2 p-4">
 					<ReviewRow
-						label="Trigger"
+						label={tr("Trigger")}
 						value={
 							nextRun ? (
 								<LocalDateTime
@@ -1865,8 +1879,14 @@ function DeployedAgentCard({
 							)
 						}
 					/>
-					<ReviewRow label="Runs in" value="Eve runtime · isolated sandbox" />
-					<ReviewRow label="Owner" value={`Team · ${agent.createdBy.name}`} />
+					<ReviewRow
+						label={tr("Runs in")}
+						value="Eve runtime · isolated sandbox"
+					/>
+					<ReviewRow
+						label={tr("Owner")}
+						value={`Team · ${agent.createdBy.name}`}
+					/>
 				</div>
 				<AgentCardFooter note="The chat stays private. The agent is team-owned.">
 					<div className="flex items-center gap-2">
@@ -1879,17 +1899,17 @@ function DeployedAgentCard({
 						>
 							<AsyncButtonContent
 								status={runAction.status}
-								pendingLabel="Queueing"
-								successLabel="Queued"
-								errorLabel="Try again"
+								pendingLabel={tr("Queueing")}
+								successLabel={tr("Queued")}
+								errorLabel={tr("Try again")}
 							>
 								<Icon icon={Play} data-icon="inline-start" />
-								Run now
+								{tr("Run now")}
 							</AsyncButtonContent>
 						</Button>
 						<Button asChild size="sm">
 							<Link href={workspaceUrl(`/agents/${agent.id}`)}>
-								Open agent
+								{tr("Open agent")}
 								<Icon icon={ArrowRight} data-icon="inline-end" />
 							</Link>
 						</Button>
@@ -1899,7 +1919,7 @@ function DeployedAgentCard({
 
 			<div>
 				<p className="flex h-7 items-center text-muted-foreground text-sm">
-					Suggested follow-ups
+					{tr("Suggested follow-ups")}
 				</p>
 				{["Add another teammate to the notification"].map((suggestion) => (
 					<button
@@ -1927,10 +1947,10 @@ function ChatUnavailable() {
 			<div className="max-w-md text-center">
 				<h1 className="font-medium text-lg">Chat unavailable</h1>
 				<p className="mt-2 text-muted-foreground text-sm">
-					This chat does not exist or you do not have access to it.
+					{tr("This chat does not exist or you do not have access to it.")}
 				</p>
 				<Button asChild variant="outline" className="mt-5">
-					<Link href={workspaceUrl("/chat")}>Start a new chat</Link>
+					<Link href={workspaceUrl("/chat")}>{tr("Start a new chat")}</Link>
 				</Button>
 			</div>
 		</main>
@@ -2012,20 +2032,22 @@ function manifestOf(manifest: AgentManifestSummary) {
 			manifest.triggers
 				.map((trigger) =>
 					trigger.type === "MANUAL"
-						? "On demand"
+						? tr("On demand")
 						: compactSummary(
 								trigger.summary,
-								trigger.type === "EVENT" ? "On CRM event" : "On schedule",
+								trigger.type === "EVENT"
+									? tr("On CRM event")
+									: tr("On schedule"),
 							),
 				)
-				.join(" · ") || "On demand",
+				.join(" · ") || tr("On demand"),
 		looksAt: textOf(
 			manifest.dataScope.summary,
-			"CRM records in the approved scope",
+			tr("CRM records in the approved scope"),
 		),
 		action: compactSummary(
 			manifest.actions[0]?.summary,
-			"Perform the requested team action",
+			tr("Perform the requested team action"),
 		),
 		access: manifest.access,
 	};

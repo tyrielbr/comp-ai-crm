@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { Skeleton } from "@crm/ui/components/skeleton";
 
 export function AgentBuilderHomeFallback() {
@@ -17,7 +18,7 @@ export function AgentBuilderHomeFallback() {
 				<Skeleton className="h-24 w-full rounded-lg" aria-hidden="true" />
 			</div>
 			<span role="status" className="sr-only">
-				Opening chat…
+				{tr("Opening chat…")}
 			</span>
 		</main>
 	);
@@ -43,7 +44,7 @@ export function AgentBuilderChatFallback() {
 				</div>
 			</div>
 			<span role="status" className="sr-only">
-				Opening chat…
+				{tr("Opening chat…")}
 			</span>
 		</main>
 	);

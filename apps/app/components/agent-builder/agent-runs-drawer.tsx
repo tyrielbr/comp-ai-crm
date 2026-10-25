@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import {
 	Sheet,
 	SheetContent,
@@ -15,8 +16,8 @@ type Runs = RouterOutputs["agents"]["history"];
 type Activity = RouterOutputs["agents"]["activity"];
 
 const VIEWS = [
-	{ id: "runs", label: "Runs" },
-	{ id: "activity", label: "Activity" },
+	{ id: "runs", label: tr("Runs") },
+	{ id: "activity", label: tr("Activity") },
 ] as const;
 
 type View = (typeof VIEWS)[number]["id"];
@@ -53,9 +54,9 @@ export function AgentRunsDrawer({
 		<Sheet onOpenChange={onOpenChange} open={open}>
 			<SheetContent className="flex flex-col gap-0 p-0" side="right" size="xl">
 				<SheetHeader className="gap-1 border-b px-5 py-4">
-					<SheetTitle>History</SheetTitle>
+					<SheetTitle>{tr("History")}</SheetTitle>
 					<SheetDescription>
-						Every run and every change, newest first.
+						{tr("Every run and every change, newest first.")}
 					</SheetDescription>
 				</SheetHeader>
 

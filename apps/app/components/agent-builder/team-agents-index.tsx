@@ -2,6 +2,7 @@
 
 import ArrowRight from "@carbon/icons-react/es/ArrowRight";
 import Bot from "@carbon/icons-react/es/Bot";
+import { tr } from "@crm/agro-i18n";
 import { Icon } from "@crm/ui/components/icon";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -44,7 +45,7 @@ export function TeamAgentsIndex({ initialAgents }: { initialAgents: Agents }) {
 									</span>
 								</span>
 								<span className="mt-1 block wrap-break-word text-muted-foreground text-xs sm:mt-0 sm:truncate">
-									{agent.description ?? "No description"}
+									{agent.description ?? tr("No description")}
 								</span>
 								<span className="mt-2 block font-mono text-muted-foreground text-xs sm:hidden">
 									{agent.runCount} runs
@@ -65,14 +66,15 @@ export function TeamAgentsIndex({ initialAgents }: { initialAgents: Agents }) {
 					<Icon icon={Bot} className="size-6 text-muted-foreground" />
 					<h2 className="mt-4 font-medium text-sm">No team agents yet</h2>
 					<p className="mt-1 text-muted-foreground text-xs">
-						Create one from a private chat, then review its access before
-						deploying it.
+						{tr(
+							"Create one from a private chat, then review its access before deploying it.",
+						)}
 					</p>
 					<Link
 						href={workspaceUrl("/chat")}
 						className="mt-4 text-primary text-xs hover:underline"
 					>
-						Open chat
+						{tr("Open chat")}
 					</Link>
 				</div>
 			)}

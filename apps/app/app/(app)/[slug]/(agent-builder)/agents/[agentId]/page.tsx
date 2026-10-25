@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -6,7 +7,7 @@ import { PageShellFallback } from "@/components/page-shell";
 import { getServerTrpcClient } from "@/lib/trpc/server";
 import { nullIfMissing } from "../../missing-record";
 
-export const metadata: Metadata = { title: "Team agent" };
+export const metadata: Metadata = { title: tr("Team agent") };
 
 export default function TeamAgentPage({
 	params,

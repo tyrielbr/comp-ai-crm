@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { SaveBar } from "@crm/ui/components/save-bar";
 import {
@@ -95,7 +96,7 @@ export function AgentCode({
 		if (failed || remaining.length > 0) return;
 
 		setEditing(false);
-		toast.success("Saved.");
+		toast.success(tr("Saved."));
 	}, [agentId, queryClient, save, trpc]);
 
 	const editorOptions = useMemo<EditorOptions<undefined>>(
@@ -147,8 +148,10 @@ export function AgentCode({
 		return (
 			<p className="text-muted-foreground text-sm">
 				{code.isPending
-					? "Reading the agent's files…"
-					: "This agent has no files yet. The builder writes them when it deploys."}
+					? tr("Reading the agent's files…")
+					: tr(
+							"This agent has no files yet. The builder writes them when it deploys.",
+						)}
 			</p>
 		);
 	}
@@ -160,7 +163,7 @@ export function AgentCode({
 					<div>
 						<h2 className="font-semibold text-lg tracking-tight">Code</h2>
 						<p className="text-muted-foreground text-sm">
-							What the agent actually runs.
+							{tr("What the agent actually runs.")}
 						</p>
 					</div>
 
@@ -171,7 +174,7 @@ export function AgentCode({
 								size="sm"
 								variant="outline"
 							>
-								{showDiff ? "Hide changes" : "Changes"}
+								{showDiff ? tr("Hide changes") : tr("Changes")}
 							</Button>
 						) : null}
 						{canManage ? (
@@ -183,7 +186,7 @@ export function AgentCode({
 								size="sm"
 								variant="outline"
 							>
-								{editing ? "Done" : "Edit"}
+								{editing ? tr("Done") : tr("Edit")}
 							</Button>
 						) : null}
 					</div>
@@ -230,10 +233,10 @@ export function AgentCode({
 			<SaveBar
 				description={`${changed.length} file${changed.length === 1 ? "" : "s"} changed. Saving writes a new revision.`}
 				open={changed.length > 0}
-				title="Unsaved code"
+				title={tr("Unsaved code")}
 			>
 				<Button disabled={saving} onClick={discard} size="sm" variant="outline">
-					Discard
+					{tr("Discard")}
 				</Button>
 				<Button
 					disabled={saving}
@@ -242,7 +245,7 @@ export function AgentCode({
 					}}
 					size="sm"
 				>
-					{saving ? "Saving…" : "Save"}
+					{saving ? tr("Saving…") : tr("Save")}
 				</Button>
 			</SaveBar>
 		</EditProvider>

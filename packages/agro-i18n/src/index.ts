@@ -18,7 +18,7 @@ const catalog: Record<string, string> = ptBR;
 // para que as asserções existentes continuem válidas.
 const passthrough = process.env.NODE_ENV === "test";
 
-type Vars = Record<string, string | number>;
+type Vars = Record<string, string | number | boolean | null | undefined>;
 
 /** Traduz `source` (texto em inglês). Suporta interpolação `{nome}`. */
 export function tr(source: string, vars?: Vars): string {
