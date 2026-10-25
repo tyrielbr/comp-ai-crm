@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -15,7 +16,7 @@ import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 import { CurrencySettings } from "./currency-settings";
 
 export const metadata: Metadata = {
-	title: "Currencies",
+	title: tr("Currencies"),
 };
 
 export default function CurrenciesSettingsPage() {
@@ -23,10 +24,11 @@ export default function CurrenciesSettingsPage() {
 		<PageShell>
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Currencies</PageShellTitle>
+					<PageShellTitle>{tr("Currencies")}</PageShellTitle>
 					<PageShellDescription>
-						What your numbers are reported in, and how the other currencies get
-						there.
+						{tr(
+							"What your numbers are reported in, and how the other currencies get there.",
+						)}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

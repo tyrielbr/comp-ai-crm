@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { GoogleConnection } from "../google-connection";
 import {
@@ -5,7 +6,7 @@ import {
 	OAuthConnectionPage,
 } from "../oauth-connection-page";
 
-export const metadata: Metadata = { title: "Google Workspace" };
+export const metadata: Metadata = { title: tr("Google Workspace") };
 
 export default function GoogleConnectionPage(props: {
 	params: Promise<{ slug: string }>;

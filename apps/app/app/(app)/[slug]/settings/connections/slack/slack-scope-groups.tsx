@@ -3,6 +3,7 @@
 import Checkmark from "@carbon/icons-react/es/Checkmark";
 import Close from "@carbon/icons-react/es/Close";
 import Warning from "@carbon/icons-react/es/Warning";
+import { tr } from "@crm/agro-i18n";
 import {
 	Accordion,
 	AccordionContent,
@@ -38,8 +39,9 @@ export function SlackScopeGroups({
 			<div>
 				<h2 className="font-medium text-sm">{title}</h2>
 				<p className="text-muted-foreground text-xs">
-					Broad means the whole workspace, not one channel. Open a group to see
-					the details.
+					{tr(
+						"Broad means the whole workspace, not one channel. Open a group to see the details.",
+					)}
 				</p>
 			</div>
 
@@ -94,11 +96,11 @@ export function SlackScopeGroups({
 								{entry.grant}
 							</span>
 							<span className="text-muted-foreground text-xs">
-								Slack held this one back, so it is off.
+								{tr("Slack held this one back, so it is off.")}
 							</span>
 						</span>
 						<span className="shrink-0 whitespace-nowrap pt-0.5 pr-2 text-muted-foreground text-xs">
-							Not granted
+							{tr("Not granted")}
 						</span>
 					</div>
 				))}

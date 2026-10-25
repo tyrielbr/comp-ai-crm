@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -37,7 +38,7 @@ export function SlackDisconnectButton({
 			onSuccess: async () => {
 				await cache.slack();
 				setConfirming(false);
-				toast.success("Slack disconnected.");
+				toast.success(tr("Slack disconnected."));
 				router.refresh();
 			},
 			onError: (error) => toast.error(error.message),
@@ -55,7 +56,7 @@ export function SlackDisconnectButton({
 				onClick={() => setConfirming(true)}
 				disabled={!canManage || disconnectAction.pending}
 			>
-				Disconnect
+				{tr("Disconnect")}
 			</Button>
 
 			<AlertDialog
@@ -67,18 +68,17 @@ export function SlackDisconnectButton({
 				<AlertDialogContent>
 					<AlertDialogHeader>
 						<AlertDialogTitle>
-							Disconnect {workspace ?? "Slack"}?
+							Disconnect {workspace ?? tr("Slack")}?
 						</AlertDialogTitle>
 						<AlertDialogDescription>
-							Agents stop sending to Slack immediately, and the cached channel
-							list is cleared so a new app re-reads it. Who is matched to which
-							Slack account is kept, so reconnecting the same workspace does not
-							ask you to match everyone again.
+							{tr(
+								"Agents stop sending to Slack immediately, and the cached channel list is cleared so a new app re-reads it. Who is matched to which Slack account is kept, so reconnecting the same workspace does not ask you to match everyone again.",
+							)}
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={disconnectAction.pending}>
-							Cancel
+							{tr("Cancel")}
 						</AlertDialogCancel>
 						<Button
 							variant="destructive"
@@ -87,9 +87,9 @@ export function SlackDisconnectButton({
 						>
 							<AsyncButtonContent
 								status={disconnectAction.status}
-								pendingLabel="Disconnecting…"
+								pendingLabel={tr("Disconnecting…")}
 							>
-								Disconnect
+								{tr("Disconnect")}
 							</AsyncButtonContent>
 						</Button>
 					</AlertDialogFooter>

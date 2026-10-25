@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { cn } from "@crm/ui/lib/utils";
 import Link from "next/link";
@@ -15,12 +16,12 @@ type SettingsNavItem = {
 const ROOT = "/settings";
 
 const ITEMS: SettingsNavItem[] = [
-	{ title: "General", href: ROOT },
-	{ title: "Tracking & Analytics", href: `${ROOT}/tracking` },
-	{ title: "Connections", href: `${ROOT}/connections` },
-	{ title: "Currencies", href: `${ROOT}/currencies` },
-	{ title: "Members", href: `${ROOT}/members` },
-	{ title: "API Keys", href: `${ROOT}/api-keys` },
+	{ title: tr("General"), href: ROOT },
+	{ title: tr("Tracking & Analytics"), href: `${ROOT}/tracking` },
+	{ title: tr("Connections"), href: `${ROOT}/connections` },
+	{ title: tr("Currencies"), href: `${ROOT}/currencies` },
+	{ title: tr("Members"), href: `${ROOT}/members` },
+	{ title: tr("API Keys"), href: `${ROOT}/api-keys` },
 	{ title: "SSO", href: `${ROOT}/sso` },
 ];
 
@@ -65,7 +66,7 @@ export function SettingsSidebarFallback() {
 		<>
 			<aside className="hidden w-56 shrink-0 border-r md:block [view-transition-name:settings-sidebar]">
 				<nav
-					aria-label="Workspace settings"
+					aria-label={tr("Workspace settings")}
 					aria-busy="true"
 					className="flex flex-col gap-0.5 p-3"
 				>
@@ -83,7 +84,7 @@ export function SettingsSidebarFallback() {
 			</aside>
 
 			<nav
-				aria-label="Workspace settings"
+				aria-label={tr("Workspace settings")}
 				aria-busy="true"
 				className="flex gap-1 overflow-x-auto border-b p-2 md:hidden [view-transition-name:settings-sidebar]"
 			>
@@ -116,7 +117,7 @@ export function SettingsSidebar() {
 		<>
 			<aside className="hidden w-56 shrink-0 border-r md:block [view-transition-name:settings-sidebar]">
 				<nav
-					aria-label="Workspace settings"
+					aria-label={tr("Workspace settings")}
 					className="flex flex-col gap-0.5 p-3"
 				>
 					{items.map((item) => (
@@ -131,7 +132,7 @@ export function SettingsSidebar() {
 			</aside>
 
 			<nav
-				aria-label="Workspace settings"
+				aria-label={tr("Workspace settings")}
 				className="flex gap-1 overflow-x-auto border-b p-2 md:hidden [view-transition-name:settings-sidebar]"
 			>
 				{items.map((item) => (

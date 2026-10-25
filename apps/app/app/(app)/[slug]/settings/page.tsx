@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -18,7 +19,7 @@ import { ResearchKey } from "./research-key";
 import { WorkspaceForm } from "./workspace-form";
 
 export const metadata: Metadata = {
-	title: "General",
+	title: tr("General"),
 };
 
 export default function GeneralSettingsPage() {
@@ -26,9 +27,9 @@ export default function GeneralSettingsPage() {
 		<PageShell>
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>General</PageShellTitle>
+					<PageShellTitle>{tr("General")}</PageShellTitle>
 					<PageShellDescription>
-						Who you are, and the model the research agent thinks with.
+						{tr("Who you are, and the model the research agent thinks with.")}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

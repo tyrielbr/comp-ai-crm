@@ -1,6 +1,7 @@
 "use client";
 
 import ChevronDown from "@carbon/icons-react/es/ChevronDown";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Card,
@@ -46,7 +47,10 @@ function perMillion(rate: number): string {
 
 function priceHint(model: CatalogModel): string | null {
 	if (!model.pricing) return null;
-	return `${perMillion(model.pricing.input)} in · ${perMillion(model.pricing.output)} out per 1M`;
+	return tr("{input} in · {output} out per 1M", {
+		input: perMillion(model.pricing.input),
+		output: perMillion(model.pricing.output),
+	});
 }
 
 function contextHint(tokens: number): string {
@@ -79,7 +83,9 @@ export function AgentModel() {
 		trpc.settings.setAgentModel.mutationOptions({
 			onSuccess: async () => {
 				await cache.settings();
-				toast.success("The agent will use this model from its next session.");
+				toast.success(
+					tr("The agent will use this model from its next session."),
+				);
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -109,9 +115,11 @@ export function AgentModel() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Research agent</CardTitle>
+				<CardTitle>{tr("Research agent")}</CardTitle>
 				<CardDescription>
-					The model the agent thinks with, routed through the Vercel AI Gateway.
+					{tr(
+						"The model the agent thinks with, routed through the Vercel AI Gateway.",
+					)}
 				</CardDescription>
 			</CardHeader>
 
@@ -122,7 +130,7 @@ export function AgentModel() {
 							variant="outline"
 							role="combobox"
 							aria-expanded={open}
-							aria-label="Model"
+							aria-label={tr("Model")}
 							disabled={save.isPending || catalog.isPending || unavailable}
 						>
 							{currentLabel}
@@ -132,9 +140,9 @@ export function AgentModel() {
 
 					<PopoverContent align="start" size="fit" className="w-96">
 						<Command>
-							<CommandInput placeholder="Search models…" />
+							<CommandInput placeholder={tr("Search models…")} />
 							<CommandList>
-								<CommandEmpty>No model matches that.</CommandEmpty>
+								<CommandEmpty>{tr("No model matches that.")}</CommandEmpty>
 
 								<CommandGroup>
 									<CommandItem
@@ -174,7 +182,10 @@ export function AgentModel() {
 
 				<p className="text-muted-foreground text-xs">
 					{unavailable
-						? `Could not reach the AI Gateway to list models. The agent is still running ${effectiveId}.`
+						? tr(
+								"Could not reach the AI Gateway to list models. The agent is still running {effectiveId}.",
+								{ effectiveId },
+							)
 						: effective
 							? `${effectiveId} · ${contextHint(effective.contextWindowTokens)}${
 									priceHint(effective) ? ` · ${priceHint(effective)}` : ""

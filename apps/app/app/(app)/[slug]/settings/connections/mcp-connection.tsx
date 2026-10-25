@@ -2,6 +2,7 @@
 
 import OverflowMenuVertical from "@carbon/icons-react/es/OverflowMenuVertical";
 import Warning from "@carbon/icons-react/es/Warning";
+import { tr } from "@crm/agro-i18n";
 import {
 	Accordion,
 	AccordionContent,
@@ -177,7 +178,7 @@ export function McpConnection({
 	const review = useMutation(
 		trpc.mcp.reviewTools.mutationOptions({
 			onSuccess: () => {
-				toast.success(`${entry.name} tools reviewed.`);
+				toast.success(tr("{name} tools reviewed.", { name: entry.name }));
 				router.refresh();
 			},
 			onError: (error) => toast.error(error.message),
@@ -205,7 +206,7 @@ export function McpConnection({
 				<div className="flex min-w-0 flex-col gap-2">
 					<Button asChild variant="link" size="inline">
 						<Link href={`/${slug}/settings/connections`}>
-							Back to connections
+							{tr("Back to connections")}
 						</Link>
 					</Button>
 					<h1 className="flex items-center gap-3 font-medium text-2xl tracking-tight">
@@ -218,7 +219,7 @@ export function McpConnection({
 						{entry.name}
 					</h1>
 					<p className="text-muted-foreground text-sm">
-						Deployed agents receive only reviewed tools.
+						{tr("Deployed agents receive only reviewed tools.")}
 					</p>
 				</div>
 				{connected && canManage ? (
@@ -255,7 +256,7 @@ export function McpConnection({
 						<StatusIndicator
 							busy
 							tone="primary"
-							label={`Connecting to ${entry.name}`}
+							label={tr("Connecting to {name}", { name: entry.name })}
 						/>
 					</CardContent>
 				</Card>
@@ -264,9 +265,9 @@ export function McpConnection({
 			{!connected && !connecting ? (
 				<Card>
 					<CardHeader>
-						<CardTitle>Access</CardTitle>
+						<CardTitle>{tr("Access")}</CardTitle>
 						<CardDescription>
-							Choose what deployed agents can do.
+							{tr("Choose what deployed agents can do.")}
 						</CardDescription>
 					</CardHeader>
 
@@ -274,7 +275,9 @@ export function McpConnection({
 						<CardContent>
 							<Alert>
 								<Icon icon={Warning} />
-								<AlertTitle>MCP connections are not configured</AlertTitle>
+								<AlertTitle>
+									{tr("MCP connections are not configured")}
+								</AlertTitle>
 								<AlertDescription>
 									Set MCP_ENCRYPTION_KEY in the root .env file. Then restart the
 									API.
@@ -310,15 +313,21 @@ export function McpConnection({
 										setMode(value);
 								}}
 							>
-								<ToggleGroupItem value="read_only">Read only</ToggleGroupItem>
+								<ToggleGroupItem value="read_only">
+									{tr("Read only")}
+								</ToggleGroupItem>
 								<ToggleGroupItem value="read_write">
-									Read and write
+									{tr("Read and write")}
 								</ToggleGroupItem>
 							</ToggleGroup>
 							<p className="text-muted-foreground text-sm">
 								{mode === "read_only"
-									? `Agents read ${entry.name} and change nothing.`
-									: `Agents read ${entry.name} and make approved changes.`}
+									? tr("Agents read {name} and change nothing.", {
+											name: entry.name,
+										})
+									: tr("Agents read {name} and make approved changes.", {
+											name: entry.name,
+										})}
 							</p>
 						</CardContent>
 					) : null}
@@ -337,11 +346,14 @@ export function McpConnection({
 			{connected ? (
 				<Card>
 					<CardHeader>
-						<CardTitle>Tool access</CardTitle>
+						<CardTitle>{tr("Tool access")}</CardTitle>
 						<CardDescription>
 							{presentation.pendingReviewCount > 0
-								? `${presentation.pendingReviewCount} tools need review. Open a tool to inspect it.`
-								: "All tools are reviewed. Open a tool to inspect it."}
+								? tr(
+										"{pendingReviewCount} tools need review. Open a tool to inspect it.",
+										{ pendingReviewCount: presentation.pendingReviewCount },
+									)
+								: tr("All tools are reviewed. Open a tool to inspect it.")}
 						</CardDescription>
 						{presentation.pendingReadTools.length > 0 && canManage ? (
 							<CardAction>
@@ -430,7 +442,8 @@ export function McpConnection({
 																		{tool.presentation.prose}
 																	</InlineReferenceText>
 																) : (
-																	tool.description || "No description provided."
+																	tool.description ||
+																	tr("No description provided.")
 																)}
 															</p>
 															{tool.presentation?.code ? (
@@ -461,7 +474,7 @@ export function McpConnection({
 																	})
 																}
 															>
-																Review tool
+																{tr("Review tool")}
 															</Button>
 														) : null}
 													</AccordionContent>
@@ -491,7 +504,7 @@ export function McpConnection({
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={disconnect.isPending}>
-							Keep connected
+							{tr("Keep connected")}
 						</AlertDialogCancel>
 						<AlertDialogAction
 							variant="destructive"
@@ -545,7 +558,7 @@ function ConnectionDetails({
 			{overview.scopeGroups.length > 0 ? (
 				<Card>
 					<CardHeader>
-						<CardTitle>Permissions</CardTitle>
+						<CardTitle>{tr("Permissions")}</CardTitle>
 						<CardAction>
 							<span className="text-muted-foreground text-xs tabular-nums">
 								{overview.scopeCount} scopes
@@ -554,7 +567,7 @@ function ConnectionDetails({
 					</CardHeader>
 					<CardPanel
 						role="region"
-						aria-label="Granted permissions"
+						aria-label={tr("Granted permissions")}
 						size={overview.permissionPanelSize}
 					>
 						<CardPanelScroll>
@@ -595,7 +608,7 @@ function ConnectionDetails({
 			{overview.agents.length > 0 ? (
 				<Card>
 					<CardHeader>
-						<CardTitle>Used by</CardTitle>
+						<CardTitle>{tr("Used by")}</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<div className="flex flex-col divide-y rounded-md border">

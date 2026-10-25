@@ -1,6 +1,7 @@
 "use client";
 
 import TrashCan from "@carbon/icons-react/es/TrashCan";
+import { tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -39,19 +40,19 @@ function columns(
 	return [
 		{
 			id: "name",
-			header: "Name",
+			header: tr("Name"),
 			sortable: true,
 			hideable: false,
 			width: "w-[28%]",
 			cell: (row) => (
 				<span className="truncate font-medium">
-					{row.name ?? "Untitled key"}
+					{row.name ?? tr("Untitled key")}
 				</span>
 			),
 		},
 		{
 			id: "start",
-			header: "Key",
+			header: tr("Key"),
 			width: "w-[20%]",
 			hideBelow: "sm",
 			cell: (row) => (
@@ -60,7 +61,7 @@ function columns(
 		},
 		{
 			id: "createdAt",
-			header: "Created",
+			header: tr("Created"),
 			sortable: true,
 			width: "w-[16%]",
 			hideBelow: "md",
@@ -72,8 +73,8 @@ function columns(
 		},
 		{
 			id: "lastRequest",
-			header: "Last used",
-			label: "Last used date",
+			header: tr("Last used"),
+			label: tr("Last used date"),
 			sortable: true,
 			width: "w-[16%]",
 			hideBelow: "lg",
@@ -89,7 +90,7 @@ function columns(
 		},
 		{
 			id: "expiresAt",
-			header: "Expires",
+			header: tr("Expires"),
 			sortable: true,
 			width: "w-[14%]",
 			hideBelow: "lg",
@@ -111,7 +112,7 @@ function columns(
 		{
 			id: "actions",
 			header: <span className="sr-only">Actions</span>,
-			label: "Actions",
+			label: tr("Actions"),
 			hideable: false,
 			align: "right",
 			width: "w-[6%]",
@@ -132,18 +133,19 @@ function columns(
 								Revoke {row.name ?? "this API key"}?
 							</AlertDialogTitle>
 							<AlertDialogDescription>
-								Anything using it stops working immediately. This cannot be
-								undone.
+								{tr(
+									"Anything using it stops working immediately. This cannot be undone.",
+								)}
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 
 						<AlertDialogFooter>
-							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogCancel>{tr("Cancel")}</AlertDialogCancel>
 							<AlertDialogAction
 								variant="destructive"
 								onClick={() => onRevoke(row)}
 							>
-								Revoke
+								{tr("Revoke")}
 							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>
@@ -170,7 +172,7 @@ export function ApiKeysTable() {
 					await query.setPage(query.page - 1);
 				}
 				await cache.apiKeys();
-				toast.success("API key revoked.");
+				toast.success(tr("API key revoked."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -179,7 +181,7 @@ export function ApiKeysTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search by name…" />}
+			search={<ListSearch placeholder={tr("Search by name…")} />}
 			columns={columns(
 				(apiKey) => revoke.mutate({ id: apiKey.id }),
 				revoke.isPending,
@@ -188,7 +190,7 @@ export function ApiKeysTable() {
 			total={apiKeys.data?.total ?? 0}
 			getRowId={(row) => row.id}
 			loading={apiKeys.isFetching}
-			empty="No API keys yet."
+			empty={tr("No API keys yet.")}
 		/>
 	);
 }

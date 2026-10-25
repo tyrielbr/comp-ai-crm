@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Card,
@@ -52,7 +53,7 @@ export function WorkspaceForm() {
 			onSuccess: async (saved) => {
 				await cache.workspace();
 				setDraft(null);
-				toast.success("Workspace saved.");
+				toast.success(tr("Workspace saved."));
 
 				if (saved.slug !== slug) {
 					router.replace(workspaceUrl(saved.slug, "/settings"));
@@ -75,9 +76,9 @@ export function WorkspaceForm() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Workspace</CardTitle>
+				<CardTitle>{tr("Workspace")}</CardTitle>
 				<CardDescription>
-					The name and website of the company using this CRM.
+					{tr("The name and website of the company using this CRM.")}
 				</CardDescription>
 
 				<CardAction>
@@ -93,7 +94,7 @@ export function WorkspaceForm() {
 						}
 					>
 						{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-						Save
+						{tr("Save")}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -111,23 +112,23 @@ export function WorkspaceForm() {
 				>
 					<FieldGroup>
 						<Field>
-							<FieldLabel htmlFor={nameId}>Name</FieldLabel>
+							<FieldLabel htmlFor={nameId}>{tr("Name")}</FieldLabel>
 							<Input
 								id={nameId}
 								value={values.name}
 								onChange={(event) => edit({ name: event.target.value })}
-								placeholder="Acme Inc."
+								placeholder={tr("Acme Inc.")}
 								autoComplete="organization"
 								disabled={!canRename || save.isPending}
 								required
 							/>
 							<FieldDescription>
-								Shown wherever the CRM refers to your own company.
+								{tr("Shown wherever the CRM refers to your own company.")}
 							</FieldDescription>
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={websiteId}>Website</FieldLabel>
+							<FieldLabel htmlFor={websiteId}>{tr("Website")}</FieldLabel>
 							<InputGroup>
 								<InputGroupAddon>
 									<InputGroupText>https://</InputGroupText>
@@ -145,14 +146,16 @@ export function WorkspaceForm() {
 									disabled={!canRename || save.isPending}
 								/>
 							</InputGroup>
-							<FieldDescription>Your own company's website.</FieldDescription>
+							<FieldDescription>
+								{tr("Your own company's website.")}
+							</FieldDescription>
 						</Field>
 					</FieldGroup>
 				</form>
 
 				{canRename ? null : (
 					<p className="text-muted-foreground text-xs">
-						Only an owner or an admin can change this.
+						{tr("Only an owner or an admin can change this.")}
 					</p>
 				)}
 			</CardContent>

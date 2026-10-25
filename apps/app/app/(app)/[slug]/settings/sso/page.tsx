@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -30,8 +31,9 @@ export default function SsoSettingsPage({
 				<PageShellHeading>
 					<PageShellTitle>SSO</PageShellTitle>
 					<PageShellDescription>
-						Let your people sign in through your own identity provider. While
-						one is configured, the sign-in page offers it instead of Google.
+						{tr(
+							"Let your people sign in through your own identity provider. While one is configured, the sign-in page offers it instead of Google.",
+						)}
 					</PageShellDescription>
 				</PageShellHeading>
 

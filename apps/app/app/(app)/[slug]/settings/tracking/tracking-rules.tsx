@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import {
 	Card,
 	CardContent,
@@ -17,13 +18,15 @@ import { useTRPC } from "@/lib/trpc/client";
 const RULES = [
 	{
 		flag: "crossDomain",
-		label: "Automatic cross-domain linking",
-		hint: "Carry the visitor between the domains below, so one journey is not counted as two people",
+		label: tr("Automatic cross-domain linking"),
+		hint: tr(
+			"Carry the visitor between the domains below, so one journey is not counted as two people",
+		),
 	},
 	{
 		flag: "limitToDomains",
-		label: "Limit tracking to the domains below",
-		hint: "On any other domain the script loads and then does nothing",
+		label: tr("Limit tracking to the domains below"),
+		hint: tr("On any other domain the script loads and then does nothing"),
 	},
 ] as const;
 
@@ -47,9 +50,9 @@ export function TrackingRules() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Tracking rules</CardTitle>
+				<CardTitle>{tr("Tracking rules")}</CardTitle>
 				<CardDescription>
-					Where the script may run, and how it follows a visitor.
+					{tr("Where the script may run, and how it follows a visitor.")}
 				</CardDescription>
 			</CardHeader>
 

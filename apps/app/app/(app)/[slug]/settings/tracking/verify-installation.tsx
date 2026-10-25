@@ -2,6 +2,7 @@
 
 import CheckmarkFilled from "@carbon/icons-react/es/CheckmarkFilled";
 import Warning from "@carbon/icons-react/es/Warning";
+import { tr } from "@crm/agro-i18n";
 import { Alert, AlertDescription, AlertTitle } from "@crm/ui/components/alert";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -55,13 +56,14 @@ export function VerifyInstallation() {
 			<CardHeader>
 				<CardTitle>
 					<div className="flex items-center gap-2">
-						Verify installation
+						{tr("Verify installation")}
 						{result ? <Indicator result={result} /> : null}
 					</div>
 				</CardTitle>
 				<CardDescription>
-					We load one page and look for the script, then read your Tag Manager
-					container if it is not in the HTML.
+					{tr(
+						"We load one page and look for the script, then read your Tag Manager container if it is not in the HTML.",
+					)}
 				</CardDescription>
 
 				<CardAction>
@@ -72,7 +74,7 @@ export function VerifyInstallation() {
 						disabled={!canManage || verify.isPending || url.trim() === ""}
 					>
 						{verify.isPending ? <Spinner data-icon="inline-start" /> : null}
-						Check now
+						{tr("Check now")}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -87,7 +89,7 @@ export function VerifyInstallation() {
 					}}
 				>
 					<Field>
-						<FieldLabel htmlFor={urlId}>Page to check</FieldLabel>
+						<FieldLabel htmlFor={urlId}>{tr("Page to check")}</FieldLabel>
 						<InputGroup>
 							<InputGroupAddon>
 								<InputGroupText>https://</InputGroupText>
@@ -109,8 +111,9 @@ export function VerifyInstallation() {
 							/>
 						</InputGroup>
 						<FieldDescription>
-							The page has to be public. A page behind a login always fails this
-							check.
+							{tr(
+								"The page has to be public. A page behind a login always fails this check.",
+							)}
 						</FieldDescription>
 					</Field>
 				</form>
@@ -124,7 +127,11 @@ export function VerifyInstallation() {
 function Indicator({ result }: { result: Result }) {
 	if (result.status === "found" && result.pageView) {
 		return (
-			<StatusIndicator size="sm" tone="success" label="Verified just now" />
+			<StatusIndicator
+				size="sm"
+				tone="success"
+				label={tr("Verified just now")}
+			/>
 		);
 	}
 
@@ -133,7 +140,7 @@ function Indicator({ result }: { result: Result }) {
 			<StatusIndicator
 				size="sm"
 				tone="warning"
-				label="Tag Manager needs a fix"
+				label={tr("Tag Manager needs a fix")}
 			/>
 		);
 	}
@@ -142,7 +149,9 @@ function Indicator({ result }: { result: Result }) {
 		<StatusIndicator
 			size="sm"
 			tone="warning"
-			label={result.status === "found" ? "No page view yet" : "Not detected"}
+			label={
+				result.status === "found" ? tr("No page view yet") : tr("Not detected")
+			}
 		/>
 	);
 }
@@ -202,8 +211,8 @@ function Outcome({ result, siteId }: { result: Result; siteId: string }) {
 			<Icon icon={CheckmarkFilled} className="text-success" />
 			<AlertTitle>
 				{result.container
-					? `Script found in container ${result.container.id}`
-					: `Script found on ${result.host}`}
+					? tr("Script found in container {id}", { id: result.container.id })
+					: tr("Script found on {host}", { host: result.host })}
 			</AlertTitle>
 			<AlertDescription>
 				It answered in {result.responseMs} ms. Site ID {siteId} matched, and

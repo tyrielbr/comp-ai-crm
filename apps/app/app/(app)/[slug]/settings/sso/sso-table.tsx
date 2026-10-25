@@ -1,6 +1,7 @@
 "use client";
 
 import TrashCan from "@carbon/icons-react/es/TrashCan";
+import { tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -35,7 +36,7 @@ function columns(
 	return [
 		{
 			id: "providerId",
-			header: "Provider",
+			header: tr("Provider"),
 			sortable: true,
 			hideable: false,
 			width: "w-[30%]",
@@ -43,7 +44,7 @@ function columns(
 				<span className="flex min-w-0 flex-col">
 					<span className="truncate font-medium">{row.name}</span>
 					<span className="truncate text-muted-foreground text-xs">
-						{row.type === "saml" ? "SAML" : "OpenID Connect"}
+						{row.type === "saml" ? "SAML" : tr("OpenID Connect")}
 						{row.clientIdLastFour ? ` · client …${row.clientIdLastFour}` : ""}
 					</span>
 				</span>
@@ -51,7 +52,7 @@ function columns(
 		},
 		{
 			id: "domain",
-			header: "Email domain",
+			header: tr("Email domain"),
 			sortable: true,
 			width: "w-[22%]",
 			hideBelow: "sm",
@@ -63,7 +64,7 @@ function columns(
 		},
 		{
 			id: "issuer",
-			header: "Issuer",
+			header: tr("Issuer"),
 			sortable: true,
 			width: "w-[22%]",
 			hideBelow: "md",
@@ -73,20 +74,20 @@ function columns(
 		},
 		{
 			id: "callbackURL",
-			header: "Redirect URI",
+			header: tr("Redirect URI"),
 			width: "w-[20%]",
 			hideBelow: "lg",
 			cell: (row) => (
 				<span className="flex min-w-0 items-center gap-1 text-muted-foreground">
 					<span className="truncate">{row.callbackURL}</span>
-					<CopyValue value={row.callbackURL} label="Redirect URI" />
+					<CopyValue value={row.callbackURL} label={tr("Redirect URI")} />
 				</span>
 			),
 		},
 		{
 			id: "actions",
 			header: <span className="sr-only">Actions</span>,
-			label: "Actions",
+			label: tr("Actions"),
 			hideable: false,
 			align: "right",
 			width: "w-[6%]",
@@ -104,18 +105,19 @@ function columns(
 							<AlertDialogHeader>
 								<AlertDialogTitle>Remove {row.name}?</AlertDialogTitle>
 								<AlertDialogDescription>
-									Nobody can sign in through it again. If this is the only
-									provider, the sign-in page goes back to Google.
+									{tr(
+										"Nobody can sign in through it again. If this is the only provider, the sign-in page goes back to Google.",
+									)}
 								</AlertDialogDescription>
 							</AlertDialogHeader>
 
 							<AlertDialogFooter>
-								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogCancel>{tr("Cancel")}</AlertDialogCancel>
 								<AlertDialogAction
 									variant="destructive"
 									onClick={() => onRemove(row)}
 								>
-									Remove
+									{tr("Remove")}
 								</AlertDialogAction>
 							</AlertDialogFooter>
 						</AlertDialogContent>
@@ -140,7 +142,7 @@ export function SsoTable() {
 		trpc.sso.remove.mutationOptions({
 			onSuccess: async () => {
 				await cache.sso();
-				toast.success("Identity provider removed.");
+				toast.success(tr("Identity provider removed."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -149,7 +151,9 @@ export function SsoTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search by name, domain or issuer…" />}
+			search={
+				<ListSearch placeholder={tr("Search by name, domain or issuer…")} />
+			}
 			columns={columns(
 				settings.data?.canConfigure ?? false,
 				(provider) => remove.mutate({ providerId: provider.providerId }),
@@ -159,7 +163,7 @@ export function SsoTable() {
 			total={providers.data?.total ?? 0}
 			getRowId={(row) => row.providerId}
 			loading={providers.isFetching}
-			empty="No identity provider yet — everyone signs in with Google."
+			empty={tr("No identity provider yet — everyone signs in with Google.")}
 		/>
 	);
 }

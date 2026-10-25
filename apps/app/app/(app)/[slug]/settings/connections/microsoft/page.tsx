@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { MicrosoftConnection } from "../microsoft-connection";
 import {
@@ -5,7 +6,7 @@ import {
 	OAuthConnectionPage,
 } from "../oauth-connection-page";
 
-export const metadata: Metadata = { title: "Microsoft 365" };
+export const metadata: Metadata = { title: tr("Microsoft 365") };
 
 export default function MicrosoftConnectionPage(props: {
 	params: Promise<{ slug: string }>;

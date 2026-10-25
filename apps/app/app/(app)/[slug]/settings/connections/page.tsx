@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { vendorBySlug, vendors } from "@crm/mcp-integrations/catalog";
 import GoogleLogo from "@crm/ui/components/brand-logos/google";
 import MicrosoftLogo from "@crm/ui/components/brand-logos/microsoft";
@@ -13,7 +14,7 @@ import { requireSession } from "@/lib/session";
 import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 import { AddConnectionDialog } from "./add-connection-dialog";
 
-export const metadata: Metadata = { title: "Connections" };
+export const metadata: Metadata = { title: tr("Connections") };
 
 export default function ConnectionsSettingsPage(
 	props: PageProps<"/[slug]/settings/connections">,
@@ -47,7 +48,7 @@ async function ConnectionsSettingsPageContent({
 		return [
 			{
 				name: vendor.name,
-				status: "Connected",
+				status: tr("Connected"),
 				bringsIn: vendor.presentation.bringsIn,
 				sends:
 					entry.connection.accessMode === "read_write"
@@ -69,10 +70,10 @@ async function ConnectionsSettingsPageContent({
 		...(google.linked
 			? [
 					{
-						name: "Google Workspace",
-						status: "Connected",
-						bringsIn: "Emails, meetings and the people on them",
-						sends: "Nothing yet",
+						name: tr("Google Workspace"),
+						status: tr("Connected"),
+						bringsIn: tr("Emails, meetings and the people on them"),
+						sends: tr("Nothing yet"),
 						href: `/${slug}/settings/connections/google`,
 						mark: <GoogleLogo className="size-5 shrink-0" />,
 					},
@@ -81,12 +82,12 @@ async function ConnectionsSettingsPageContent({
 		...(slack.connected
 			? [
 					{
-						name: "Slack",
+						name: tr("Slack"),
 						status: slack.workspace
-							? `Connected to ${slack.workspace}`
-							: "Connected",
-						bringsIn: "Workspace members and channels the app has joined",
-						sends: "Messages to approved channels and people",
+							? tr("Connected to {workspace}", { workspace: slack.workspace })
+							: tr("Connected"),
+						bringsIn: tr("Workspace members and channels the app has joined"),
+						sends: tr("Messages to approved channels and people"),
 						href: `/${slug}/settings/connections/slack`,
 						mark: <SlackLogo className="size-5 shrink-0" />,
 					},
@@ -95,10 +96,10 @@ async function ConnectionsSettingsPageContent({
 		...(microsoft.linked
 			? [
 					{
-						name: "Microsoft 365",
-						status: "Connected",
-						bringsIn: "Outlook email and the people on it",
-						sends: "Nothing yet",
+						name: tr("Microsoft 365"),
+						status: tr("Connected"),
+						bringsIn: tr("Outlook email and the people on it"),
+						sends: tr("Nothing yet"),
 						href: `/${slug}/settings/connections/microsoft`,
 						mark: <MicrosoftLogo className="size-5 shrink-0" />,
 					},
@@ -114,16 +115,17 @@ async function ConnectionsSettingsPageContent({
 					<header className="flex items-start justify-between gap-4 px-(--spacing-block-inline)">
 						<div className="flex flex-col gap-2">
 							<h1 className="font-medium text-2xl tracking-tight">
-								Connections
+								{tr("Connections")}
 							</h1>
 							<p className="max-w-2xl text-muted-foreground text-sm">
-								Where your CRM gets its information, and what it is allowed to
-								send on your behalf.
+								{tr(
+									"Where your CRM gets its information, and what it is allowed to send on your behalf.",
+								)}
 							</p>
 						</div>
 						<Button asChild variant="outline">
 							<Link href={`/${slug}/settings/connections?add=1`}>
-								Add connection
+								{tr("Add connection")}
 							</Link>
 						</Button>
 					</header>
@@ -137,31 +139,35 @@ async function ConnectionsSettingsPageContent({
 				<div className="mx-auto flex w-full max-w-(--container-narrow) flex-1 flex-col justify-center gap-(--spacing-page-gap) text-center">
 					<div className="flex flex-col gap-2 px-(--spacing-block-inline)">
 						<h1 className="font-medium text-2xl tracking-tight">
-							Nothing is connected yet
+							{tr("Nothing is connected yet")}
 						</h1>
 						<p className="text-muted-foreground text-sm leading-relaxed">
-							Right now every deal, contact and note has to be typed in by hand.
-							Connect a tool and the CRM starts filling itself in from the work
-							your team already does.
+							{tr(
+								"Right now every deal, contact and note has to be typed in by hand. Connect a tool and the CRM starts filling itself in from the work your team already does.",
+							)}
 						</p>
 					</div>
 					<div className="flex flex-col divide-y rounded-lg border bg-card px-(--spacing-block-inline)">
 						<StarterRow
 							logo={GoogleLogo}
 							name="Google Workspace"
-							description="File email and meetings against the right company"
+							description={tr(
+								"File email and meetings against the right company",
+							)}
 							href={`/${slug}/settings/connections/google`}
 						/>
 						<StarterRow
 							logo={SlackLogo}
 							name="Slack"
-							description="Let deployed agents notify approved channels and people"
+							description={tr(
+								"Let deployed agents notify approved channels and people",
+							)}
 							href={`/${slug}/settings/connections/slack`}
 						/>
 						<StarterRow
 							logo={MicrosoftLogo}
 							name="Microsoft 365"
-							description="File Outlook email against the right company"
+							description={tr("File Outlook email against the right company")}
 							href={`/${slug}/settings/connections/microsoft`}
 						/>
 					</div>
@@ -171,7 +177,7 @@ async function ConnectionsSettingsPageContent({
 							className="font-medium text-foreground underline underline-offset-4"
 							href={`/${slug}/settings/connections?add=1`}
 						>
-							Browse all connections
+							{tr("Browse all connections")}
 						</Link>
 					</p>
 				</div>
@@ -225,12 +231,12 @@ function ConnectionCard({
 					{status}
 				</p>
 				<Button asChild size="sm" variant="outline">
-					<Link href={href}>Manage</Link>
+					<Link href={href}>{tr("Manage")}</Link>
 				</Button>
 			</div>
 			<div className="flex flex-col gap-2 pl-8 text-sm">
-				<CapabilityRow label="Brings in" value={bringsIn} />
-				<CapabilityRow label="Sends" value={sends} />
+				<CapabilityRow label={tr("Brings in")} value={bringsIn} />
+				<CapabilityRow label={tr("Sends")} value={sends} />
 			</div>
 		</section>
 	);
@@ -264,7 +270,7 @@ function StarterRow({
 				<p className="text-muted-foreground text-xs">{description}</p>
 			</div>
 			<Button asChild variant="outline" size="sm">
-				<Link href={href}>Connect</Link>
+				<Link href={href}>{tr("Connect")}</Link>
 			</Button>
 		</div>
 	);

@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -15,7 +16,7 @@ import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 import { TrackingSections } from "./tracking-sections";
 
 export const metadata: Metadata = {
-	title: "Tracking & Analytics",
+	title: tr("Tracking & Analytics"),
 };
 
 export default function TrackingSettingsPage() {
@@ -25,8 +26,9 @@ export default function TrackingSettingsPage() {
 				<PageShellHeading>
 					<PageShellTitle>Tracking &amp; Analytics</PageShellTitle>
 					<PageShellDescription>
-						Track website visitors and automatically add contacts when a form is
-						submitted.
+						{tr(
+							"Track website visitors and automatically add contacts when a form is submitted.",
+						)}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

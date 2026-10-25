@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import SlackLogo from "@crm/ui/components/brand-logos/slack";
 import { Spinner } from "@crm/ui/components/spinner";
 import { redirect } from "next/navigation";
@@ -41,11 +42,12 @@ async function SlackPeoplePageContent({ params }: SlackPeoplePageProps) {
 			<header className="flex flex-col gap-3 px-(--spacing-block-inline) text-center">
 				<SlackLogo className="mx-auto size-7" />
 				<h1 className="font-medium text-2xl tracking-tight">
-					Slack is connected
+					{tr("Slack is connected")}
 				</h1>
 				<p className="text-muted-foreground text-sm">
-					Match your CRM people to Slack once. Agents use these exact accounts
-					later instead of guessing from a similar name.
+					{tr(
+						"Match your CRM people to Slack once. Agents use these exact accounts later instead of guessing from a similar name.",
+					)}
 				</p>
 			</header>
 			<SlackPeopleMatches slug={slug} initialMatches={matches} />

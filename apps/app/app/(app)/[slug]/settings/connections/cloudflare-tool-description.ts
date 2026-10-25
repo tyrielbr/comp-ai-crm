@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { codeToHtml } from "shiki";
 
 const TYPESCRIPT_MARKER = "Available in your code:";
@@ -5,7 +6,7 @@ const TYPESCRIPT_MARKER = "Available in your code:";
 export async function presentCloudflareToolDescription(
 	description: string | null,
 ) {
-	const value = description?.trim() || "No description provided.";
+	const value = description?.trim() || tr("No description provided.");
 	const markerIndex = value.indexOf(TYPESCRIPT_MARKER);
 	if (markerIndex < 0) return { prose: value };
 
@@ -23,7 +24,7 @@ export async function presentCloudflareToolDescription(
 		prose,
 		code: {
 			highlightedHTML,
-			label: "TypeScript API",
+			label: tr("TypeScript API"),
 			value: code,
 		},
 	};

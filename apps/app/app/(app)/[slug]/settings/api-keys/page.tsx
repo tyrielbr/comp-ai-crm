@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -18,7 +19,7 @@ import { ApiKeysTable } from "./api-keys-table";
 import { CreateApiKeySheet } from "./create-api-key-sheet";
 
 export const metadata: Metadata = {
-	title: "API Keys",
+	title: tr("API Keys"),
 };
 
 export default function ApiKeysSettingsPage({
@@ -28,10 +29,11 @@ export default function ApiKeysSettingsPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>API Keys</PageShellTitle>
+					<PageShellTitle>{tr("API Keys")}</PageShellTitle>
 					<PageShellDescription>
-						Personal keys for calling the CRM API. Each one acts as you —
-						anything it can read or change is exactly what you can.
+						{tr(
+							"Personal keys for calling the CRM API. Each one acts as you — anything it can read or change is exactly what you can.",
+						)}
 					</PageShellDescription>
 				</PageShellHeading>
 

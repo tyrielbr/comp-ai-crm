@@ -1,5 +1,6 @@
 "use client";
 import Search from "@carbon/icons-react/es/Search";
+import { tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -45,10 +46,10 @@ export function SlackChannels() {
 				setAsking(null);
 				toast.success(
 					result.alreadyJoined
-						? "Comp AI is already in there."
+						? tr("Comp AI is already in there.")
 						: result.queued
-							? "Comp AI is joining."
-							: "Ask someone inside to invite Comp AI.",
+							? tr("Comp AI is joining.")
+							: tr("Ask someone inside to invite Comp AI."),
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -60,7 +61,7 @@ export function SlackChannels() {
 	const refresh = useMutation(
 		trpc.slack.refreshPeople.mutationOptions({
 			onSuccess: async () => {
-				toast.success("Reading the channel list from Slack.");
+				toast.success(tr("Reading the channel list from Slack."));
 				await channels.reload();
 			},
 			onError: (error) => toast.error(error.message),
@@ -77,7 +78,7 @@ export function SlackChannels() {
 				<div>
 					<h2 className="font-medium text-sm">Channels Comp AI can reach</h2>
 					<p className="text-muted-foreground text-xs">
-						Agents pick from this list.
+						{tr("Agents pick from this list.")}
 					</p>
 				</div>
 				<Button
@@ -86,13 +87,15 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{refreshing ? "Refreshing…" : "Refresh"}
+					{refreshing ? tr("Refreshing…") : tr("Refresh")}
 				</Button>
 			</div>
 
 			{channels.stalled ? (
 				<p className="text-warning text-xs">
-					Comp AI is not reading Slack right now. The list can be out of date.
+					{tr(
+						"Comp AI is not reading Slack right now. The list can be out of date.",
+					)}
 				</p>
 			) : null}
 
@@ -103,7 +106,7 @@ export function SlackChannels() {
 					</InputGroupAddon>
 					<InputGroupInput
 						onChange={(event) => setQuery(event.target.value)}
-						placeholder="Search channels"
+						placeholder={tr("Search channels")}
 						value={query}
 					/>
 				</InputGroup>
@@ -115,10 +118,12 @@ export function SlackChannels() {
 				empty={
 					<p className="px-4 py-4 text-muted-foreground text-sm">
 						{channels.pending
-							? "Reading the channel list from Slack…"
+							? tr("Reading the channel list from Slack…")
 							: query
-								? `No channel matches “${query}”.`
-								: "No channels yet. Comp AI reads the list from Slack after it connects."}
+								? tr("No channel matches “{query}”.", { query })
+								: tr(
+										"No channels yet. Comp AI reads the list from Slack after it connects.",
+									)}
 					</p>
 				}
 				onAdd={(channel) => void joinAction.run(channel.id)}
@@ -133,7 +138,7 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{channels.fetchingMore ? "Loading…" : "Load more"}
+					{channels.fetchingMore ? tr("Loading…") : tr("Load more")}
 				</Button>
 			) : null}
 
@@ -167,11 +172,11 @@ function AskDialog({
 		try {
 			await navigator.clipboard.writeText(INVITE_COMMAND);
 		} catch {
-			toast.error("Copying failed. Copy the command above by hand.");
+			toast.error(tr("Copying failed. Copy the command above by hand."));
 			return;
 		}
 
-		toast.success("Command copied.");
+		toast.success(tr("Command copied."));
 		onConfirm();
 	}
 
@@ -182,12 +187,17 @@ function AskDialog({
 					<AlertDialogTitle>
 						{canInviteItself
 							? `Add Comp AI to #${channel.name}?`
-							: "Ask someone to add Comp AI"}
+							: tr("Ask someone to add Comp AI")}
 					</AlertDialogTitle>
 					<AlertDialogDescription>
 						{canInviteItself
-							? `It is a private channel, so Comp AI joins as you. Same as typing the invite yourself. Everyone in the channel sees it join. It reads nothing until you turn a permission on.`
-							: `We cannot add Comp AI to a private channel yet. Someone already in #${channel.name} has to run this.`}
+							? tr(
+									"It is a private channel, so Comp AI joins as you. Same as typing the invite yourself. Everyone in the channel sees it join. It reads nothing until you turn a permission on.",
+								)
+							: tr(
+									"We cannot add Comp AI to a private channel yet. Someone already in #{name} has to run this.",
+									{ name: channel.name },
+								)}
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 
@@ -199,14 +209,16 @@ function AskDialog({
 
 				<AlertDialogFooter>
 					<AlertDialogCancel disabled={status === "pending"}>
-						Cancel
+						{tr("Cancel")}
 					</AlertDialogCancel>
 					<Button
 						disabled={status === "pending"}
 						onClick={canInviteItself ? onConfirm : () => void copyThenConfirm()}
 					>
-						<AsyncButtonContent pendingLabel="Adding…" status={status}>
-							{canInviteItself ? "Add Comp AI" : "Copy and mark as asked"}
+						<AsyncButtonContent pendingLabel={tr("Adding…")} status={status}>
+							{canInviteItself
+								? tr("Add Comp AI")
+								: tr("Copy and mark as asked")}
 						</AsyncButtonContent>
 					</Button>
 				</AlertDialogFooter>

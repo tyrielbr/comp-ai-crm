@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Card,
@@ -39,7 +40,7 @@ export function ArchiveRetention() {
 		trpc.settings.setArchiveRetention.mutationOptions({
 			onSuccess: async () => {
 				await cache.settings();
-				toast.success("Archive retention saved.");
+				toast.success(tr("Archive retention saved."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -53,9 +54,9 @@ export function ArchiveRetention() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Archived records</CardTitle>
+				<CardTitle>{tr("Archived records")}</CardTitle>
 				<CardDescription>
-					Deleted records are archived and hidden, then pruned for good.
+					{tr("Deleted records are archived and hidden, then pruned for good.")}
 				</CardDescription>
 
 				<CardAction>
@@ -70,7 +71,7 @@ export function ArchiveRetention() {
 						}
 					>
 						{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-						Save
+						{tr("Save")}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -81,7 +82,7 @@ export function ArchiveRetention() {
 					onSubmit={(event) => {
 						event.preventDefault();
 						if (!Number.isFinite(days)) {
-							toast.error("Enter a number of days.");
+							toast.error(tr("Enter a number of days."));
 							return;
 						}
 						save.mutate({ days });
@@ -90,7 +91,7 @@ export function ArchiveRetention() {
 					<FieldGroup>
 						<Field>
 							<FieldLabel htmlFor={daysId}>
-								Prune archived records after
+								{tr("Prune archived records after")}
 							</FieldLabel>
 							<Input
 								id={daysId}
@@ -99,7 +100,9 @@ export function ArchiveRetention() {
 								disabled={save.isPending}
 								onChange={(event) => setDraft(event.target.value)}
 							/>
-							<FieldDescription>Days. 180 is the default.</FieldDescription>
+							<FieldDescription>
+								{tr("Days. 180 is the default.")}
+							</FieldDescription>
 						</Field>
 					</FieldGroup>
 				</form>

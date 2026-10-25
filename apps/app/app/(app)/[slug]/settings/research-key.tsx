@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { CONTEXT_DEV_SIGNUP_URL } from "@crm/db/settings";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -39,7 +40,7 @@ export function ResearchKey() {
 			onSuccess: async () => {
 				await cache.settings();
 				setDraft("");
-				toast.success("Context API key saved.");
+				toast.success(tr("Context API key saved."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -52,10 +53,11 @@ export function ResearchKey() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Company research</CardTitle>
+				<CardTitle>{tr("Company research")}</CardTitle>
 				<CardDescription>
-					Enter your Context API key so our agents can research every company in
-					the CRM.
+					{tr(
+						"Enter your Context API key so our agents can research every company in the CRM.",
+					)}
 				</CardDescription>
 
 				<CardAction>
@@ -65,7 +67,7 @@ export function ResearchKey() {
 						disabled={save.isPending || draft.trim() === ""}
 					>
 						{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-						{configured ? "Replace key" : "Save key"}
+						{configured ? tr("Replace key") : tr("Save key")}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -81,11 +83,11 @@ export function ResearchKey() {
 					<FieldGroup>
 						<Field>
 							<div className="flex items-center justify-between gap-3">
-								<FieldLabel htmlFor={keyId}>Context API key</FieldLabel>
+								<FieldLabel htmlFor={keyId}>{tr("Context API key")}</FieldLabel>
 								<StatusIndicator
 									size="sm"
 									tone={configured ? "success" : "warning"}
-									label={configured ? "Connected" : "Not connected"}
+									label={configured ? tr("Connected") : tr("Not connected")}
 								/>
 							</div>
 							<Input
@@ -93,7 +95,7 @@ export function ResearchKey() {
 								type="password"
 								value={draft}
 								onChange={(event) => setDraft(event.target.value)}
-								placeholder={hint ?? "Paste the key"}
+								placeholder={hint ?? tr("Paste the key")}
 								autoComplete="off"
 								autoCapitalize="off"
 								autoCorrect="off"
@@ -108,7 +110,7 @@ export function ResearchKey() {
 									rel="noreferrer"
 									className="underline underline-offset-4 hover:text-foreground"
 								>
-									Sign up here
+									{tr("Sign up here")}
 								</a>
 							</FieldDescription>
 						</Field>

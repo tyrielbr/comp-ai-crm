@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { groupGrantedScopes } from "@crm/mcp-integrations/scopes";
 import { MCP_CONNECTION } from "./mcp-connection-config";
 
@@ -40,29 +41,29 @@ type Agent = {
 const TOOL_GROUPS = [
 	{
 		kind: "read",
-		label: "Read",
-		description: "Views data without changing it.",
+		label: tr("Read"),
+		description: tr("Views data without changing it."),
 		badgeVariant: "scope-read",
 	},
 	{
 		kind: "change",
-		label: "Change",
-		description: "Creates or updates data.",
+		label: tr("Change"),
+		description: tr("Creates or updates data."),
 		badgeVariant: "scope-change",
 	},
 	{
 		kind: "risky",
-		label: "Sensitive",
-		description: "Uses sensitive or destructive access.",
+		label: tr("Sensitive"),
+		description: tr("Uses sensitive or destructive access."),
 		badgeVariant: "scope-sensitive",
 	},
 ] as const;
 
 const TOOL_REVIEW_LABEL = {
-	pending: "Needs review",
-	reviewed: "Reviewed",
-	changed: "Changed",
-	removed: "Removed",
+	pending: tr("Needs review"),
+	reviewed: tr("Reviewed"),
+	changed: tr("Changed"),
+	removed: tr("Removed"),
 } satisfies Record<ToolReviewState, string>;
 
 export function presentMcpConnection(input: {
@@ -101,7 +102,7 @@ export function presentMcpConnection(input: {
 		label: string;
 		count: number;
 	}> = [
-		{ value: "all", label: "All", count: input.tools.length },
+		{ value: "all", label: tr("All"), count: input.tools.length },
 		...TOOL_GROUPS.map((group) => ({
 			value: group.kind,
 			label: group.label,
@@ -119,7 +120,7 @@ export function presentMcpConnection(input: {
 					failure:
 						connection.lastErrorCode || connection.status === "error"
 							? {
-									title: "The last connection attempt failed.",
+									title: tr("The last connection attempt failed."),
 									code: connection.lastErrorCode ?? "unknown_error",
 								}
 							: null,
@@ -133,7 +134,7 @@ export function presentMcpConnection(input: {
 						: [],
 					agents: input.agents.map((agent) => ({
 						...agent,
-						statusLabel: agent.status === "LIVE" ? "Running" : "Paused",
+						statusLabel: agent.status === "LIVE" ? tr("Running") : tr("Paused"),
 					})),
 				}
 			: null,

@@ -1,6 +1,7 @@
 "use client";
 
 import OverflowMenuHorizontal from "@carbon/icons-react/es/OverflowMenuHorizontal";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	DataTable,
@@ -26,9 +27,9 @@ import type { RouterOutputs } from "@/lib/trpc/types";
 import { membersSearchParams } from "./members-search-params";
 
 const ROLE_LABEL = {
-	owner: "Owner",
-	admin: "Admin",
-	member: "Member",
+	owner: tr("Owner"),
+	admin: tr("Admin"),
+	member: tr("Member"),
 } as const;
 
 type Role = keyof typeof ROLE_LABEL;
@@ -43,7 +44,7 @@ function columns(
 	return [
 		{
 			id: "name",
-			header: "Name",
+			header: tr("Name"),
 			sortable: true,
 			hideable: false,
 			width: "w-[34%]",
@@ -64,7 +65,7 @@ function columns(
 		},
 		{
 			id: "email",
-			header: "Email",
+			header: tr("Email"),
 			sortable: true,
 			width: "w-[32%]",
 			hideBelow: "md",
@@ -74,7 +75,7 @@ function columns(
 		},
 		{
 			id: "role",
-			header: "Role",
+			header: tr("Role"),
 			sortable: true,
 			width: "w-[14%]",
 			cell: (row) => (
@@ -83,8 +84,8 @@ function columns(
 		},
 		{
 			id: "joinedAt",
-			header: "Joined",
-			label: "Joined date",
+			header: tr("Joined"),
+			label: tr("Joined date"),
 			sortable: true,
 			align: "right",
 			width: "w-[14%]",
@@ -98,7 +99,7 @@ function columns(
 		{
 			id: "actions",
 			header: <span className="sr-only">Actions</span>,
-			label: "Actions",
+			label: tr("Actions"),
 			hideable: false,
 			align: "right",
 			width: "w-[6%]",
@@ -147,7 +148,7 @@ export function MembersTable() {
 		trpc.workspace.setMemberRole.mutationOptions({
 			onSuccess: async () => {
 				await cache.workspace();
-				toast.success("Role changed.");
+				toast.success(tr("Role changed."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -158,7 +159,7 @@ export function MembersTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "role",
-			label: "Role",
+			label: tr("Role"),
 			options: (Object.keys(ROLE_LABEL) as Role[]).flatMap((role) =>
 				(facetCounts?.role?.[role] ?? 0) > 0
 					? [{ value: role, label: ROLE_LABEL[role] }]
@@ -170,7 +171,7 @@ export function MembersTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search by name or email…" />}
+			search={<ListSearch placeholder={tr("Search by name or email…")} />}
 			columns={columns(
 				workspace.data?.canChangeRoles ?? false,
 				(member, role) => setRole.mutate({ memberId: member.id, role }),
@@ -182,7 +183,7 @@ export function MembersTable() {
 			facets={facets}
 			getRowId={(row) => row.id}
 			loading={members.isFetching}
-			empty="Nobody matches this view."
+			empty={tr("Nobody matches this view.")}
 		/>
 	);
 }

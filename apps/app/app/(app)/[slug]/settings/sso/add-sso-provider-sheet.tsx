@@ -1,6 +1,7 @@
 "use client";
 
 import Add from "@carbon/icons-react/es/Add";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Field,
@@ -49,7 +50,7 @@ function AddButton(props: ComponentProps<typeof Button>) {
 	return (
 		<Button {...props}>
 			<Icon icon={Add} data-icon="inline-start" />
-			Add provider
+			{tr("Add provider")}
 		</Button>
 	);
 }
@@ -112,9 +113,9 @@ function AddSsoProviderForm() {
 
 			<SheetContent side="right">
 				<SheetHeader>
-					<SheetTitle>Add an identity provider</SheetTitle>
+					<SheetTitle>{tr("Add an identity provider")}</SheetTitle>
 					<SheetDescription>
-						Configure an OpenID Connect provider.
+						{tr("Configure an OpenID Connect provider.")}
 					</SheetDescription>
 				</SheetHeader>
 
@@ -134,7 +135,7 @@ function AddSsoProviderForm() {
 				>
 					<FieldGroup>
 						<Field>
-							<FieldLabel htmlFor={providerIdId}>Name</FieldLabel>
+							<FieldLabel htmlFor={providerIdId}>{tr("Name")}</FieldLabel>
 							<Input
 								id={providerIdId}
 								value={values.providerId}
@@ -147,7 +148,7 @@ function AddSsoProviderForm() {
 								required
 							/>
 							<FieldDescription>
-								Names the sign-in button. Cannot be changed later.
+								{tr("Names the sign-in button. Cannot be changed later.")}
 							</FieldDescription>
 						</Field>
 
@@ -166,11 +167,13 @@ function AddSsoProviderForm() {
 								inputMode="url"
 								required
 							/>
-							<FieldDescription>Where discovery lives.</FieldDescription>
+							<FieldDescription>
+								{tr("Where discovery lives.")}
+							</FieldDescription>
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={domainId}>Email domain</FieldLabel>
+							<FieldLabel htmlFor={domainId}>{tr("Email domain")}</FieldLabel>
 							<Input
 								id={domainId}
 								value={values.domain}
@@ -182,7 +185,9 @@ function AddSsoProviderForm() {
 								spellCheck={false}
 								required
 							/>
-							<FieldDescription>Comma-separate several.</FieldDescription>
+							<FieldDescription>
+								{tr("Comma-separate several.")}
+							</FieldDescription>
 						</Field>
 
 						<Field>
@@ -200,7 +205,9 @@ function AddSsoProviderForm() {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={clientSecretId}>Client secret</FieldLabel>
+							<FieldLabel htmlFor={clientSecretId}>
+								{tr("Client secret")}
+							</FieldLabel>
 							<Input
 								id={clientSecretId}
 								type="password"
@@ -209,7 +216,7 @@ function AddSsoProviderForm() {
 								autoComplete="off"
 								required
 							/>
-							<FieldDescription>Never shown again.</FieldDescription>
+							<FieldDescription>{tr("Never shown again.")}</FieldDescription>
 						</Field>
 
 						<Field>
@@ -217,11 +224,11 @@ function AddSsoProviderForm() {
 							<InputGroup>
 								<InputGroupInput id={redirectId} value={callbackURL} readOnly />
 								<InputGroupAddon align="inline-end">
-									<CopyValue value={callbackURL} label="Redirect URI" />
+									<CopyValue value={callbackURL} label={tr("Redirect URI")} />
 								</InputGroupAddon>
 							</InputGroup>
 							<FieldDescription>
-								Add this at your provider before saving.
+								{tr("Add this at your provider before saving.")}
 							</FieldDescription>
 						</Field>
 					</FieldGroup>
@@ -234,10 +241,10 @@ function AddSsoProviderForm() {
 						disabled={!complete || register.isPending}
 					>
 						{register.isPending ? <Spinner /> : null}
-						Add provider
+						{tr("Add provider")}
 					</Button>
 					<SheetClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant="outline">{tr("Cancel")}</Button>
 					</SheetClose>
 				</SheetFooter>
 			</SheetContent>

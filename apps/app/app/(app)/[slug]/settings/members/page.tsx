@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -16,7 +17,7 @@ import { membersSearchParams } from "./members-search-params";
 import { MembersTable } from "./members-table";
 
 export const metadata: Metadata = {
-	title: "Members",
+	title: tr("Members"),
 };
 
 export default function MembersSettingsPage({
@@ -26,9 +27,9 @@ export default function MembersSettingsPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Members</PageShellTitle>
+					<PageShellTitle>{tr("Members")}</PageShellTitle>
 					<PageShellDescription>
-						Everyone who has access to your CRM.
+						{tr("Everyone who has access to your CRM.")}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

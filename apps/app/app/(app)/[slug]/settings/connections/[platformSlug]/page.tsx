@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { vendorBySlug } from "@crm/mcp-integrations/catalog";
 import { providerBrand } from "@crm/ui/lib/provider-brand";
 import type { Metadata } from "next";
@@ -19,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const { platformSlug } = await params;
 	const vendor = vendorBySlug(platformSlug);
-	return { title: vendor ? `${vendor.name} connection` : "Connection" };
+	return { title: vendor ? `${vendor.name} connection` : tr("Connection") };
 }
 
 export default function McpConnectionPage({

@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { providerBrand } from "@crm/ui/lib/provider-brand";
 import type { Metadata } from "next";
 import { Suspense } from "react";
@@ -8,7 +9,7 @@ import { McpConnection } from "../mcp-connection";
 import { presentMcpConnection } from "../mcp-connection-presentation";
 import { presentSupabaseToolDescription } from "./supabase-tool-description";
 
-export const metadata: Metadata = { title: "Supabase connection" };
+export const metadata: Metadata = { title: tr("Supabase connection") };
 
 export default function SupabaseConnectionPage(
 	props: PageProps<"/[slug]/settings/connections/supabase">,

@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import {
 	Card,
 	CardContent,
@@ -26,18 +27,20 @@ import { useTRPC } from "@/lib/trpc/client";
 const TOGGLES = [
 	{
 		flag: "cookieSubdomains",
-		label: "Limit cookies to subdomains",
-		hint: "Set the cookie on the exact host that served the page, never on the parent domain",
+		label: tr("Limit cookies to subdomains"),
+		hint: tr(
+			"Set the cookie on the exact host that served the page, never on the parent domain",
+		),
 	},
 	{
 		flag: "secureCookies",
-		label: "Use secure cookies only",
-		hint: "Send the cookie over HTTPS and drop it on plain HTTP",
+		label: tr("Use secure cookies only"),
+		hint: tr("Send the cookie over HTTPS and drop it on plain HTTP"),
 	},
 	{
 		flag: "honourDnt",
-		label: "Honour Do Not Track",
-		hint: "Record nothing at all when the browser asks not to be tracked",
+		label: tr("Honour Do Not Track"),
+		hint: tr("Record nothing at all when the browser asks not to be tracked"),
 	},
 ] as const;
 
@@ -59,7 +62,7 @@ export function TrackingCookies() {
 		trpc.tracking.setCookieLifetime.mutationOptions({
 			onSuccess: async () => {
 				await cache.tracking();
-				toast.success("Cookie lifetime saved.");
+				toast.success(tr("Cookie lifetime saved."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -73,9 +76,9 @@ export function TrackingCookies() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Cookies</CardTitle>
+				<CardTitle>{tr("Cookies")}</CardTitle>
 				<CardDescription>
-					How a returning visitor is recognised.
+					{tr("How a returning visitor is recognised.")}
 				</CardDescription>
 			</CardHeader>
 
@@ -107,7 +110,7 @@ export function TrackingCookies() {
 				))}
 
 				<Field>
-					<FieldLabel htmlFor={lifetimeId}>Cookie lifetime</FieldLabel>
+					<FieldLabel htmlFor={lifetimeId}>{tr("Cookie lifetime")}</FieldLabel>
 					<Select
 						value={String(cookieDays)}
 						disabled={busy}
@@ -127,8 +130,9 @@ export function TrackingCookies() {
 						</SelectContent>
 					</Select>
 					<FieldDescription>
-						After this a returning visitor counts as somebody new. Shorten it if
-						your policy asks you to.
+						{tr(
+							"After this a returning visitor counts as somebody new. Shorten it if your policy asks you to.",
+						)}
 					</FieldDescription>
 				</Field>
 			</CardContent>

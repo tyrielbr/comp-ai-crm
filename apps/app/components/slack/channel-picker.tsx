@@ -2,6 +2,7 @@
 
 import Checkmark from "@carbon/icons-react/es/Checkmark";
 import Locked from "@carbon/icons-react/es/Locked";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { Icon } from "@crm/ui/components/icon";
 import { cn } from "@crm/ui/lib/utils";
@@ -101,7 +102,7 @@ export function ChannelPicker({
 									size="xs"
 									variant="outline"
 								>
-									{channel.inviteRequestedAt ? "Ask again" : "Request"}
+									{channel.inviteRequestedAt ? tr("Ask again") : tr("Request")}
 								</Button>
 							) : !channel.isMember && onAdd ? (
 								<Button
@@ -110,7 +111,7 @@ export function ChannelPicker({
 									size="xs"
 									variant="outline"
 								>
-									Add
+									{tr("Add")}
 								</Button>
 							) : null}
 						</span>
@@ -126,10 +127,15 @@ function describe(channel: PickerChannel, canInviteItself: boolean): string {
 		channel.memberCount === null ? "" : ` · ${channel.memberCount} people`;
 
 	if (channel.isMember) return `Comp AI is in${people}`;
-	if (!channel.classified) return `Not read from Slack yet${people}`;
-	if (!channel.isPrivate) return `Comp AI can join this one${people}`;
-	if (canInviteItself) return `Private. Comp AI joins as you${people}`;
+	if (!channel.classified)
+		return tr("Not read from Slack yet{people}", { people });
+	if (!channel.isPrivate)
+		return tr("Comp AI can join this one{people}", { people });
+	if (canInviteItself)
+		return tr("Private. Comp AI joins as you{people}", { people });
 	if (channel.inviteRequestedAt)
-		return `Private. Waiting on an invite${people}`;
-	return `Private. Someone inside has to invite Comp AI${people}`;
+		return tr("Private. Waiting on an invite{people}", { people });
+	return tr("Private. Someone inside has to invite Comp AI{people}", {
+		people,
+	});
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Copy from "@carbon/icons-react/es/Copy";
+import { tr } from "@crm/agro-i18n";
 import {
 	Accordion,
 	AccordionContent,
@@ -50,8 +51,10 @@ export function TrackingScript() {
 				await cache.tracking();
 				toast.success(
 					input.enabled
-						? "Tracking paused. The script stops recording within five minutes."
-						: "Tracking resumed.",
+						? tr(
+								"Tracking paused. The script stops recording within five minutes.",
+							)
+						: tr("Tracking resumed."),
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -62,7 +65,9 @@ export function TrackingScript() {
 		trpc.tracking.rotateSiteId.mutationOptions({
 			onSuccess: async () => {
 				await cache.tracking();
-				toast.success("Site ID rotated. Paste the new tag on your website.");
+				toast.success(
+					tr("Site ID rotated. Paste the new tag on your website."),
+				);
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -84,14 +89,14 @@ export function TrackingScript() {
 		const clipboard = navigator.clipboard;
 
 		if (!value || !clipboard) {
-			toast.error("Could not copy the script. Select it instead.");
+			toast.error(tr("Could not copy the script. Select it instead."));
 			return;
 		}
 
 		clipboard
 			.writeText(value)
-			.then(() => toast.success("Script copied."))
-			.catch(() => toast.error("Could not copy the script."));
+			.then(() => toast.success(tr("Script copied.")))
+			.catch(() => toast.error(tr("Could not copy the script.")));
 	};
 
 	return (
@@ -99,22 +104,22 @@ export function TrackingScript() {
 			<CardHeader>
 				<CardTitle>
 					<div className="flex items-center gap-2">
-						Tracking script
+						{tr("Tracking script")}
 						<StatusIndicator
 							size="sm"
 							tone={paused ? "warning" : receivingSince ? "success" : "neutral"}
 							label={
 								paused
-									? "Paused"
+									? tr("Paused")
 									: receivingSince
-										? "Receiving page views"
-										: "No page views yet"
+										? tr("Receiving page views")
+										: tr("No page views yet")
 							}
 						/>
 					</div>
 				</CardTitle>
 				<CardDescription>
-					One tag, 4 KB, in the head of every page you measure.
+					{tr("One tag, 4 KB, in the head of every page you measure.")}
 				</CardDescription>
 
 				<CardAction>
@@ -126,7 +131,7 @@ export function TrackingScript() {
 						type="button"
 					>
 						<Icon icon={Copy} data-icon="inline-start" />
-						Copy
+						{tr("Copy")}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -160,7 +165,7 @@ export function TrackingScript() {
 
 					<AccordionItem value="gtm">
 						<AccordionTrigger>
-							Add it through Google Tag Manager
+							{tr("Add it through Google Tag Manager")}
 						</AccordionTrigger>
 						<AccordionContent className="flex flex-col gap-4">
 							<pre className="overflow-x-auto rounded-md border bg-muted p-4 font-mono text-code-foreground text-xs/5">
@@ -171,9 +176,11 @@ export function TrackingScript() {
 								<span className="text-code-accent">{"></script>"}</span>
 							</pre>
 							<ol className="flex list-decimal flex-col gap-1 pl-4 text-muted-foreground text-xs/relaxed">
-								<li>In Tag Manager, add a new Custom HTML tag.</li>
+								<li>{tr("In Tag Manager, add a new Custom HTML tag.")}</li>
 								<li>
-									Paste this snippet — not the one above — as the tag's HTML.
+									{tr(
+										"Paste this snippet — not the one above — as the tag's HTML.",
+									)}
 								</li>
 								<li>
 									Trigger it on All Pages, then publish the container. Keep{" "}
@@ -198,8 +205,9 @@ export function TrackingScript() {
 					>
 						<span className="text-sm">Pause tracking</span>
 						<span className="font-normal text-muted-foreground text-xs">
-							The script keeps loading and records nothing. Your domains and
-							settings are kept
+							{tr(
+								"The script keeps loading and records nothing. Your domains and settings are kept",
+							)}
 						</span>
 					</Label>
 
@@ -222,28 +230,29 @@ export function TrackingScript() {
 									size="xs"
 									disabled={!canManage || rotate.isPending}
 								>
-									Rotate site ID
+									{tr("Rotate site ID")}
 								</Button>
 							</AlertDialogTrigger>
 
 							<AlertDialogContent>
 								<AlertDialogHeader>
-									<AlertDialogTitle>Rotate the site ID?</AlertDialogTitle>
+									<AlertDialogTitle>
+										{tr("Rotate the site ID?")}
+									</AlertDialogTitle>
 									<AlertDialogDescription>
-										Every copy of the old script stops recording at once,
-										including any you have forgotten about. You will need to
-										paste the new tag on every page that carries the old one.
-										Nothing already collected is lost.
+										{tr(
+											"Every copy of the old script stops recording at once, including any you have forgotten about. You will need to paste the new tag on every page that carries the old one. Nothing already collected is lost.",
+										)}
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 
 								<AlertDialogFooter>
-									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogCancel>{tr("Cancel")}</AlertDialogCancel>
 									<AlertDialogAction
 										variant="destructive"
 										onClick={() => rotate.mutate()}
 									>
-										Rotate
+										{tr("Rotate")}
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>

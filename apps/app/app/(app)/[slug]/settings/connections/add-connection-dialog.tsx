@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import DocusignLogo from "@crm/ui/components/brand-logos/docusign";
 import GoogleLogo from "@crm/ui/components/brand-logos/google";
 import MicrosoftLogo from "@crm/ui/components/brand-logos/microsoft";
@@ -49,7 +50,7 @@ export function AddConnectionDialog({
 				<DialogHeader className="gap-2 px-(--spacing-block-inline) pt-5 pb-4">
 					<DialogTitle className="text-base">Add a connection</DialogTitle>
 					<DialogDescription>
-						Nothing moves until you finish setting one up.
+						{tr("Nothing moves until you finish setting one up.")}
 					</DialogDescription>
 				</DialogHeader>
 				<div className="flex max-h-[min(60vh,32rem)] flex-col overflow-y-auto border-y px-2 py-2">
@@ -57,7 +58,9 @@ export function AddConnectionDialog({
 						<CatalogRow
 							logo={GoogleLogo}
 							name="Google Workspace"
-							description="Bring in Gmail messages and Google Calendar meetings"
+							description={tr(
+								"Bring in Gmail messages and Google Calendar meetings",
+							)}
 							href={`/${slug}/settings/connections/google`}
 						/>
 					) : null}
@@ -65,7 +68,9 @@ export function AddConnectionDialog({
 						<CatalogRow
 							logo={SlackLogo}
 							name="Slack"
-							description="Let deployed agents notify approved channels and people"
+							description={tr(
+								"Let deployed agents notify approved channels and people",
+							)}
 							href={`/${slug}/settings/connections/slack`}
 						/>
 					) : null}
@@ -73,7 +78,7 @@ export function AddConnectionDialog({
 						<CatalogRow
 							logo={MicrosoftLogo}
 							name="Microsoft 365"
-							description="Bring in Outlook email and the people on it"
+							description={tr("Bring in Outlook email and the people on it")}
 							href={`/${slug}/settings/connections/microsoft`}
 						/>
 					) : null}
@@ -102,18 +107,18 @@ export function AddConnectionDialog({
 					<CatalogRow
 						logo={StripeLogo}
 						name="Stripe"
-						description="Coming soon"
+						description={tr("Coming soon")}
 					/>
 					<CatalogRow
 						logo={DocusignLogo}
 						name="Docusign"
-						description="Coming soon"
+						description={tr("Coming soon")}
 					/>
 				</div>
 				<p className="px-(--spacing-block-inline) py-4 text-muted-foreground text-xs">
 					{connected.length > 0
 						? `${connected.join(", ")} ${connected.length === 1 ? "is" : "are"} already connected.`
-						: "Nothing is connected yet."}
+						: tr("Nothing is connected yet.")}
 				</p>
 			</DialogContent>
 		</Dialog>
@@ -125,8 +130,8 @@ function mcpDescription(
 	configured: boolean,
 	canManage: boolean,
 ) {
-	if (!configured) return "Set MCP_ENCRYPTION_KEY to enable";
-	if (!canManage) return "An owner or admin can connect this service";
+	if (!configured) return tr("Set MCP_ENCRYPTION_KEY to enable");
+	if (!canManage) return tr("An owner or admin can connect this service");
 	return description;
 }
 
