@@ -110,7 +110,7 @@ function MessageScrollerButton({
           <ArrowDownIcon
           />
           <span className="sr-only">
-            {direction === "end" ? "Scroll to end" : "Scroll to start"}
+            {direction === "end" ? tr("Scroll to end") : tr("Scroll to start")}
           </span>
         </>
       )}
@@ -129,3 +129,5 @@ export {
   useMessageScrollerScrollable,
   useMessageScrollerVisibility,
 }
+
+import { tr } from "@crm/agro-i18n";

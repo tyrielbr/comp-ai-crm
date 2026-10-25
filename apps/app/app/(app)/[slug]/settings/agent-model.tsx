@@ -183,7 +183,9 @@ export function AgentModel() {
 				<p className="text-muted-foreground text-xs">
 					{unavailable
 						? tr(
-								"Could not reach the AI Gateway to list models. The agent is still running {effectiveId}.",
+								tr(
+									"Could not reach the AI Gateway to list models. The agent is still running {effectiveId}.",
+								),
 								{ effectiveId },
 							)
 						: effective

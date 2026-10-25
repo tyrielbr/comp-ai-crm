@@ -6,6 +6,7 @@ import { Button } from "@crm/ui/components/button";
 import { Icon } from "@crm/ui/components/icon";
 import { Spinner } from "@crm/ui/components/spinner";
 import type * as React from "react";
+import { tr } from "@crm/agro-i18n";
 
 export function Suggestion({
 	value,
@@ -41,7 +42,7 @@ export function Suggestion({
 							variant="ghost"
 							size="icon-xs"
 							onClick={onAccept}
-							aria-label="Accept"
+							aria-label={tr("Accept")}
 						>
 							<Icon icon={Checkmark} />
 						</Button>
@@ -49,7 +50,7 @@ export function Suggestion({
 							variant="ghost"
 							size="icon-xs"
 							onClick={onDismiss}
-							aria-label="Dismiss"
+							aria-label={tr("Dismiss")}
 						>
 							<Icon icon={Close} />
 						</Button>

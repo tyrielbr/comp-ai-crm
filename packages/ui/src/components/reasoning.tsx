@@ -9,6 +9,7 @@ import {
 import { Shimmer } from "@crm/ui/components/shimmer";
 import { cn } from "@crm/ui/lib/utils";
 import type { ReactNode } from "react";
+import { tr } from "@crm/agro-i18n";
 
 export function Reasoning({
 	children,
@@ -31,7 +32,7 @@ export function Reasoning({
 		>
 			<AccordionItem value="reasoning">
 				<AccordionTrigger variant="subtle">
-					{isStreaming ? <Shimmer>Thinking…</Shimmer> : label}
+					{isStreaming ? <Shimmer>{tr("Thinking…")}</Shimmer> : label}
 				</AccordionTrigger>
 				<AccordionContent className="text-muted-foreground">
 					{children}

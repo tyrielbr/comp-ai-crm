@@ -1,5 +1,6 @@
 import { cn } from "@crm/ui/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import { tr } from "@crm/agro-i18n";
 
 const SILHOUETTE =
 	"M384 99.548 367.934 87.04 256.021 0 0 199.096v113.782L256.021 512 512 312.879V199.096Z";
@@ -28,7 +29,7 @@ function Spinner({
 		<svg
 			data-slot="spinner"
 			role="status"
-			aria-label="Loading"
+			aria-label={tr("Loading")}
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="-68 -68 648 648"
 			fill="none"

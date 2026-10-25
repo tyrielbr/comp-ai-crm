@@ -1,12 +1,13 @@
+import { tr } from "@crm/agro-i18n";
 import type { RecordKind } from "@/components/crm/record-sheet/record-stack";
 import type { FieldEntity } from "./fields-entity";
 
 export const SHEET_TITLE = "Fields";
 
 const SUBTITLE = {
-	company: "This shapes every company in your CRM.",
-	contact: "This shapes every contact in your CRM.",
-	deal: "This shapes every deal in your CRM.",
+	company: tr("This shapes every company in your CRM."),
+	contact: tr("This shapes every contact in your CRM."),
+	deal: tr("This shapes every deal in your CRM."),
 } satisfies Record<RecordKind, string>;
 
 export function subtitleFor(kind: RecordKind): string {
@@ -62,21 +63,21 @@ export const ARCHIVE = "Archive";
 export const FILL_REST = "Fill the rest";
 
 const SHEET_PLACEMENT = {
-	COMPANY: "Show on the company sheet",
-	CONTACT: "Show on the contact sheet",
-	DEAL: "Show on the deal sheet",
+	COMPANY: tr("Show on the company sheet"),
+	CONTACT: tr("Show on the contact sheet"),
+	DEAL: tr("Show on the deal sheet"),
 } satisfies Record<FieldEntity, string>;
 
 const TABLE_PLACEMENT = {
-	COMPANY: "Offer as a column on the Companies table",
-	CONTACT: "Offer as a column on the Contacts table",
-	DEAL: "Offer as a column on the Deals table",
+	COMPANY: tr("Offer as a column on the Companies table"),
+	CONTACT: tr("Offer as a column on the Contacts table"),
+	DEAL: tr("Offer as a column on the Deals table"),
 } satisfies Record<FieldEntity, string>;
 
 const FILTER_PLACEMENT = {
-	COMPANY: "Offer as a filter on the Companies table",
-	CONTACT: "Offer as a filter on the Contacts table",
-	DEAL: "Offer as a filter on the Deals table",
+	COMPANY: tr("Offer as a filter on the Companies table"),
+	CONTACT: tr("Offer as a filter on the Contacts table"),
+	DEAL: tr("Offer as a filter on the Deals table"),
 } satisfies Record<FieldEntity, string>;
 
 export function sheetPlacement(entity: FieldEntity): string {
@@ -92,7 +93,7 @@ export function filterPlacement(entity: FieldEntity): string {
 }
 
 export const ENTITY_TABS = [
-	{ kind: "company", label: "Companies" },
-	{ kind: "contact", label: "Contacts" },
-	{ kind: "deal", label: "Deals" },
+	{ kind: "company", label: tr("Companies") },
+	{ kind: "contact", label: tr("Contacts") },
+	{ kind: "deal", label: tr("Deals") },
 ] as const satisfies readonly { kind: RecordKind; label: string }[];

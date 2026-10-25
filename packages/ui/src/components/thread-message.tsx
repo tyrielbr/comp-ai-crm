@@ -1,6 +1,7 @@
 import { PersonAvatar } from "@crm/ui/components/person-avatar";
 import { cn } from "@crm/ui/lib/utils";
 import type * as React from "react";
+import { tr } from "@crm/agro-i18n";
 
 function ThreadMessage({
 	from,
@@ -59,7 +60,7 @@ function ThreadMessage({
 					</p>
 				) : (
 					<p className="text-muted-foreground text-xs italic">
-						No message body.
+						{tr("No message body.")}
 					</p>
 				)}
 

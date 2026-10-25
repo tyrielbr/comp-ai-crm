@@ -319,7 +319,9 @@ export function AgentCapabilities({
 					blocked ??
 					(channelChanged
 						? tr(
-								"Comp AI joins #{to}. It stays in #{from} until you remove it.",
+								tr(
+									"Comp AI joins #{to}. It stays in #{from} until you remove it.",
+								),
 								{ to, from },
 							)
 						: tr("The old version stays in the history."))

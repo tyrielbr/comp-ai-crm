@@ -83,7 +83,7 @@ export function parseCsv(text: string): ParsedCsv {
 	const records = parseRecords(text.replace(/^\uFEFF/, ""));
 	const [headerRecord, ...dataRecords] = records;
 	if (!headerRecord || headerRecord.every((field) => field.trim() === "")) {
-		throw new Error("The CSV file has no headers.");
+		throw new Error(tr("The CSV file has no headers."));
 	}
 
 	const headers = headerRecord.map((header) => header.trim());
@@ -92,7 +92,7 @@ export function parseCsv(text: string): ParsedCsv {
 	}
 
 	if (dataRecords.length === 0) {
-		throw new Error("The CSV file has no company rows.");
+		throw new Error(tr("The CSV file has no company rows."));
 	}
 	if (dataRecords.length > COMPANY_IMPORT.maxRows) {
 		throw new Error(
@@ -106,7 +106,11 @@ export function parseCsv(text: string): ParsedCsv {
 	for (const [index, row] of dataRecords.entries()) {
 		if (row.length !== headers.length) {
 			throw new Error(
-				`Row ${index + 2} has ${row.length} columns. The header has ${headers.length}.`,
+				tr("Row {index} has {length} columns. The header has {length2}.", {
+					index: index + 2,
+					length: row.length,
+					length2: headers.length,
+				}),
 			);
 		}
 	}
@@ -130,17 +134,17 @@ export function buildImportRows(
 	mapping: CompanyImportMapping,
 ): CompanyImportRow[] {
 	if (mapping.length !== parsed.headers.length) {
-		throw new Error("Map every CSV column before importing.");
+		throw new Error(tr("Map every CSV column before importing."));
 	}
 
 	const mappedFields = mapping.filter(
 		(field): field is CompanyImportField => field !== null,
 	);
 	if (!mappedFields.includes("name")) {
-		throw new Error("Map one CSV column to Name before importing.");
+		throw new Error(tr("Map one CSV column to Name before importing."));
 	}
 	if (new Set(mappedFields).size !== mappedFields.length) {
-		throw new Error("Each company field can use only one CSV column.");
+		throw new Error(tr("Each company field can use only one CSV column."));
 	}
 
 	const rows = parsed.rows.map((row) => {
@@ -161,7 +165,9 @@ export function reduceImportWizard(
 	if (action.type === "file-loaded") {
 		return {
 			step: "map",
-			message: `${action.parsed.rows.length} company rows are ready to map.`,
+			message: tr("{length} company rows are ready to map.", {
+				length: action.parsed.rows.length,
+			}),
 			parsed: action.parsed,
 			mapping: action.mapping,
 		};
@@ -175,7 +181,7 @@ export function reduceImportWizard(
 		return { ...state, mapping, error: undefined };
 	}
 	if (action.type === "back") {
-		return { step: "upload", message: "Choose a CSV file." };
+		return { step: "upload", message: tr("Choose a CSV file.") };
 	}
 	if (action.type === "failed") {
 		return state.step === "result"
@@ -185,12 +191,14 @@ export function reduceImportWizard(
 	if (action.type === "import-finished") {
 		return {
 			step: "result",
-			message: `${action.result.created} companies imported.`,
+			message: tr("{created} companies imported.", {
+				created: action.result.created,
+			}),
 			result: action.result,
 		};
 	}
 	if (action.type === "restart") {
-		return { step: "upload", message: "Choose a CSV file." };
+		return { step: "upload", message: tr("Choose a CSV file.") };
 	}
 	return state;
 }
@@ -229,11 +237,15 @@ function parseRecords(text: string): string[][] {
 			character !== "\n" &&
 			character !== "\r"
 		) {
-			throw new Error(`Row ${rowNumber} has text after a quoted field.`);
+			throw new Error(
+				tr("Row {rowNumber} has text after a quoted field.", { rowNumber }),
+			);
 		}
 		if (character === '"') {
 			if (field !== "")
-				throw new Error(`Row ${rowNumber} has an unexpected quote.`);
+				throw new Error(
+					tr("Row {rowNumber} has an unexpected quote.", { rowNumber }),
+				);
 			quoted = true;
 			closedQuote = false;
 			continue;
@@ -258,7 +270,9 @@ function parseRecords(text: string): string[][] {
 	}
 
 	if (quoted)
-		throw new Error(`Row ${rowNumber} has an unterminated quoted field.`);
+		throw new Error(
+			tr("Row {rowNumber} has an unterminated quoted field.", { rowNumber }),
+		);
 	if (field !== "" || record.length > 0) {
 		record.push(field);
 		records.push(record);

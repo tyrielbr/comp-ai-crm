@@ -6,6 +6,7 @@ import type * as React from "react";
 import { buttonVariants, type Button } from "./button";
 import { Icon } from "./icon";
 import { cn } from "../lib/utils";
+import { tr } from "@crm/agro-i18n";
 
 function Questionnaire({
 	className,
@@ -216,7 +217,7 @@ function QuestionnairePrevious({
 			)}
 			{...props}
 		>
-			{children ?? "Previous"}
+			{children ?? tr("Previous")}
 		</QuestionnairePrimitive.Previous>
 	);
 }
@@ -241,7 +242,7 @@ function QuestionnaireSkip({
 			)}
 			{...props}
 		>
-			{children ?? "Skip"}
+			{children ?? tr("Skip")}
 		</QuestionnairePrimitive.Skip>
 	);
 }
@@ -266,7 +267,7 @@ function QuestionnaireNext({
 			)}
 			{...props}
 		>
-			{children ?? "Next"}
+			{children ?? tr("Next")}
 		</QuestionnairePrimitive.Next>
 	);
 }
@@ -291,7 +292,7 @@ function QuestionnaireSubmit({
 			)}
 			{...props}
 		>
-			{children ?? "Submit"}
+			{children ?? tr("Submit")}
 		</QuestionnairePrimitive.Submit>
 	);
 }

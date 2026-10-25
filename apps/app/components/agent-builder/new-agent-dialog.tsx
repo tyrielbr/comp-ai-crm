@@ -158,7 +158,9 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 								? channel.isMember
 									? tr("Comp AI is already in #{name}.", { name: channel.name })
 									: tr(
-											"Comp AI is not in #{name} yet. It joins when you create this.",
+											tr(
+												"Comp AI is not in #{name} yet. It joins when you create this.",
+											),
 											{ name: channel.name },
 										)
 								: tr("Leave this empty and the builder will ask.")}

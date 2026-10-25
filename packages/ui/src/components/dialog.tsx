@@ -5,6 +5,7 @@ import { cn } from "@crm/ui/lib/utils";
 import { XIcon } from "lucide-react";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import type * as React from "react";
+import { tr } from "@crm/agro-i18n";
 
 function Dialog({
 	...props
@@ -113,7 +114,7 @@ function DialogFooter({
 			{children}
 			{showCloseButton && (
 				<DialogPrimitive.Close asChild>
-					<Button variant="outline">Close</Button>
+					<Button variant="outline">{tr("Close")}</Button>
 				</DialogPrimitive.Close>
 			)}
 		</div>

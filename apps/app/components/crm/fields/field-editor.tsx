@@ -161,7 +161,9 @@ function Coverage({ field }: { field: FieldRecord }) {
 						})}
 					/>
 					<span className="pl-4 text-muted-foreground text-xs">
-						{covered ? ALL_FILLED : `${total - filled} still to go`}
+						{covered
+							? ALL_FILLED
+							: tr("{filled} still to go", { filled: total - filled })}
 					</span>
 				</div>
 				<Button

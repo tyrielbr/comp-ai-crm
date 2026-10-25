@@ -288,7 +288,7 @@ function ScheduledSection({
 				<span className="text-muted-foreground">
 					{total === 1
 						? "1 record is booked for a later look"
-						: `${total} records are booked for a later look`}
+						: tr("{total} records are booked for a later look", { total })}
 				</span>
 				<span className="text-primary">{shown ? "Hide" : "Show"}</span>
 			</CollapsibleTrigger>

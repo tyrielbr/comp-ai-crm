@@ -195,7 +195,9 @@ function AskDialog({
 									"It is a private channel, so Comp AI joins as you. Same as typing the invite yourself. Everyone in the channel sees it join. It reads nothing until you turn a permission on.",
 								)
 							: tr(
-									"We cannot add Comp AI to a private channel yet. Someone already in #{name} has to run this.",
+									tr(
+										"We cannot add Comp AI to a private channel yet. Someone already in #{name} has to run this.",
+									),
 									{ name: channel.name },
 								)}
 					</AlertDialogDescription>

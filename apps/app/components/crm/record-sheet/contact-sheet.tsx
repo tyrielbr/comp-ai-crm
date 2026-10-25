@@ -535,7 +535,7 @@ function WeKnowThem({
 									last reply <LocalRelativeDate date={lastReplyAt} />
 								</>
 							) : (
-								`${first} has never replied`
+								tr("{first} has never replied", { first })
 							)}
 						</span>
 					</DetailSheetProperty>
@@ -604,7 +604,10 @@ function ContactDeals({ contact }: { contact: Contact }) {
 			<DetailSheetEmpty
 				icon={Partnership}
 				title={tr("Not on any deals")}
-				description={`${contactName(contact)} is not attached to anything being sold yet. Deals are opened on the company, then people are added to them.`}
+				description={tr(
+					"{contact} is not attached to anything being sold yet. Deals are opened on the company, then people are added to them.",
+					{ contact: contactName(contact) },
+				)}
 			/>
 		);
 	}

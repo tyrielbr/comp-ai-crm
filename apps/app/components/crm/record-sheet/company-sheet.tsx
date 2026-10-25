@@ -93,8 +93,12 @@ function companyConsequence(company: Company): string {
 		deals > 0
 			? tr(
 					deals === 1
-						? "Its one deal and everything filed against the account go too."
-						: "All {count} of its deals and everything filed against the account go too.",
+						? tr(
+								"Its one deal and everything filed against the account go too.",
+							)
+						: tr(
+								"All {count} of its deals and everything filed against the account go too.",
+							),
 					{ count: deals },
 				)
 			: tr("Everything filed against the account goes too.");
@@ -103,8 +107,12 @@ function companyConsequence(company: Company): string {
 		contacts > 0
 			? ` ${tr(
 					contacts === 1
-						? "The one person who works there stays in the CRM, without a company."
-						: "The {count} people who work there stay in the CRM, without a company.",
+						? tr(
+								"The one person who works there stays in the CRM, without a company.",
+							)
+						: tr(
+								"The {count} people who work there stay in the CRM, without a company.",
+							),
 					{ count: contacts },
 				)}`
 			: "";
@@ -474,7 +482,9 @@ function CompanyContacts({
 						icon={UserMultiple}
 						title={tr("No contacts yet")}
 						description={tr(
-							"Everyone you talk to at {company} lives here — add the first person and their calls, emails and notes hang off them.",
+							tr(
+								"Everyone you talk to at {company} lives here — add the first person and their calls, emails and notes hang off them.",
+							),
 							{ company: company.name },
 						)}
 						action={
@@ -599,7 +609,9 @@ function CompanyDeals({
 						icon={Partnership}
 						title={tr("No deals yet")}
 						description={tr(
-							"Nothing is being sold to {company} right now. Open one and it joins the pipeline and the forecast.",
+							tr(
+								"Nothing is being sold to {company} right now. Open one and it joins the pipeline and the forecast.",
+							),
 							{ company: company.name },
 						)}
 						action={

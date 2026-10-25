@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { FieldEntity } from "./fields-entity";
 
 export const STANDARD_FIELDS = {
@@ -12,8 +13,8 @@ export const STANDARD_FIELDS = {
 		"Owner",
 	],
 	CONTACT: [
-		"First name",
-		"Last name",
+		tr("First name"),
+		tr("Last name"),
 		"Title",
 		"Email",
 		"Phone",
@@ -26,7 +27,7 @@ export const STANDARD_FIELDS = {
 		"Name",
 		"Amount",
 		"Currency",
-		"Close date",
+		tr("Close date"),
 		"Company",
 		"Owner",
 		"Stage",
