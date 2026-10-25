@@ -58,7 +58,7 @@ function columns(
 					/>
 					<span className="truncate font-medium">{row.name}</span>
 					{row.isViewer ? (
-						<span className="text-muted-foreground text-xs">You</span>
+						<span className="text-muted-foreground text-xs">{tr("You")}</span>
 					) : null}
 				</span>
 			),
@@ -98,7 +98,7 @@ function columns(
 		},
 		{
 			id: "actions",
-			header: <span className="sr-only">Actions</span>,
+			header: <span className="sr-only">{tr("Actions")}</span>,
 			label: tr("Actions"),
 			hideable: false,
 			align: "right",

@@ -191,7 +191,7 @@ function Outcome({ result, siteId }: { result: Result; siteId: string }) {
 		return (
 			<Alert variant="destructive">
 				<Icon icon={Warning} />
-				<AlertTitle>Tag Manager will drop the site ID</AlertTitle>
+				<AlertTitle>{tr("Tag Manager will drop the site ID")}</AlertTitle>
 				<AlertDescription>
 					Container {result.container.id} carries the tag, but the site ID is
 					not in the script URL. Tag Manager keeps only the URL when it injects

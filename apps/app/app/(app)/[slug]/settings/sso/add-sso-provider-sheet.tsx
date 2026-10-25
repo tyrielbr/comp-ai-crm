@@ -153,7 +153,7 @@ function AddSsoProviderForm() {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={issuerId}>Issuer URL</FieldLabel>
+							<FieldLabel htmlFor={issuerId}>{tr("Issuer URL")}</FieldLabel>
 							<Input
 								id={issuerId}
 								type="url"
@@ -191,7 +191,7 @@ function AddSsoProviderForm() {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={clientIdId}>Client ID</FieldLabel>
+							<FieldLabel htmlFor={clientIdId}>{tr("Client ID")}</FieldLabel>
 							<Input
 								id={clientIdId}
 								value={values.clientId}
@@ -220,7 +220,7 @@ function AddSsoProviderForm() {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={redirectId}>Redirect URI</FieldLabel>
+							<FieldLabel htmlFor={redirectId}>{tr("Redirect URI")}</FieldLabel>
 							<InputGroup>
 								<InputGroupInput id={redirectId} value={callbackURL} readOnly />
 								<InputGroupAddon align="inline-end">

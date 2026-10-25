@@ -94,7 +94,7 @@ export function DeleteChatAction({
 							disabled={removeAction.pending}
 						>
 							<Icon icon={OverflowMenuVertical} />
-							<span className="sr-only">More chat actions</span>
+							<span className="sr-only">{tr("More chat actions")}</span>
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">

@@ -84,7 +84,7 @@ export function TasksTable() {
 	const columns: DataTableColumn<TaskRow>[] = [
 		{
 			id: "status",
-			header: <span className="sr-only">Status</span>,
+			header: <span className="sr-only">{tr("Status")}</span>,
 			label: tr("Status"),
 			sortable: true,
 			hideable: false,

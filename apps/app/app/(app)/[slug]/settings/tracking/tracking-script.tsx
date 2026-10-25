@@ -144,7 +144,7 @@ export function TrackingScript() {
 					onValueChange={setSection}
 				>
 					<AccordionItem value="html">
-						<AccordionTrigger>Paste it into your HTML</AccordionTrigger>
+						<AccordionTrigger>{tr("Paste it into your HTML")}</AccordionTrigger>
 						<AccordionContent className="flex flex-col gap-4">
 							<pre className="overflow-x-auto rounded-md border bg-muted p-4 font-mono text-code-foreground text-xs/5">
 								<span className="text-code-accent">{"<script"}</span>
@@ -203,7 +203,7 @@ export function TrackingScript() {
 						htmlFor="tracking-paused"
 						className="flex flex-col items-start gap-1"
 					>
-						<span className="text-sm">Pause tracking</span>
+						<span className="text-sm">{tr("Pause tracking")}</span>
 						<span className="font-normal text-muted-foreground text-xs">
 							{tr(
 								"The script keeps loading and records nothing. Your domains and settings are kept",

@@ -318,7 +318,7 @@ function Thread({
 							disabled={locked}
 						>
 							{busy ? <Spinner /> : <Icon icon={Send} />}
-							<span className="sr-only">Ask</span>
+							<span className="sr-only">{tr("Ask")}</span>
 						</Button>
 					</form>
 				)}

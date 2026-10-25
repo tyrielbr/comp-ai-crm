@@ -11,7 +11,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
 				<AuthShader />
 
 				<div className="relative flex gap-2 text-sm/5">
-					<Link href="/" aria-label="Homepage" className="flex">
+					<Link href="/" aria-label={tr("Homepage")} className="flex">
 						<Logo className="size-5 shrink-0" />
 					</Link>
 				</div>
@@ -28,7 +28,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
 				</div>
 
 				<p className="relative font-mono text-xs/4 text-muted-foreground">
-					Made with love by{" "}
+					{tr("Made with love by")}{" "}
 					<a
 						href="https://trycomp.ai"
 						target="_blank"
@@ -62,7 +62,7 @@ export function AuthHeading({
 }) {
 	return (
 		<div className="flex flex-col gap-3 text-left">
-			<Link href="/" aria-label="Homepage" className="flex">
+			<Link href="/" aria-label={tr("Homepage")} className="flex">
 				<Logo className="size-6 shrink-0" />
 			</Link>
 			<div className="flex flex-col gap-1">

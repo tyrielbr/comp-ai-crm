@@ -375,10 +375,10 @@ export function AgentActivity({ activity }: { activity: Activity }) {
 
 			<div className="min-w-0 overflow-hidden rounded-lg border bg-card">
 				<div className="hidden h-9 items-center border-b bg-background px-5 text-muted-foreground text-xs sm:flex">
-					<span className="w-[166px] shrink-0">Time</span>
-					<span className="min-w-0 flex-1">Change</span>
-					<span className="w-[140px] shrink-0">Actor</span>
-					<span className="w-[118px] shrink-0 text-right">Request</span>
+					<span className="w-[166px] shrink-0">{tr("Time")}</span>
+					<span className="min-w-0 flex-1">{tr("Change")}</span>
+					<span className="w-[140px] shrink-0">{tr("Actor")}</span>
+					<span className="w-[118px] shrink-0 text-right">{tr("Request")}</span>
 				</div>
 				{visible.map((event) => (
 					<div

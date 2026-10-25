@@ -559,9 +559,9 @@ export function AgentComposer({
 					>
 						<AsyncButtonContent
 							status={stopAction.status}
-							pendingLabel={<span className="sr-only">Stopping</span>}
-							successLabel={<span className="sr-only">Stopping</span>}
-							errorLabel={<span className="sr-only">Stop failed</span>}
+							pendingLabel={<span className="sr-only">{tr("Stopping")}</span>}
+							successLabel={<span className="sr-only">{tr("Stopping")}</span>}
+							errorLabel={<span className="sr-only">{tr("Stop failed")}</span>}
 						>
 							<Icon icon={StopFilled} motion="none" />
 						</AsyncButtonContent>
@@ -591,8 +591,8 @@ export function AgentComposer({
 										: tr("Sending")}
 								</span>
 							}
-							successLabel={<span className="sr-only">Sent</span>}
-							errorLabel={<span className="sr-only">Send failed</span>}
+							successLabel={<span className="sr-only">{tr("Sent")}</span>}
+							errorLabel={<span className="sr-only">{tr("Send failed")}</span>}
 						>
 							<Icon icon={ArrowUp} />
 						</AsyncButtonContent>

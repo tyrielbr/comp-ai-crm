@@ -106,12 +106,12 @@ function columns(
 						<LocalRelativeTime date={row.expiresAt} />
 					</span>
 				) : (
-					<span className="text-muted-foreground">Never</span>
+					<span className="text-muted-foreground">{tr("Never")}</span>
 				),
 		},
 		{
 			id: "actions",
-			header: <span className="sr-only">Actions</span>,
+			header: <span className="sr-only">{tr("Actions")}</span>,
 			label: tr("Actions"),
 			hideable: false,
 			align: "right",

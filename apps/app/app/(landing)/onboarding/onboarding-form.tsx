@@ -79,7 +79,7 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 				</Field>
 
 				<Field>
-					<FieldLabel htmlFor={slugId}>Workspace URL</FieldLabel>
+					<FieldLabel htmlFor={slugId}>{tr("Workspace URL")}</FieldLabel>
 					<InputGroup>
 						<InputGroupAddon>
 							<InputGroupText>/</InputGroupText>

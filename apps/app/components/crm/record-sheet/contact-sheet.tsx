@@ -187,7 +187,7 @@ export function ContactSheet({ contactId }: { contactId: string }) {
 							<Button asChild variant="outline" size="sm">
 								<a href={`mailto:${contact.email}`}>
 									<Icon icon={Email} data-icon="inline-start" />
-									<span className="hidden sm:inline">Email</span>
+									<span className="hidden sm:inline">{tr("Email")}</span>
 								</a>
 							</Button>
 						) : null}
@@ -204,7 +204,7 @@ export function ContactSheet({ contactId }: { contactId: string }) {
 								}
 							>
 								<Icon icon={Star} data-icon="inline-start" />
-								<span className="hidden sm:inline">Make primary</span>
+								<span className="hidden sm:inline">{tr("Make primary")}</span>
 							</Button>
 						) : null}
 						<RecordActions

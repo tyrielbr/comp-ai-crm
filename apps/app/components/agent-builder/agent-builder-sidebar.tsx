@@ -79,7 +79,7 @@ export function AgentBuilderSidebar({
 	return (
 		<aside className={cn("min-h-0 min-w-0 flex-col p-4 font-sans", className)}>
 			<div className="flex h-7 shrink-0 items-center justify-between pl-2">
-				<span className="font-medium text-xs">Chats</span>
+				<span className="font-medium text-xs">{tr("Chats")}</span>
 				<Button asChild variant="ghost" size="icon-xs">
 					<Link
 						href={workspaceUrl("/chat")}
@@ -91,7 +91,10 @@ export function AgentBuilderSidebar({
 				</Button>
 			</div>
 
-			<nav aria-label="Agent chats" className="min-h-0 flex-1 overflow-y-auto">
+			<nav
+				aria-label={tr("Agent chats")}
+				className="min-h-0 flex-1 overflow-y-auto"
+			>
 				{groups.map((group) => (
 					<div key={group.label}>
 						<div className="flex h-8 items-end pb-1 pl-2 font-medium text-[11px] text-muted-foreground uppercase tracking-[0.08em]">
@@ -175,7 +178,7 @@ function TeamAgents({
 				onClick={onNavigate}
 				className="flex h-8 items-end gap-2 rounded-sm px-2 pb-1 font-medium text-[11px] text-muted-foreground uppercase tracking-[0.08em] outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60"
 			>
-				<span className="min-w-0 flex-1">Team agents</span>
+				<span className="min-w-0 flex-1">{tr("Team agents")}</span>
 				<span className="shrink-0 font-mono">{agents.length}</span>
 			</Link>
 			{agents.map((agent) => {

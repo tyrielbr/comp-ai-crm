@@ -161,7 +161,9 @@ export function AgentCode({
 			<section className="flex flex-col gap-3.5">
 				<div className="flex items-end justify-between gap-4">
 					<div>
-						<h2 className="font-semibold text-lg tracking-tight">Code</h2>
+						<h2 className="font-semibold text-lg tracking-tight">
+							{tr("Code")}
+						</h2>
 						<p className="text-muted-foreground text-sm">
 							{tr("What the agent actually runs.")}
 						</p>

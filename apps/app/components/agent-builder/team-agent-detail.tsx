@@ -470,7 +470,7 @@ function DeleteAgentAction({
 						disabled={removeAction.pending}
 					>
 						<Icon icon={OverflowMenuVertical} />
-						<span className="sr-only">More agent actions</span>
+						<span className="sr-only">{tr("More agent actions")}</span>
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">

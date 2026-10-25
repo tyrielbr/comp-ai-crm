@@ -125,7 +125,7 @@ function Forget({
 			onClick={() => remove.mutate({ id: conversation.id })}
 		>
 			<Icon icon={TrashCan} />
-			<span className="sr-only">Delete this conversation</span>
+			<span className="sr-only">{tr("Delete this conversation")}</span>
 		</Button>
 	);
 }

@@ -101,7 +101,11 @@ export function EnrichmentQueue() {
 					<StatusIndicator
 						tone={total > 0 ? "primary" : "neutral"}
 						busy={total > 0}
-						label={total > 0 ? `Enriching ${total}` : tr("Enrichment")}
+						label={
+							total > 0
+								? tr("Enriching {count}", { count: total })
+								: tr("Enrichment")
+						}
 					/>
 				</Button>
 			</PopoverTrigger>

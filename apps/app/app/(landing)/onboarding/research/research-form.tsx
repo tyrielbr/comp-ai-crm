@@ -58,7 +58,7 @@ export function ResearchForm() {
 						required
 					/>
 					<FieldDescription>
-						Don't have a Context API key?{" "}
+						{tr("Don't have a Context API key?")}{" "}
 						<a
 							href={CONTEXT_DEV_SIGNUP_URL}
 							target="_blank"

@@ -29,12 +29,14 @@ export function CopyValue({ value, label }: { value: string; label: string }) {
 
 				clipboard
 					.writeText(value)
-					.then(() => toast.success(`${label} copied.`))
+					.then(() => toast.success(tr("{label} copied.", { label })))
 					.catch(unavailable);
 			}}
 		>
 			<Icon icon={Copy} />
-			<span className="sr-only">Copy {label.toLowerCase()}</span>
+			<span className="sr-only">
+				{tr("Copy {label}", { label: label.toLowerCase() })}
+			</span>
 		</Button>
 	);
 }

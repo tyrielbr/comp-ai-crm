@@ -218,7 +218,9 @@ function ConnectedSlack({
 			<section className="flex flex-col gap-3 border-y px-(--spacing-block-inline) py-5">
 				<div className="flex items-end justify-between gap-4">
 					<div>
-						<h2 className="font-medium text-sm">Agents that use Slack</h2>
+						<h2 className="font-medium text-sm">
+							{tr("Agents that use Slack")}
+						</h2>
 						<p className="text-muted-foreground text-xs">
 							{tr("Built in chat, not here. Open one to change it.")}
 						</p>

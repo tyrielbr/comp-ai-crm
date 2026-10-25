@@ -64,7 +64,9 @@ export function TeamAgentsIndex({ initialAgents }: { initialAgents: Agents }) {
 			) : (
 				<div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-dashed px-6 text-center">
 					<Icon icon={Bot} className="size-6 text-muted-foreground" />
-					<h2 className="mt-4 font-medium text-sm">No team agents yet</h2>
+					<h2 className="mt-4 font-medium text-sm">
+						{tr("No team agents yet")}
+					</h2>
 					<p className="mt-1 text-muted-foreground text-xs">
 						{tr(
 							"Create one from a private chat, then review its access before deploying it.",

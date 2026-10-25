@@ -180,7 +180,7 @@ export function TimelineEntry({
 							onClick={() => setEditing(true)}
 						>
 							<Icon icon={Edit} />
-							<span className="sr-only">Edit task</span>
+							<span className="sr-only">{tr("Edit task")}</span>
 						</Button>
 					) : null}
 				</div>

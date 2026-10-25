@@ -129,7 +129,7 @@ export function ShareChatDialog({
 							className="absolute top-4 right-4"
 						>
 							<Icon icon={Close} />
-							<span className="sr-only">Close</span>
+							<span className="sr-only">{tr("Close")}</span>
 						</Button>
 					</DialogClose>
 				</DialogHeader>

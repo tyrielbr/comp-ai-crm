@@ -16,7 +16,9 @@ const catalog: Record<string, string> = ptBR;
 
 // Nos testes do upstream (bun test) mantemos o texto original em inglês,
 // para que as asserções existentes continuem válidas.
-const passthrough = process.env.NODE_ENV === "test";
+const passthrough =
+	(globalThis as { process?: { env?: Record<string, string | undefined> } })
+		.process?.env?.NODE_ENV === "test";
 
 type Vars = Record<string, string | number | boolean | null | undefined>;
 

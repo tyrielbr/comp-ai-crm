@@ -76,7 +76,9 @@ export function SlackChannels() {
 		<section className="flex flex-col gap-3 px-(--spacing-block-inline)">
 			<div className="flex items-end justify-between gap-4">
 				<div>
-					<h2 className="font-medium text-sm">Channels Comp AI can reach</h2>
+					<h2 className="font-medium text-sm">
+						{tr("Channels Comp AI can reach")}
+					</h2>
 					<p className="text-muted-foreground text-xs">
 						{tr("Agents pick from this list.")}
 					</p>

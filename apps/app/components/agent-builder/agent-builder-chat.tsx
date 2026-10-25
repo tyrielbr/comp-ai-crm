@@ -943,7 +943,7 @@ function ChatHeader({
 							className="size-3.5 animate-spin text-ring"
 							motion="none"
 						/>
-						<span className="sr-only">Working in background</span>
+						<span className="sr-only">{tr("Working in background")}</span>
 						<span aria-hidden="true" className="hidden sm:inline">
 							{tr("Working in background")}
 						</span>
@@ -1267,10 +1267,10 @@ function AgentApprovalCard({
 			disabled={pending}
 			className="w-full max-w-lg overflow-hidden rounded-lg border bg-card"
 		>
-			<legend className="sr-only">Approval required</legend>
+			<legend className="sr-only">{tr("Approval required")}</legend>
 			<div className="flex items-start gap-3 p-4">
 				<div className="min-w-0 flex-1">
-					<p className="font-medium text-sm">Approval required</p>
+					<p className="font-medium text-sm">{tr("Approval required")}</p>
 					<p className="mt-1 text-muted-foreground text-xs">{label}</p>
 					<p className="mt-2 text-pretty text-sm leading-5">
 						{approval.prompt}
@@ -1308,9 +1308,9 @@ function AgentSessionLimitCard({
 			disabled={pending}
 			className="w-full max-w-lg overflow-hidden rounded-lg border bg-card"
 		>
-			<legend className="sr-only">Session limit reached</legend>
+			<legend className="sr-only">{tr("Session limit reached")}</legend>
 			<div className="p-4">
-				<p className="font-medium text-sm">Session limit reached</p>
+				<p className="font-medium text-sm">{tr("Session limit reached")}</p>
 				<p className="mt-2 text-pretty text-sm leading-5">{request.prompt}</p>
 			</div>
 			<div className="flex items-center justify-end gap-2 border-t bg-muted px-4 py-3">
@@ -1436,7 +1436,10 @@ function BuildingAgentCard({
 						{completed} of 4
 					</span>
 				</div>
-				<ol className="flex flex-col gap-1 p-3" aria-label="Agent creation">
+				<ol
+					className="flex flex-col gap-1 p-3"
+					aria-label={tr("Agent creation")}
+				>
 					{BUILDER_STEPS.map((label, index) => {
 						const done = index < completed;
 						const active =
@@ -1585,7 +1588,7 @@ function AgentConnectionCard({
 				</div>
 				<div className="flex flex-wrap items-center justify-between gap-3 border-t bg-muted px-4 py-3">
 					{connected ? (
-						<p className="text-muted-foreground text-xs">Connected</p>
+						<p className="text-muted-foreground text-xs">{tr("Connected")}</p>
 					) : canConnect ? (
 						<div className="flex items-center gap-1">
 							<Button
@@ -1945,7 +1948,7 @@ function ChatUnavailable() {
 	return (
 		<main className="flex flex-1 items-center justify-center p-8">
 			<div className="max-w-md text-center">
-				<h1 className="font-medium text-lg">Chat unavailable</h1>
+				<h1 className="font-medium text-lg">{tr("Chat unavailable")}</h1>
 				<p className="mt-2 text-muted-foreground text-sm">
 					{tr("This chat does not exist or you do not have access to it.")}
 				</p>

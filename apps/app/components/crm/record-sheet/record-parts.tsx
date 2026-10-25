@@ -1,6 +1,7 @@
 "use client";
 
 import Add from "@carbon/icons-react/es/Add";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { EmptyCellValue } from "@crm/ui/components/empty-cell";
 import { Icon } from "@crm/ui/components/icon";
@@ -61,7 +62,9 @@ export function RecordSheetFrame({
 				</div>
 			) : error ? (
 				<div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-1 p-6 text-center">
-					<p className="font-medium text-sm">This record could not be loaded</p>
+					<p className="font-medium text-sm">
+						{tr("This record could not be loaded")}
+					</p>
 					<p className="text-muted-foreground text-xs">{error}</p>
 				</div>
 			) : (

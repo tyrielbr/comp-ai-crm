@@ -42,9 +42,9 @@ import { CreatedApiKeyDialog } from "./created-api-key-dialog";
 const FORM = "create-api-key";
 
 const EXPIRATION_OPTIONS = [
-	{ value: "30", label: "30 days" },
-	{ value: "90", label: "90 days" },
-	{ value: "365", label: "1 year" },
+	{ value: "30", label: tr("30 days") },
+	{ value: "90", label: tr("90 days") },
+	{ value: "365", label: tr("1 year") },
 	{ value: "never", label: tr("No expiration") },
 ] as const;
 

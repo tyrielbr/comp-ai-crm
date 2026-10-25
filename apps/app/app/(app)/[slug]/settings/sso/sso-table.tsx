@@ -86,7 +86,7 @@ function columns(
 		},
 		{
 			id: "actions",
-			header: <span className="sr-only">Actions</span>,
+			header: <span className="sr-only">{tr("Actions")}</span>,
 			label: tr("Actions"),
 			hideable: false,
 			align: "right",

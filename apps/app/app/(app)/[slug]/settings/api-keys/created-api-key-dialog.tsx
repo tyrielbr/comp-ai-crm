@@ -31,7 +31,9 @@ export function CreatedApiKeyDialog({
 		<Dialog open={apiKey !== null} onOpenChange={onOpenChange}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>{apiKey?.name ?? tr("API key")} created</DialogTitle>
+					<DialogTitle>
+						{tr("{name} created", { name: apiKey?.name ?? tr("API key") })}
+					</DialogTitle>
 					<DialogDescription>
 						{tr("Copy it now. Nobody, including us, can show it to you again.")}
 					</DialogDescription>
@@ -49,7 +51,7 @@ export function CreatedApiKeyDialog({
 				</InputGroup>
 
 				<DialogFooter>
-					<Button onClick={() => onOpenChange(false)}>{tr("Done")}</Button>
+					<Button onClick={() => onOpenChange(false)}>{tr("Finish")}</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
