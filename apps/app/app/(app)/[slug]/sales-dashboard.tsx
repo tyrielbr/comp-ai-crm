@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import {
 	Card,
 	CardDescription,
@@ -25,8 +26,8 @@ import { useWorkspaceUrl } from "@/lib/use-workspace-url";
 type Summary = RouterOutputs["dashboard"]["summary"];
 
 const TREND_CONFIG: ChartConfig = {
-	won: { label: "Closed won", color: "var(--success)" },
-	created: { label: "New pipeline", color: "var(--chart-1)" },
+	won: { label: tr("Closed won"), color: "var(--success)" },
+	created: { label: tr("New pipeline"), color: "var(--chart-1)" },
 };
 
 function changeDelta(
@@ -81,7 +82,7 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 		<div className="flex flex-col gap-6">
 			<StatGroup>
 				<StatCard
-					label="Closed won this month"
+					label={tr("Closed won this month")}
 					value={money(wonThisMonth.valueCents)}
 					delta={changeDelta(
 						wonThisMonth.valueCents,
@@ -91,12 +92,12 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 					description={`${formatCount(wonThisMonth.count, "deal")} · ${money(wonPrevMonth.valueCents)} last month`}
 				/>
 				<StatCard
-					label="Open pipeline"
+					label={tr("Open pipeline")}
 					value={money(pipeline.totalCents)}
 					description={`${formatCount(pipeline.totalDeals, "deal")} in progress · ${money(closingThisMonthTotal.valueCents)} due this month`}
 				/>
 				<StatCard
-					label={`Win rate (${performance.windowDays}d)`}
+					label={tr("Win rate ({days}d)", { days: performance.windowDays })}
 					value={
 						performance.winRate === null
 							? "—"
@@ -104,12 +105,12 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 					}
 					description={
 						performance.wins + performance.losses === 0
-							? "Nothing has closed yet"
+							? tr("Nothing has closed yet")
 							: `${performance.wins} won · ${performance.losses} lost`
 					}
 				/>
 				<StatCard
-					label={`Average deal (${performance.windowDays}d)`}
+					label={tr("Average deal ({days}d)", { days: performance.windowDays })}
 					value={
 						performance.avgDealCents === null
 							? "—"
@@ -117,7 +118,7 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 					}
 					description={
 						performance.avgCycleDays === null
-							? "No wins to measure"
+							? tr("No wins to measure")
 							: `${performance.avgCycleDays}-day average cycle`
 					}
 				/>
@@ -135,7 +136,7 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 						href={workspaceUrl("/settings/currencies")}
 						className="underline hover:no-underline"
 					>
-						Set one
+						{tr("Set one")}
 					</Link>
 					.
 				</p>
@@ -143,8 +144,10 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 
 			<DashboardRow split="hero">
 				<ChartPanel
-					title="Closed won vs. new pipeline"
-					description="Last six months, by the month a deal closed or was created"
+					title={tr("Closed won vs. new pipeline")}
+					description={tr(
+						"Last six months, by the month a deal closed or was created",
+					)}
 				>
 					{hasTrend ? (
 						<div className="flex flex-1 flex-col justify-center py-4">
@@ -160,13 +163,13 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 							/>
 						</div>
 					) : (
-						<EmptyChart label="No deals closed or created yet" />
+						<EmptyChart label={tr("No deals closed or created yet")} />
 					)}
 				</ChartPanel>
 
 				<ChartPanel
-					title="Open pipeline by stage"
-					description="Where the value sits right now"
+					title={tr("Open pipeline by stage")}
+					description={tr("Where the value sits right now")}
 				>
 					{stageSlices.length > 0 ? (
 						<div className="flex flex-1 flex-col justify-between gap-1 pt-4">
@@ -204,7 +207,7 @@ export function SalesDashboard({ summary }: { summary: Summary }) {
 							</ul>
 						</div>
 					) : (
-						<EmptyChart label="Nothing open" />
+						<EmptyChart label={tr("Nothing open")} />
 					)}
 				</ChartPanel>
 			</DashboardRow>

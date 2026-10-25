@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { useQueryState } from "nuqs";
 import { PageShellDescription, PageShellTitle } from "@/components/page-shell";
 import { SEARCH_PARAM } from "@/lib/search-param-keys";
@@ -8,9 +9,11 @@ import { overviewParsers } from "./overview-search-params";
 export function OverviewGreetingFallback() {
 	return (
 		<>
-			<PageShellTitle>Welcome back</PageShellTitle>
+			<PageShellTitle>{tr("Welcome back")}</PageShellTitle>
 			<PageShellDescription>
-				What you have closed, what is still in play, and what needs you today.
+				{tr(
+					"What you have closed, what is still in play, and what needs you today.",
+				)}
 			</PageShellDescription>
 		</>
 	);
@@ -24,11 +27,15 @@ export function OverviewGreeting() {
 
 	return (
 		<>
-			<PageShellTitle>Welcome back</PageShellTitle>
+			<PageShellTitle>{tr("Welcome back")}</PageShellTitle>
 			<PageShellDescription>
 				{scope === "me"
-					? "What you have closed, what is still in play, and what needs you today."
-					: "What the team has closed, what is still in play, and what needs you today."}
+					? tr(
+							"What you have closed, what is still in play, and what needs you today.",
+						)
+					: tr(
+							"What the team has closed, what is still in play, and what needs you today.",
+						)}
 			</PageShellDescription>
 		</>
 	);

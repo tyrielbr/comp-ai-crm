@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -15,7 +16,7 @@ import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 import { normalizeTasksInput, tasksSearchParams } from "./tasks-search-params";
 import { TasksTable } from "./tasks-table";
 
-export const metadata: Metadata = { title: "Tasks" };
+export const metadata: Metadata = { title: tr("Tasks") };
 
 export default function TasksPage({
 	searchParams,
@@ -24,9 +25,9 @@ export default function TasksPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Tasks</PageShellTitle>
+					<PageShellTitle>{tr("Tasks")}</PageShellTitle>
 					<PageShellDescription>
-						Work that needs a next step.
+						{tr("Work that needs a next step.")}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

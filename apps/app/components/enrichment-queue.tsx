@@ -1,6 +1,7 @@
 "use client";
 
 import ChevronRight from "@carbon/icons-react/es/ChevronRight";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Collapsible,
@@ -100,7 +101,7 @@ export function EnrichmentQueue() {
 					<StatusIndicator
 						tone={total > 0 ? "primary" : "neutral"}
 						busy={total > 0}
-						label={total > 0 ? `Enriching ${total}` : "Enrichment"}
+						label={total > 0 ? `Enriching ${total}` : tr("Enrichment")}
 					/>
 				</Button>
 			</PopoverTrigger>
@@ -108,7 +109,7 @@ export function EnrichmentQueue() {
 			<PopoverContent align="end" size="panel">
 				<div className="flex items-center justify-between border-b px-4 py-3">
 					<span className="font-semibold text-popover-foreground text-sm">
-						Enriching now
+						{tr("Enriching now")}
 					</span>
 					<span className="font-mono text-muted-foreground text-xs">
 						{total}
@@ -118,11 +119,12 @@ export function EnrichmentQueue() {
 				{visible.length === 0 ? (
 					<div className="flex flex-col gap-1 px-6 py-8 text-center">
 						<span className="font-medium text-popover-foreground text-sm">
-							Nothing right now
+							{tr("Nothing right now")}
 						</span>
 						<span className="text-muted-foreground text-xs">
-							New companies and contacts show up here while your agents look
-							them up.
+							{tr(
+								"New companies and contacts show up here while your agents look them up.",
+							)}
 						</span>
 					</div>
 				) : (
@@ -144,7 +146,7 @@ export function EnrichmentQueue() {
 								className="cursor-pointer text-primary"
 								onClick={() => setExpanded(true)}
 							>
-								Show all
+								{tr("Show all")}
 							</button>
 						) : null}
 						{footer.action === "load-more" ? (
@@ -157,7 +159,7 @@ export function EnrichmentQueue() {
 									)
 								}
 							>
-								Load more
+								{tr("Load more")}
 							</button>
 						) : null}
 					</div>

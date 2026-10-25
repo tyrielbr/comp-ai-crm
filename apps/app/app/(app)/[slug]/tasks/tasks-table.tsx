@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Checkbox } from "@crm/ui/components/checkbox";
 import {
 	DataTable,
@@ -26,11 +27,11 @@ import { normalizeTasksInput, tasksSearchParams } from "./tasks-search-params";
 type TaskRow = RouterOutputs["activities"]["tasks"]["rows"][number];
 
 const DUE_OPTIONS = [
-	{ value: "overdue", label: "Overdue" },
-	{ value: "today", label: "Today" },
-	{ value: "week", label: "This week" },
-	{ value: "later", label: "Later" },
-	{ value: "none", label: "No due date" },
+	{ value: "overdue", label: tr("Overdue") },
+	{ value: "today", label: tr("Today") },
+	{ value: "week", label: tr("This week") },
+	{ value: "later", label: tr("Later") },
+	{ value: "none", label: tr("No due date") },
 ];
 
 export function TasksTable() {
@@ -66,7 +67,9 @@ export function TasksTable() {
 			{ id: row.id, completed },
 			{
 				onSuccess: async () => {
-					setAnnouncement(completed ? "Task completed." : "Task reopened.");
+					setAnnouncement(
+						completed ? tr("Task completed.") : tr("Task reopened."),
+					);
 					await cache.activity();
 					requestAnimationFrame(() => {
 						const target = focusId ? completionRefs.current.get(focusId) : null;
@@ -82,7 +85,7 @@ export function TasksTable() {
 		{
 			id: "status",
 			header: <span className="sr-only">Status</span>,
-			label: "Status",
+			label: tr("Status"),
 			sortable: true,
 			hideable: false,
 			width: "w-12",
@@ -95,13 +98,13 @@ export function TasksTable() {
 					checked={row.completedAt !== null}
 					disabled={complete.isPending && complete.variables?.id === row.id}
 					onCheckedChange={(checked) => setCompleted(row, checked === true)}
-					aria-label={`${row.completedAt ? "Reopen" : "Complete"} ${row.subject ?? "task"}`}
+					aria-label={`${row.completedAt ? tr("Reopen") : tr("Complete")} ${row.subject ?? "task"}`}
 				/>
 			),
 		},
 		{
 			id: "subject",
-			header: "Task",
+			header: tr("Task"),
 			sortable: true,
 			hideable: false,
 			width: "w-[34%]",
@@ -121,7 +124,7 @@ export function TasksTable() {
 		},
 		{
 			id: "company",
-			header: "Related to",
+			header: tr("Related to"),
 			sortable: true,
 			width: "w-[24%]",
 			cell: (row) => {
@@ -151,7 +154,7 @@ export function TasksTable() {
 		},
 		{
 			id: "dueAt",
-			header: "Due",
+			header: tr("Due"),
 			sortable: true,
 			align: "right",
 			width: "w-32",
@@ -171,7 +174,7 @@ export function TasksTable() {
 		},
 		{
 			id: "createdBy",
-			header: "Created by",
+			header: tr("Created by"),
 			sortable: true,
 			width: "w-44",
 			hideBelow: "md",
@@ -191,7 +194,7 @@ export function TasksTable() {
 		},
 		{
 			id: "createdAt",
-			header: "Created",
+			header: tr("Created"),
 			sortable: true,
 			align: "right",
 			width: "w-24",
@@ -208,14 +211,14 @@ export function TasksTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "due",
-			label: "Due",
+			label: tr("Due"),
 			options: DUE_OPTIONS.filter(
 				(option) => (facetCounts?.due?.[option.value] ?? 0) > 0,
 			),
 		},
 		{
 			id: "createdBy",
-			label: "Created by",
+			label: tr("Created by"),
 			options: (users.data ?? [])
 				.map((user) => ({ value: user.id, label: user.name }))
 				.filter((option) => (facetCounts?.createdBy?.[option.value] ?? 0) > 0),
@@ -229,7 +232,9 @@ export function TasksTable() {
 			</span>
 			<DataTable
 				query={query}
-				search={<ListSearch inputRef={searchRef} placeholder="Search tasks…" />}
+				search={
+					<ListSearch inputRef={searchRef} placeholder={tr("Search tasks…")} />
+				}
 				columns={columns}
 				rows={rows}
 				total={tasks.data?.total ?? 0}
@@ -237,15 +242,15 @@ export function TasksTable() {
 				facets={facets}
 				tabs={{
 					id: "status",
-					allLabel: "All tasks",
+					allLabel: tr("All tasks"),
 					options: [
-						{ value: "open", label: "Open" },
-						{ value: "done", label: "Done" },
+						{ value: "open", label: tr("Open") },
+						{ value: "done", label: tr("Done") },
 					],
 				}}
 				getRowId={(row) => row.id}
 				loading={tasks.isFetching}
-				empty="No tasks match this view."
+				empty={tr("No tasks match this view.")}
 			/>
 		</>
 	);

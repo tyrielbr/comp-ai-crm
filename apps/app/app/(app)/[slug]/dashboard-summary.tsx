@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Card,
@@ -46,47 +47,47 @@ import { SalesDashboard } from "./sales-dashboard";
 
 const CELL = "px-3 py-2.5 align-middle";
 const OPEN_COLUMNS: SimpleTableColumn[] = [
-	{ id: "deal", header: "Deal" },
+	{ id: "deal", header: tr("Deal") },
 	{
 		id: "stage",
-		header: "Stage",
+		header: tr("Stage"),
 		width: "w-32",
 		className: "hidden lg:table-cell",
 	},
 	{
 		id: "share",
-		srLabel: "Share of the largest",
+		srLabel: tr("Share of the largest"),
 		width: "w-24",
 		className: "hidden sm:table-cell",
 	},
-	{ id: "value", header: "Value", width: "w-20", align: "right" },
+	{ id: "value", header: tr("Value"), width: "w-20", align: "right" },
 ];
 const TASK_COLUMNS: SimpleTableColumn[] = [
-	{ id: "done", srLabel: "Done", width: "w-8" },
-	{ id: "task", header: "Task" },
-	{ id: "overdue", header: "Overdue", width: "w-24", align: "right" },
+	{ id: "done", srLabel: tr("Done"), width: "w-8" },
+	{ id: "task", header: tr("Task") },
+	{ id: "overdue", header: tr("Overdue"), width: "w-24", align: "right" },
 ];
 const ACTIVITY_COLUMNS: SimpleTableColumn[] = [
-	{ id: "activity", header: "Activity" },
+	{ id: "activity", header: tr("Activity") },
 	{
 		id: "company",
-		header: "Company",
+		header: tr("Company"),
 		width: "w-44",
 		className: "hidden md:table-cell",
 	},
 	{
 		id: "deal",
-		header: "Deal",
+		header: tr("Deal"),
 		width: "w-48",
 		className: "hidden lg:table-cell",
 	},
 	{
 		id: "who",
-		header: "Who",
+		header: tr("Who"),
 		width: "w-32",
 		className: "hidden md:table-cell",
 	},
-	{ id: "when", header: "When", width: "w-20", align: "right" },
+	{ id: "when", header: tr("When"), width: "w-20", align: "right" },
 ];
 
 export function DashboardSummary() {
@@ -134,20 +135,22 @@ export function DashboardSummary() {
 			<div className="grid gap-6 @3xl/page-content:grid-cols-2">
 				<Card className="min-w-0">
 					<CardHeader>
-						<CardTitle>Deals in progress</CardTitle>
+						<CardTitle>{tr("Deals in progress")}</CardTitle>
 						<CardDescription>
-							The largest open deals, and how long each has sat in its stage
+							{tr(
+								"The largest open deals, and how long each has sat in its stage",
+							)}
 						</CardDescription>
 						<CardAction>
 							<Button asChild variant="contrast" size="sm">
-								<Link href={workspaceUrl("/deals")}>Open deals</Link>
+								<Link href={workspaceUrl("/deals")}>{tr("Open deals")}</Link>
 							</Button>
 						</CardAction>
 					</CardHeader>
 					<CardPanel>
 						{biggestOpen.length === 0 ? (
 							<CardPanelEmpty>
-								Nothing open. Time to fill the pipeline.
+								{tr("Nothing open. Time to fill the pipeline.")}
 							</CardPanelEmpty>
 						) : (
 							<SimpleTable
@@ -198,21 +201,23 @@ export function DashboardSummary() {
 
 				<Card className="min-w-0">
 					<CardHeader>
-						<CardTitle>Overdue tasks</CardTitle>
+						<CardTitle>{tr("Overdue tasks")}</CardTitle>
 						<CardDescription>
 							{overdueTasks.length === 0
-								? "Every task you have logged is either done or still to come"
+								? tr(
+										"Every task you have logged is either done or still to come",
+									)
 								: `${formatCount(overdueTasks.length, "task")} past due`}
 						</CardDescription>
 						<CardAction>
 							<Button asChild variant="contrast" size="sm">
-								<Link href={workspaceUrl("/tasks")}>Open tasks</Link>
+								<Link href={workspaceUrl("/tasks")}>{tr("Open tasks")}</Link>
 							</Button>
 						</CardAction>
 					</CardHeader>
 					<CardPanel>
 						{overdueTasks.length === 0 ? (
-							<CardPanelEmpty>Nothing overdue. Good.</CardPanelEmpty>
+							<CardPanelEmpty>{tr("Nothing overdue. Good.")}</CardPanelEmpty>
 						) : (
 							<SimpleTable
 								variant="panel"
@@ -225,7 +230,7 @@ export function DashboardSummary() {
 											<Checkbox
 												checked={false}
 												disabled={complete.isPending}
-												aria-label="Mark as done"
+												aria-label={tr("Mark as done")}
 												onCheckedChange={() =>
 													complete.mutate({ id: task.id, completed: true })
 												}
@@ -254,7 +259,7 @@ export function DashboardSummary() {
 													task.dueAt ? (
 														<LocalRelativeTime date={task.dueAt} />
 													) : (
-														"No due date"
+														tr("No due date")
 													)
 												}
 											/>
@@ -270,21 +275,23 @@ export function DashboardSummary() {
 			<Card className="min-w-0">
 				<CardHeader>
 					<CardTitle>
-						{mine ? "Your recent activity" : "Recent activity"}
+						{mine ? tr("Your recent activity") : tr("Recent activity")}
 					</CardTitle>
 					<CardDescription>
 						{mine
-							? "Every note, task and stage change you have logged"
-							: "Every note, task and stage change across the workspace"}
+							? tr("Every note, task and stage change you have logged")
+							: tr("Every note, task and stage change across the workspace")}
 					</CardDescription>
 					<CardAction>
 						<Button asChild variant="contrast" size="sm">
-							<Link href={workspaceUrl("/companies")}>All companies</Link>
+							<Link href={workspaceUrl("/companies")}>
+								{tr("All companies")}
+							</Link>
 						</Button>
 					</CardAction>
 				</CardHeader>
 				{recentActivity.length === 0 ? (
-					<CardTableEmpty>Nothing has happened yet.</CardTableEmpty>
+					<CardTableEmpty>{tr("Nothing has happened yet.")}</CardTableEmpty>
 				) : (
 					<SimpleTable columns={ACTIVITY_COLUMNS}>
 						{recentActivity.map((entry) => (

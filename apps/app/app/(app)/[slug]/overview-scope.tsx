@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { ToggleGroup, ToggleGroupItem } from "@crm/ui/components/toggle-group";
 import { useQueryState } from "nuqs";
 import { SEARCH_PARAM } from "@/lib/search-param-keys";
@@ -10,8 +11,8 @@ import {
 } from "./overview-search-params";
 
 const LABELS = {
-	me: "Me",
-	everyone: "Everyone",
+	me: tr("Me"),
+	everyone: tr("Everyone"),
 } satisfies Record<OverviewScope, string>;
 
 function isScope(value: string): value is OverviewScope {
@@ -26,7 +27,7 @@ export function OverviewScopeToggleFallback() {
 			size="sm"
 			spacing={0}
 			disabled
-			aria-label="Whose numbers to show"
+			aria-label={tr("Whose numbers to show")}
 		>
 			{OVERVIEW_SCOPES.map((value) => (
 				<ToggleGroupItem key={value} value={value}>
@@ -53,7 +54,7 @@ export function OverviewScopeToggle() {
 			onValueChange={(next) => {
 				if (isScope(next)) void setScope(next);
 			}}
-			aria-label="Whose numbers to show"
+			aria-label={tr("Whose numbers to show")}
 		>
 			{OVERVIEW_SCOPES.map((value) => (
 				<ToggleGroupItem key={value} value={value}>

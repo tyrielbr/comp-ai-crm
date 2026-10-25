@@ -1,12 +1,14 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
+import { AGRO_INTL_LOCALE } from "@crm/agro-i18n/format";
 import { InlineScript } from "./inline-script";
 
 const DAY_MS = 86_400_000;
 const MINUTE_MS = 60_000;
 const HOUR_MS = 60 * MINUTE_MS;
 const dateTimeFormatters = new Map<string, Intl.DateTimeFormat>();
-const relativeDateFormatter = new Intl.RelativeTimeFormat(undefined, {
+const relativeDateFormatter = new Intl.RelativeTimeFormat(AGRO_INTL_LOCALE, {
 	numeric: "auto",
 });
 const LOCAL_DAY_OPTIONS = {
@@ -14,7 +16,7 @@ const LOCAL_DAY_OPTIONS = {
 	day: "numeric",
 	year: "numeric",
 } as const;
-const LOCAL_DATE_TIME_SCRIPT = `{var s="time[data-local-date-kind]",f=function(n){try{var k=n.dataset.localDateKind,v=n.dataset.localDateValue,e=n.dataset.localDateEnd,o=JSON.parse(n.dataset.localDateOptions||"{}"),d=new Date(v),t=d.getTime(),x=Date.now()-t,a=Math.abs(x),r;if(k==="date-time")r=new Intl.DateTimeFormat(void 0,o).format(d);else if(k==="date-range")r=new Intl.DateTimeFormat(void 0,o).formatRange(d,new Date(e));else if(k==="day")r=new Intl.DateTimeFormat(void 0,o).format(new Date(v+"T00:00:00"));else if(k==="relative-date"){var z=new Date(),q=(Date.UTC(z.getFullYear(),z.getMonth(),z.getDate())-Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()))/${DAY_MS};r=new Intl.RelativeTimeFormat(void 0,{numeric:"auto"}).format(-q,"day")}else if(!Number.isFinite(t))r="—";else if(a<${MINUTE_MS})r="just now";else if(a>=${30 * DAY_MS})r=new Intl.DateTimeFormat(void 0,{month:"short",day:"numeric"}).format(d);else{var u=a<${HOUR_MS}?Math.floor(a/${MINUTE_MS})+"m":a<${DAY_MS}?Math.floor(a/${HOUR_MS})+"h":Math.floor(a/${DAY_MS})+"d";r=x<0?"in "+u:u+" ago"}n.textContent=r}catch{}};var c=function(r){if(r.nodeType===1&&r.matches&&r.matches(s))f(r);if(r.querySelectorAll)r.querySelectorAll(s).forEach(f)};c(document);new MutationObserver(function(m){m.forEach(function(r){r.addedNodes.forEach(c)})}).observe(document.documentElement,{childList:true,subtree:true})}`;
+const LOCAL_DATE_TIME_SCRIPT = `{var s="time[data-local-date-kind]",f=function(n){try{var k=n.dataset.localDateKind,v=n.dataset.localDateValue,e=n.dataset.localDateEnd,o=JSON.parse(n.dataset.localDateOptions||"{}"),d=new Date(v),t=d.getTime(),x=Date.now()-t,a=Math.abs(x),r;if(k==="date-time")r=new Intl.DateTimeFormat(${JSON.stringify(AGRO_INTL_LOCALE)},o).format(d);else if(k==="date-range")r=new Intl.DateTimeFormat(${JSON.stringify(AGRO_INTL_LOCALE)},o).formatRange(d,new Date(e));else if(k==="day")r=new Intl.DateTimeFormat(${JSON.stringify(AGRO_INTL_LOCALE)},o).format(new Date(v+"T00:00:00"));else if(k==="relative-date"){var z=new Date(),q=(Date.UTC(z.getFullYear(),z.getMonth(),z.getDate())-Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()))/${DAY_MS};r=new Intl.RelativeTimeFormat(${JSON.stringify(AGRO_INTL_LOCALE)},{numeric:"auto"}).format(-q,"day")}else if(!Number.isFinite(t))r="—";else if(a<${MINUTE_MS})r=${JSON.stringify(tr("just now"))};else if(a>=${30 * DAY_MS})r=new Intl.DateTimeFormat(${JSON.stringify(AGRO_INTL_LOCALE)},{month:"short",day:"numeric"}).format(d);else{var u=a<${HOUR_MS}?Math.floor(a/${MINUTE_MS})+"m":a<${DAY_MS}?Math.floor(a/${HOUR_MS})+"h":Math.floor(a/${DAY_MS})+"d";r=(x<0?${JSON.stringify(tr("in {d}"))}:${JSON.stringify(tr("{d} ago"))}).replace("{d}",u)}n.textContent=r}catch{}};var c=function(r){if(r.nodeType===1&&r.matches&&r.matches(s))f(r);if(r.querySelectorAll)r.querySelectorAll(s).forEach(f)};c(document);new MutationObserver(function(m){m.forEach(function(r){r.addedNodes.forEach(c)})}).observe(document.documentElement,{childList:true,subtree:true})}`;
 
 export function LocalDateTime({
 	date,
@@ -131,7 +133,7 @@ function formatRelativeTime(date: string): string {
 	if (!Number.isFinite(then)) return "—";
 	const difference = Date.now() - then;
 	const absolute = Math.abs(difference);
-	if (absolute < MINUTE_MS) return "just now";
+	if (absolute < MINUTE_MS) return tr("just now");
 	if (absolute >= 30 * DAY_MS) {
 		return getDateTimeFormatter({ month: "short", day: "numeric" }).format(
 			new Date(then),
@@ -144,7 +146,7 @@ function formatRelativeTime(date: string): string {
 			: absolute < DAY_MS
 				? `${Math.floor(absolute / HOUR_MS)}h`
 				: `${Math.floor(absolute / DAY_MS)}d`;
-	return difference < 0 ? `in ${distance}` : `${distance} ago`;
+	return tr(difference < 0 ? "in {d}" : "{d} ago", { d: distance });
 }
 
 function calendarDay(date: Date): number {
@@ -162,7 +164,7 @@ function getDateTimeFormatter(
 	const cached = dateTimeFormatters.get(key);
 	if (cached) return cached;
 
-	const formatter = new Intl.DateTimeFormat(undefined, options);
+	const formatter = new Intl.DateTimeFormat(AGRO_INTL_LOCALE, options);
 	dateTimeFormatters.set(key, formatter);
 	return formatter;
 }
