@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { canManageCurrency, workspaceRoleOf } from "@crm/auth/organization";
 import type { Db } from "@crm/db";
 import { Prisma, RateSource } from "@crm/db";
@@ -104,7 +105,7 @@ export class CurrencyService {
 	private async requireManager(userId: string): Promise<void> {
 		if (!canManageCurrency(await workspaceRoleOf(userId))) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change how money is reported.",
+				tr("Only an owner or an admin can change how money is reported."),
 			);
 		}
 	}
@@ -150,7 +151,9 @@ export class CurrencyService {
 
 		if (quoteCurrency === baseCurrency) {
 			throw new BadRequestException(
-				`${baseCurrency} is the reporting currency — its rate is always 1.`,
+				tr("{baseCurrency} is the reporting currency — its rate is always 1.", {
+					baseCurrency,
+				}),
 			);
 		}
 

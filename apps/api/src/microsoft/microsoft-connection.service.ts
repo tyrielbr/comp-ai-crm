@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { isMicrosoftConfigured } from "@crm/auth/env";
 import { MICROSOFT_PROVIDER_ID, signsInWithMicrosoft } from "@crm/auth/scopes";
 import type { Db, Prisma } from "@crm/db";
@@ -165,7 +166,7 @@ export class MicrosoftConnectionService {
 	): Promise<void> {
 		const row = await this.state.get(userId, source);
 		if (!row) {
-			throw new NotFoundException(`${source} is not connected.`);
+			throw new NotFoundException(tr("{source} is not connected.", { source }));
 		}
 
 		await this.state.setAutoCreate(userId, source, enabled);

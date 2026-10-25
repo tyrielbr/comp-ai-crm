@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	type Db,
 	type FieldEntity,
@@ -69,7 +70,8 @@ export class FieldsService {
 			include: WITH_OPTIONS,
 		});
 
-		if (!definition) throw new NotFoundException("That field does not exist.");
+		if (!definition)
+			throw new NotFoundException(tr("That field does not exist."));
 
 		return serializeField(definition);
 	}
@@ -78,7 +80,9 @@ export class FieldsService {
 		const key = fieldKeyFromLabel(input.label);
 
 		if (!key) {
-			throw new BadRequestException("That label does not make a usable key.");
+			throw new BadRequestException(
+				tr("That label does not make a usable key."),
+			);
 		}
 
 		const taken = await this.db.fieldDefinition.findUnique({
@@ -87,11 +91,13 @@ export class FieldsService {
 		});
 
 		if (taken) {
-			throw new ConflictException(`There is already a field called "${key}".`);
+			throw new ConflictException(
+				tr('There is already a field called "{key}".', { key }),
+			);
 		}
 
 		if (usesOptions(input.type) && input.options.length === 0) {
-			throw new BadRequestException("A select needs at least one option.");
+			throw new BadRequestException(tr("A select needs at least one option."));
 		}
 
 		const last = await this.db.fieldDefinition.findFirst({
@@ -148,7 +154,8 @@ export class FieldsService {
 			include: WITH_OPTIONS,
 		});
 
-		if (!existing) throw new NotFoundException("That field does not exist.");
+		if (!existing)
+			throw new NotFoundException(tr("That field does not exist."));
 
 		const type = data.type ?? existing.type;
 
@@ -159,7 +166,9 @@ export class FieldsService {
 
 			if (values > 0) {
 				throw new ConflictException(
-					"This field already holds values, so its type cannot change. Archive it and make a new one.",
+					tr(
+						"This field already holds values, so its type cannot change. Archive it and make a new one.",
+					),
 				);
 			}
 		}
@@ -169,7 +178,7 @@ export class FieldsService {
 			: existing.options.filter((option) => option.archivedAt === null).length;
 
 		if (usesOptions(type) && optionCount === 0) {
-			throw new BadRequestException("A select needs at least one option.");
+			throw new BadRequestException(tr("A select needs at least one option."));
 		}
 
 		const definition = await this.db.$transaction(async (tx) => {
@@ -247,7 +256,7 @@ export class FieldsService {
 
 		if (owned.length !== input.ids.length) {
 			throw new BadRequestException(
-				"That order names a field which is not on this record type.",
+				tr("That order names a field which is not on this record type."),
 			);
 		}
 
@@ -313,11 +322,12 @@ export class FieldsService {
 			},
 		});
 
-		if (!definition) throw new NotFoundException("That field does not exist.");
+		if (!definition)
+			throw new NotFoundException(tr("That field does not exist."));
 
 		if (!definition.agentFilled || definition.archivedAt !== null) {
 			throw new BadRequestException(
-				"Your agents do not fill this field, so there is nothing to run.",
+				tr("Your agents do not fill this field, so there is nothing to run."),
 			);
 		}
 
@@ -399,7 +409,8 @@ export class FieldsService {
 			select: { entity: true },
 		});
 
-		if (!definition) throw new NotFoundException("That field does not exist.");
+		if (!definition)
+			throw new NotFoundException(tr("That field does not exist."));
 
 		const column = recordColumn(definition.entity);
 
@@ -640,7 +651,7 @@ export class FieldsService {
 			cause instanceof PrismaNamespace.PrismaClientKnownRequestError &&
 			cause.code === "P2025"
 		) {
-			throw new NotFoundException("That field does not exist.");
+			throw new NotFoundException(tr("That field does not exist."));
 		}
 
 		throw cause;

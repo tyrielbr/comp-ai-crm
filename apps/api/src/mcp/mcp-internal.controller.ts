@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	Controller,
 	ForbiddenException,
@@ -35,7 +36,7 @@ export class McpInternalController {
 		if (!this.secret) {
 			this.logger.error({ message: "MCP token brokering is not configured." });
 			throw new ServiceUnavailableException(
-				"MCP token brokering is not configured.",
+				tr("MCP token brokering is not configured."),
 			);
 		}
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

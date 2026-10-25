@@ -1,4 +1,5 @@
 import { createHash, randomBytes, randomUUID } from "node:crypto";
+import { tr } from "@crm/agro-i18n";
 import { apiUrl, appUrl } from "@crm/auth/env";
 import { MCP_AUTH } from "@crm/auth/mcp-config";
 import { createMcpSecretBox, type McpSecretBox } from "@crm/auth/mcp-crypto";
@@ -87,7 +88,7 @@ function decryptAuthorizationValue(
 	try {
 		return box.decrypt(value, purpose);
 	} catch {
-		throw new BadRequestException("The MCP authorization must restart.");
+		throw new BadRequestException(tr("The MCP authorization must restart."));
 	}
 }
 
@@ -129,7 +130,7 @@ export function assertGrantedScopeBounds(
 ): void {
 	const vendor = vendorBySlug(platformSlug);
 	if (!vendor)
-		throw new BadRequestException("The MCP platform is unavailable.");
+		throw new BadRequestException(tr("The MCP platform is unavailable."));
 	const readScopes = new Set(vendor.access.read_only.scopes);
 	const writeOnlyScopes = vendor.access.read_write.scopes.filter(
 		(scope) => !readScopes.has(scope),
@@ -139,7 +140,7 @@ export function assertGrantedScopeBounds(
 		writeOnlyScopes.some((scope) => granted.includes(scope))
 	) {
 		throw new BadRequestException(
-			"The MCP platform granted unexpected access.",
+			tr("The MCP platform granted unexpected access."),
 		);
 	}
 }
@@ -225,7 +226,7 @@ export class McpConnectionsService {
 			(candidate) => candidate.slug === platformSlug,
 		);
 		if (!entry)
-			throw new NotFoundException("The MCP platform is not supported.");
+			throw new NotFoundException(tr("The MCP platform is not supported."));
 		return entry;
 	}
 
@@ -234,13 +235,13 @@ export class McpConnectionsService {
 		const box = createMcpSecretBox();
 		if (!box) {
 			throw new ServiceUnavailableException(
-				"MCP connections are not configured.",
+				tr("MCP connections are not configured."),
 			);
 		}
 
 		const vendor = vendorBySlug(input.platformSlug);
 		if (!vendor)
-			throw new NotFoundException("The MCP platform is not supported.");
+			throw new NotFoundException(tr("The MCP platform is not supported."));
 
 		const access = vendorAccess(vendor, input.accessMode);
 		const server = await this.oauth.discover(vendor);
@@ -326,7 +327,7 @@ export class McpConnectionsService {
 			select: { id: true },
 		});
 		if (!connection) {
-			throw new NotFoundException("The MCP platform is not connected.");
+			throw new NotFoundException(tr("The MCP platform is not connected."));
 		}
 		return this.start(userId, input);
 	}
@@ -398,7 +399,7 @@ export class McpConnectionsService {
 			select: { id: true, status: true },
 		});
 		if (connection?.status !== "CONNECTED") {
-			throw new NotFoundException("The MCP connection is not active.");
+			throw new NotFoundException(tr("The MCP connection is not active."));
 		}
 
 		const count = await this.db.$transaction(async (tx) => {
@@ -416,7 +417,7 @@ export class McpConnectionsService {
 				total += result.count;
 			}
 			if (total !== tools.length) {
-				throw new BadRequestException("The MCP tool inventory changed.");
+				throw new BadRequestException(tr("The MCP tool inventory changed."));
 			}
 			return total;
 		});
@@ -428,7 +429,7 @@ export class McpConnectionsService {
 		const box = createMcpSecretBox();
 		if (!box)
 			throw new ServiceUnavailableException(
-				"MCP connections are not configured.",
+				tr("MCP connections are not configured."),
 			);
 
 		const hash = stateHash(input.state);
@@ -442,7 +443,9 @@ export class McpConnectionsService {
 			state.consumedAt ||
 			state.expiresAt.getTime() <= Date.now()
 		) {
-			throw new BadRequestException("The MCP authorization state is invalid.");
+			throw new BadRequestException(
+				tr("The MCP authorization state is invalid."),
+			);
 		}
 
 		const consumed = await this.db.mcpOauthState.updateMany({
@@ -451,19 +454,21 @@ export class McpConnectionsService {
 		});
 		if (consumed.count !== 1) {
 			throw new BadRequestException(
-				"The MCP authorization state was already used.",
+				tr("The MCP authorization state was already used."),
 			);
 		}
 
 		const vendor = vendorBySlug(state.platformSlug);
 		if (!vendor)
-			throw new BadRequestException("The MCP platform is unavailable.");
+			throw new BadRequestException(tr("The MCP platform is unavailable."));
 		const server = await this.oauth.discover(vendor);
 		if (
 			fingerprint(server) !== state.registration.metadataFingerprint ||
 			(input.issuer && input.issuer !== server.issuer)
 		) {
-			throw new BadRequestException("The MCP authorization server changed.");
+			throw new BadRequestException(
+				tr("The MCP authorization server changed."),
+			);
 		}
 
 		const clientSecret = state.registration.encryptedClientSecret
@@ -581,7 +586,7 @@ export class McpConnectionsService {
 			include: { registration: true },
 		});
 		if (!connection)
-			throw new NotFoundException("The MCP platform is not connected.");
+			throw new NotFoundException(tr("The MCP platform is not connected."));
 
 		const box = createMcpSecretBox();
 		const vendor = vendorBySlug(platformSlug);
@@ -637,7 +642,7 @@ export class McpConnectionsService {
 		const box = createMcpSecretBox();
 		if (!box) {
 			throw new ServiceUnavailableException(
-				"MCP connections are not configured.",
+				tr("MCP connections are not configured."),
 			);
 		}
 
@@ -649,7 +654,7 @@ export class McpConnectionsService {
 			!connection?.encryptedAccessToken ||
 			(connection.status !== "CONNECTING" && connection.status !== "CONNECTED")
 		) {
-			throw new NotFoundException("The MCP connection is not active.");
+			throw new NotFoundException(tr("The MCP connection is not active."));
 		}
 
 		const currentToken = box.decrypt(
@@ -663,14 +668,16 @@ export class McpConnectionsService {
 		if (!connection.encryptedRefreshToken) {
 			await this.markReauthRequired(connection.id, "refresh_token_missing");
 			throw new ServiceUnavailableException(
-				"The MCP connection needs authorization.",
+				tr("The MCP connection needs authorization."),
 			);
 		}
 
 		const vendor = vendorBySlug(connection.platformSlug);
 		if (!vendor) {
 			await this.markReauthRequired(connection.id, "platform_removed");
-			throw new ServiceUnavailableException("The MCP platform is unavailable.");
+			throw new ServiceUnavailableException(
+				tr("The MCP platform is unavailable."),
+			);
 		}
 
 		try {
@@ -751,7 +758,7 @@ export class McpConnectionsService {
 			if (reauthorizationRequired) {
 				await this.markReauthRequired(connection.id, code);
 				throw new ServiceUnavailableException(
-					"The MCP connection needs authorization.",
+					tr("The MCP connection needs authorization."),
 				);
 			}
 
@@ -760,7 +767,7 @@ export class McpConnectionsService {
 				data: { lastErrorCode: code.slice(0, 120) },
 			});
 			throw new ServiceUnavailableException(
-				"The MCP connection is temporarily unavailable.",
+				tr("The MCP connection is temporarily unavailable."),
 			);
 		}
 	}
@@ -782,7 +789,7 @@ export class McpConnectionsService {
 		const box = createMcpSecretBox();
 		if (!box)
 			throw new ServiceUnavailableException(
-				"MCP connections are not configured.",
+				tr("MCP connections are not configured."),
 			);
 		if (
 			existing &&
@@ -865,7 +872,7 @@ export class McpConnectionsService {
 		const role = await workspaceRoleOf(userId, this.db);
 		if (!canManageConnections(role)) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can manage MCP connections.",
+				tr("Only an owner or an admin can manage MCP connections."),
 			);
 		}
 	}

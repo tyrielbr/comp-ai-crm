@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { ActivityType, type Db, Prisma } from "@crm/db";
 import { activityMeta } from "@crm/validation/activity-meta";
 import {
@@ -423,7 +424,7 @@ export class ActivitiesService {
 		});
 
 		if (!activity) {
-			throw new NotFoundException(`No activity with id ${id}.`);
+			throw new NotFoundException(tr("No activity with id {id}.", { id }));
 		}
 
 		if (activity.type !== ActivityType.TASK) {
@@ -438,7 +439,7 @@ export class ActivitiesService {
 		if (input.contactId) return { contactId: input.contactId };
 		if (input.companyId) return { companyId: input.companyId };
 		throw new BadRequestException(
-			"A timeline needs a company, a contact or a deal.",
+			tr("A timeline needs a company, a contact or a deal."),
 		);
 	}
 
@@ -453,7 +454,9 @@ export class ActivitiesService {
 				select: { companyId: true },
 			});
 			if (!deal) {
-				throw new NotFoundException(`No deal with id ${input.dealId}.`);
+				throw new NotFoundException(
+					tr("No deal with id {dealId}.", { dealId: input.dealId }),
+				);
 			}
 			return deal.companyId;
 		}
@@ -464,7 +467,9 @@ export class ActivitiesService {
 				select: { companyId: true },
 			});
 			if (!contact) {
-				throw new NotFoundException(`No contact with id ${input.contactId}.`);
+				throw new NotFoundException(
+					tr("No contact with id {contactId}.", { contactId: input.contactId }),
+				);
 			}
 			return contact.companyId;
 		}

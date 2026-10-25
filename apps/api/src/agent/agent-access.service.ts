@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	isWorkspaceAdmin,
 	toWorkspaceRole,
@@ -22,7 +23,9 @@ export class AgentAccessService {
 		const role = await workspaceRoleOf(userId);
 
 		if (!role) {
-			throw new ForbiddenException("You are not a member of this workspace.");
+			throw new ForbiddenException(
+				tr("You are not a member of this workspace."),
+			);
 		}
 
 		return role;
@@ -42,7 +45,9 @@ export class AgentAccessService {
 		`;
 
 		if (!member) {
-			throw new ForbiddenException("You are not a member of this workspace.");
+			throw new ForbiddenException(
+				tr("You are not a member of this workspace."),
+			);
 		}
 
 		const role = toWorkspaceRole(member.role);
@@ -58,16 +63,20 @@ export class AgentAccessService {
 		});
 
 		if (!agent) {
-			throw new NotFoundException(`No agent with id ${agentId}.`);
+			throw new NotFoundException(
+				tr("No agent with id {agentId}.", { agentId }),
+			);
 		}
 
 		if (isPrivateAgentDraft(agent.status) && agent.createdById !== userId) {
-			throw new NotFoundException(`No agent with id ${agentId}.`);
+			throw new NotFoundException(
+				tr("No agent with id {agentId}.", { agentId }),
+			);
 		}
 
 		if (agent.createdById !== userId && !isWorkspaceAdmin(role)) {
 			throw new ForbiddenException(
-				"Only the creator or a workspace admin can change this agent.",
+				tr("Only the creator or a workspace admin can change this agent."),
 			);
 		}
 
@@ -87,7 +96,9 @@ export class AgentAccessService {
 		});
 
 		if (!agent || !canReadAgent(agent.status, agent.createdById, userId)) {
-			throw new NotFoundException(`No agent with id ${agentId}.`);
+			throw new NotFoundException(
+				tr("No agent with id {agentId}.", { agentId }),
+			);
 		}
 
 		return {

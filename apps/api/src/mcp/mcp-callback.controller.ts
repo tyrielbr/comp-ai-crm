@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { type auth } from "@crm/auth/auth";
 import { SESSION_COOKIE_NAME } from "@crm/auth/cookies";
 import {
@@ -30,7 +31,7 @@ export class McpCallbackController {
 		@Res() response: Response,
 	) {
 		if (!state || !code) {
-			throw new BadRequestException("The MCP callback is incomplete.");
+			throw new BadRequestException(tr("The MCP callback is incomplete."));
 		}
 		try {
 			const redirect = await this.connections.callback({

@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	Controller,
 	ForbiddenException,
@@ -61,7 +62,7 @@ export class TelemetryController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run the rollup route.",
 			});
-			throw new ServiceUnavailableException("Telemetry is not configured.");
+			throw new ServiceUnavailableException(tr("Telemetry is not configured."));
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

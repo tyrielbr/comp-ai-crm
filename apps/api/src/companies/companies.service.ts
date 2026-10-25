@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	type Db,
 	EnrichmentStatus,
@@ -234,7 +235,7 @@ export class CompaniesService {
 		});
 
 		if (!company) {
-			throw new NotFoundException(`No company with id ${id}.`);
+			throw new NotFoundException(tr("No company with id {id}.", { id }));
 		}
 
 		const {
@@ -288,7 +289,10 @@ export class CompaniesService {
 				});
 				if (existing) {
 					throw new ConflictException(
-						`${existing.name} already uses the domain ${domain}.`,
+						tr("{name} already uses the domain {domain}.", {
+							name: existing.name,
+							domain,
+						}),
 					);
 				}
 			}
@@ -569,7 +573,7 @@ export class CompaniesService {
 
 				if (!row) {
 					if (guard) return null;
-					throw new NotFoundException(`No company with id ${id}.`);
+					throw new NotFoundException(tr("No company with id {id}.", { id }));
 				}
 				if (
 					guard &&
@@ -683,7 +687,7 @@ export class CompaniesService {
 		});
 
 		if (!company) {
-			throw new NotFoundException(`No company with id ${id}.`);
+			throw new NotFoundException(tr("No company with id {id}.", { id }));
 		}
 
 		const queued = await this.agent.companyRequested(
@@ -708,12 +712,12 @@ export class CompaniesService {
 		});
 
 		if (!company) {
-			throw new NotFoundException(`No company with id ${id}.`);
+			throw new NotFoundException(tr("No company with id {id}.", { id }));
 		}
 
 		if (!company.domain) {
 			throw new BadRequestException(
-				"There is nothing to read without a domain — add one first.",
+				tr("There is nothing to read without a domain — add one first."),
 			);
 		}
 
@@ -732,11 +736,13 @@ export class CompaniesService {
 				select: { companyId: true },
 			});
 			if (!contact) {
-				throw new NotFoundException(`No contact with id ${contactId}.`);
+				throw new NotFoundException(
+					tr("No contact with id {contactId}.", { contactId }),
+				);
 			}
 			if (contact.companyId !== companyId) {
 				throw new BadRequestException(
-					"That contact does not work at this company.",
+					tr("That contact does not work at this company."),
 				);
 			}
 		}
@@ -848,11 +854,11 @@ export class CompaniesService {
 	private translate(cause: unknown, id: string): never {
 		if (cause instanceof PrismaNamespace.PrismaClientKnownRequestError) {
 			if (cause.code === "P2025") {
-				throw new NotFoundException(`No company with id ${id}.`);
+				throw new NotFoundException(tr("No company with id {id}.", { id }));
 			}
 			if (cause.code === "P2002") {
 				throw new ConflictException(
-					"Another company already uses that domain.",
+					tr("Another company already uses that domain."),
 				);
 			}
 		}

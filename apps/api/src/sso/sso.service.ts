@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { auth } from "@crm/auth/auth";
 import { isGoogleConfigured, isMicrosoftConfigured } from "@crm/auth/env";
 import { WORKSPACE_ID, workspaceRoleOf } from "@crm/auth/organization";
@@ -167,7 +168,9 @@ export class SsoService {
 
 		if (domains.length === 0) {
 			throw new BadRequestException(
-				"Give the email domain your people sign in with, for example acme.com.",
+				tr(
+					"Give the email domain your people sign in with, for example acme.com.",
+				),
 			);
 		}
 
@@ -263,7 +266,7 @@ export class SsoService {
 			);
 
 			throw new InternalServerErrorException(
-				"Could not reach the identity provider.",
+				tr("Could not reach the identity provider."),
 			);
 		}
 	}
@@ -271,7 +274,7 @@ export class SsoService {
 	private async requireConfigurer(userId: string): Promise<void> {
 		if (!canConfigureSso(await workspaceRoleOf(userId, this.db))) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change how people sign in.",
+				tr("Only an owner or an admin can change how people sign in."),
 			);
 		}
 	}

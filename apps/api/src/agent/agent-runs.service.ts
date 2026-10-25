@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { tr } from "@crm/agro-i18n";
 import { type Db, Prisma } from "@crm/db";
 import type { AgentRunStatus } from "@crm/db/enums";
 import { lockIdempotencyKey } from "@crm/db/idempotency";
@@ -183,11 +184,13 @@ export class AgentRunsService {
 				`;
 
 			if (!agent || agent.status === "DELETED") {
-				throw new NotFoundException(`No agent with id ${input.id}.`);
+				throw new NotFoundException(
+					tr("No agent with id {id}.", { id: input.id }),
+				);
 			}
 
 			if (agent.status !== "LIVE" || !agent.currentVersionId) {
-				throw new BadRequestException("This agent is not live yet.");
+				throw new BadRequestException(tr("This agent is not live yet."));
 			}
 
 			const active = await tx.agentRun.findFirst({
@@ -199,7 +202,9 @@ export class AgentRunsService {
 			});
 			if (active) {
 				throw new ConflictException(
-					"This agent already has an active run. Stop it or wait for it to finish.",
+					tr(
+						"This agent already has an active run. Stop it or wait for it to finish.",
+					),
 				);
 			}
 
@@ -264,10 +269,12 @@ export class AgentRunsService {
 				},
 			});
 			if (!previous || previous.agentId !== input.id) {
-				throw new NotFoundException(`No run with id ${input.runId}.`);
+				throw new NotFoundException(
+					tr("No run with id {runId}.", { runId: input.runId }),
+				);
 			}
 			if (CANCELLABLE_STATUSES.includes(previous.status)) {
-				throw new ConflictException("This run has not finished yet.");
+				throw new ConflictException(tr("This run has not finished yet."));
 			}
 
 			const [agent] = await tx.$queryRaw<
@@ -279,10 +286,12 @@ export class AgentRunsService {
 					FOR UPDATE
 				`;
 			if (!agent || agent.status === "DELETED") {
-				throw new NotFoundException(`No agent with id ${input.id}.`);
+				throw new NotFoundException(
+					tr("No agent with id {id}.", { id: input.id }),
+				);
 			}
 			if (agent.status !== "LIVE" || !agent.currentVersionId) {
-				throw new BadRequestException("This agent is not live yet.");
+				throw new BadRequestException(tr("This agent is not live yet."));
 			}
 
 			const active = await tx.agentRun.findFirst({
@@ -291,7 +300,9 @@ export class AgentRunsService {
 			});
 			if (active) {
 				throw new ConflictException(
-					"This agent already has an active run. Stop it or wait for it to finish.",
+					tr(
+						"This agent already has an active run. Stop it or wait for it to finish.",
+					),
 				);
 			}
 
@@ -351,12 +362,16 @@ export class AgentRunsService {
 			`;
 
 			if (!run || run.agentId !== input.id) {
-				throw new NotFoundException(`No run with id ${input.runId}.`);
+				throw new NotFoundException(
+					tr("No run with id {runId}.", { runId: input.runId }),
+				);
 			}
 
 			if (!agent.canManage && run.initiatedById !== userId) {
 				throw new ForbiddenException(
-					"Only the person who started this run, or a workspace admin, can stop it.",
+					tr(
+						"Only the person who started this run, or a workspace admin, can stop it.",
+					),
 				);
 			}
 
@@ -439,7 +454,9 @@ export class AgentRunsService {
 		requestedAgentId: string,
 	) {
 		if (existingAgentId !== requestedAgentId) {
-			throw new BadRequestException("That run request has already been used.");
+			throw new BadRequestException(
+				tr("That run request has already been used."),
+			);
 		}
 	}
 }

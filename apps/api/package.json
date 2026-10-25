@@ -23,6 +23,7 @@
 		"clean": "rm -rf .turbo dist node_modules src/generated"
 	},
 	"dependencies": {
+		"@crm/agro-i18n": "workspace:*",
 		"@crm/auth": "workspace:*",
 		"@crm/db": "workspace:*",
 		"@crm/mcp-integrations": "workspace:*",

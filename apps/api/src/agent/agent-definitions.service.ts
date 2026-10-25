@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Db, Prisma } from "@crm/db";
 import type { AgentDefinitionStatus } from "@crm/db/enums";
 import { schemas } from "@crm/validation";
@@ -143,7 +144,7 @@ export class AgentDefinitionsService {
 			},
 		});
 
-		if (!row) throw new NotFoundException(`No agent with id ${id}.`);
+		if (!row) throw new NotFoundException(tr("No agent with id {id}.", { id }));
 		const { versions, ...agent } = row;
 		const draft = versions[0];
 
@@ -253,7 +254,9 @@ export class AgentDefinitionsService {
 			if (replay) return { saved: false, versionId: replay.versionId };
 
 			if (!agent.currentVersionId) {
-				throw new BadRequestException("This agent has no deployed version.");
+				throw new BadRequestException(
+					tr("This agent has no deployed version."),
+				);
 			}
 
 			const current = await tx.agentVersion.findFirstOrThrow({
@@ -276,7 +279,10 @@ export class AgentDefinitionsService {
 				where: { versionId: agent.currentVersionId, path: input.path },
 				orderBy: { revision: "desc" },
 			});
-			if (!file) throw new NotFoundException(`No file at ${input.path}.`);
+			if (!file)
+				throw new NotFoundException(
+					tr("No file at {path}.", { path: input.path }),
+				);
 			if (file.content === input.content) {
 				return { saved: false, versionId: agent.currentVersionId };
 			}
@@ -359,7 +365,9 @@ export class AgentDefinitionsService {
 			if (replay) return replay.versionId;
 
 			if (!agent.currentVersionId) {
-				throw new BadRequestException("This agent has no deployed version.");
+				throw new BadRequestException(
+					tr("This agent has no deployed version."),
+				);
 			}
 
 			const current = await tx.agentVersion.findFirstOrThrow({
@@ -381,7 +389,9 @@ export class AgentDefinitionsService {
 			const parsed = agentManifest.safeParse(current.manifest);
 			if (!parsed.success) {
 				throw new BadRequestException(
-					"This version's manifest cannot be read, so it cannot be changed.",
+					tr(
+						"This version's manifest cannot be read, so it cannot be changed.",
+					),
 				);
 			}
 
@@ -396,7 +406,9 @@ export class AgentDefinitionsService {
 				const keep = new Set(input.actions);
 				actions = actions.filter((action) => keep.has(action.type));
 				if (actions.length === 0) {
-					throw new BadRequestException("An agent needs at least one action.");
+					throw new BadRequestException(
+						tr("An agent needs at least one action."),
+					);
 				}
 			}
 
@@ -405,7 +417,9 @@ export class AgentDefinitionsService {
 			if (channel) {
 				if (!actions.some((action) => action.destination !== undefined)) {
 					throw new BadRequestException(
-						"None of this agent's actions post to a channel, so its channel cannot be changed.",
+						tr(
+							"None of this agent's actions post to a channel, so its channel cannot be changed.",
+						),
 					);
 				}
 
@@ -520,7 +534,7 @@ export class AgentDefinitionsService {
 			if (existing) {
 				if (existing.versionId !== input.versionId) {
 					throw new BadRequestException(
-						"That deployment request has already been used.",
+						tr("That deployment request has already been used."),
 					);
 				}
 
@@ -533,12 +547,14 @@ export class AgentDefinitionsService {
 			});
 
 			if (!version) {
-				throw new NotFoundException(`No version with id ${input.versionId}.`);
+				throw new NotFoundException(
+					tr("No version with id {versionId}.", { versionId: input.versionId }),
+				);
 			}
 
 			if (version.status !== "READY" && version.status !== "DEPLOYED") {
 				throw new BadRequestException(
-					"Only a validated agent version can be deployed.",
+					tr("Only a validated agent version can be deployed."),
 				);
 			}
 			const metadata = versionMetadata(version.manifest);
@@ -666,7 +682,7 @@ export class AgentDefinitionsService {
 			`;
 
 			if (!current || current.status === "DELETED") {
-				throw new NotFoundException(`No agent with id ${id}.`);
+				throw new NotFoundException(tr("No agent with id {id}.", { id }));
 			}
 
 			const disabledTriggers = await tx.agentTrigger.updateMany({
@@ -799,7 +815,7 @@ export class AgentDefinitionsService {
 		`;
 
 		if (!agent || agent.status === "DELETED") {
-			throw new NotFoundException(`No agent with id ${id}.`);
+			throw new NotFoundException(tr("No agent with id {id}.", { id }));
 		}
 
 		return agent;

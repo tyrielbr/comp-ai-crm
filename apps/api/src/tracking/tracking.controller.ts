@@ -1,4 +1,5 @@
 import type { IncomingMessage } from "node:http";
+import { tr } from "@crm/agro-i18n";
 import type { Db } from "@crm/db";
 import {
 	EVENT_RETENTION_DAYS,
@@ -176,7 +177,7 @@ export class TrackingRetentionController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run tracking retention.",
 			});
-			throw new ServiceUnavailableException("Retention is not configured.");
+			throw new ServiceUnavailableException(tr("Retention is not configured."));
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

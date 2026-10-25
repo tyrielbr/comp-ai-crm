@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	Controller,
 	ForbiddenException,
@@ -65,7 +66,9 @@ export class RatesController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run the rates route.",
 			});
-			throw new ServiceUnavailableException("Rate refresh is not configured.");
+			throw new ServiceUnavailableException(
+				tr("Rate refresh is not configured."),
+			);
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

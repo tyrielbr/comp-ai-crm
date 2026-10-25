@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	BadRequestException,
 	Injectable,
@@ -20,7 +21,9 @@ export class SlackChannelsService {
 
 		if (!agent) {
 			throw new ServiceUnavailableException(
-				"This install has no AGENT_BRIDGE_SECRET, so nothing can reach Slack.",
+				tr(
+					"This install has no AGENT_BRIDGE_SECRET, so nothing can reach Slack.",
+				),
 			);
 		}
 
@@ -46,7 +49,7 @@ export class SlackChannelsService {
 				error instanceof Error ? error.stack : String(error),
 			);
 			throw new ServiceUnavailableException(
-				"The agent is not answering, so the channel was not created.",
+				tr("The agent is not answering, so the channel was not created."),
 			);
 		}
 
@@ -57,7 +60,7 @@ export class SlackChannelsService {
 				status: response.status,
 			});
 			throw new ServiceUnavailableException(
-				"The agent failed, so the channel was not created.",
+				tr("The agent failed, so the channel was not created."),
 			);
 		}
 
@@ -72,7 +75,9 @@ export class SlackChannelsService {
 				status: response.status,
 			});
 			throw new ServiceUnavailableException(
-				"The agent answered with something unreadable, so the channel was not created.",
+				tr(
+					"The agent answered with something unreadable, so the channel was not created.",
+				),
 			);
 		}
 
@@ -81,7 +86,9 @@ export class SlackChannelsService {
 		}
 
 		if (!response.ok) {
-			throw new BadRequestException("Slack refused to create that channel.");
+			throw new BadRequestException(
+				tr("Slack refused to create that channel."),
+			);
 		}
 
 		return { channel: reply.data.channel };

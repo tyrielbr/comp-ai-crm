@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Db } from "@crm/db";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
@@ -50,7 +51,7 @@ export class AuthService {
 
 		if (!user) {
 			this.logger.warn({ message: "Session user no longer exists", userId });
-			throw new NotFoundException(`No user with id ${userId}.`);
+			throw new NotFoundException(tr("No user with id {userId}.", { userId }));
 		}
 
 		const profile: UserProfile = {

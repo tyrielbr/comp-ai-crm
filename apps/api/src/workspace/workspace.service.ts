@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	canChangeRole,
 	canRenameWorkspace,
@@ -75,7 +76,7 @@ export class WorkspaceService {
 
 		if (!row) {
 			throw new ServiceUnavailableException(
-				"The workspace could not be read. Sign in again in a moment.",
+				tr("The workspace could not be read. Sign in again in a moment."),
 			);
 		}
 
@@ -101,7 +102,7 @@ export class WorkspaceService {
 
 		if (!canRenameWorkspace(role)) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change the workspace.",
+				tr("Only an owner or an admin can change the workspace."),
 			);
 		}
 
@@ -114,7 +115,7 @@ export class WorkspaceService {
 
 		if (!website) {
 			throw new BadRequestException(
-				"That is not a website. Enter the domain, like acme.com.",
+				tr("That is not a website. Enter the domain, like acme.com."),
 			);
 		}
 
@@ -180,7 +181,7 @@ export class WorkspaceService {
 
 		if (!canChangeRole(role)) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change a member's role.",
+				tr("Only an owner or an admin can change a member's role."),
 			);
 		}
 
@@ -191,7 +192,9 @@ export class WorkspaceService {
 			});
 
 			if (!target) {
-				throw new NotFoundException("That person is not in this workspace.");
+				throw new NotFoundException(
+					tr("That person is not in this workspace."),
+				);
 			}
 
 			if (target.role === "owner" && input.role !== "owner") {
@@ -203,7 +206,9 @@ export class WorkspaceService {
 
 				if (owners.length <= 1) {
 					throw new ForbiddenException(
-						"The workspace needs an owner. Make someone else an owner first.",
+						tr(
+							"The workspace needs an owner. Make someone else an owner first.",
+						),
 					);
 				}
 			}

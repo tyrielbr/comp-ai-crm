@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Db, Prisma } from "@crm/db";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { z } from "zod";
@@ -48,7 +49,9 @@ export class ConversationService {
 		});
 
 		if (!thread) {
-			throw new NotFoundException(`No email thread with id ${threadId}.`);
+			throw new NotFoundException(
+				tr("No email thread with id {threadId}.", { threadId }),
+			);
 		}
 
 		const faces = await this.facesFor(
@@ -138,7 +141,9 @@ export class ConversationService {
 		});
 
 		if (!event) {
-			throw new NotFoundException(`No calendar event with id ${eventId}.`);
+			throw new NotFoundException(
+				tr("No calendar event with id {eventId}.", { eventId }),
+			);
 		}
 
 		return {

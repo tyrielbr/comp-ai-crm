@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Db } from "@crm/db";
 import {
 	DEFAULT_AGENT_MODEL,
@@ -58,7 +59,9 @@ export class SettingsService {
 
 		if (!models) {
 			throw new BadRequestException(
-				"Could not reach the AI Gateway to check that model. Try again in a moment.",
+				tr(
+					"Could not reach the AI Gateway to check that model. Try again in a moment.",
+				),
 			);
 		}
 
@@ -66,7 +69,10 @@ export class SettingsService {
 
 		if (!chosen) {
 			throw new BadRequestException(
-				`The AI Gateway does not serve a tool-using model called "${modelId}".`,
+				tr(
+					'The AI Gateway does not serve a tool-using model called "{modelId}".',
+					{ modelId },
+				),
 			);
 		}
 

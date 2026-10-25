@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { DAY_SECONDS } from "@crm/auth/api-keys";
 import { auth } from "@crm/auth/auth";
 import type { Db, Prisma } from "@crm/db";
@@ -175,7 +176,7 @@ export class ApiKeysService {
 			);
 
 			throw new InternalServerErrorException(
-				"Could not reach the auth service.",
+				tr("Could not reach the auth service."),
 			);
 		}
 	}

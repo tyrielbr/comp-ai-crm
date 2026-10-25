@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { isGoogleConfigured } from "@crm/auth/env";
 import { GOOGLE_PROVIDER_ID, signsInWithGoogle } from "@crm/auth/scopes";
 import type { Db, Prisma } from "@crm/db";
@@ -169,7 +170,7 @@ export class GoogleConnectionService {
 	): Promise<void> {
 		const row = await this.state.get(userId, source);
 		if (!row) {
-			throw new NotFoundException(`${source} is not connected.`);
+			throw new NotFoundException(tr("{source} is not connected.", { source }));
 		}
 
 		await this.state.setAutoCreate(userId, source, enabled);
@@ -187,7 +188,7 @@ export class GoogleConnectionService {
 		const ours = await this.match.internalIdentity();
 		if (ours.domains.has(normalised)) {
 			throw new NotFoundException(
-				"That is our own domain — it is already excluded.",
+				tr("That is our own domain — it is already excluded."),
 			);
 		}
 

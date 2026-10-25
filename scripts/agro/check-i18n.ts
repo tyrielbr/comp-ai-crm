@@ -18,7 +18,9 @@ const ROOT = new URL("../../", import.meta.url).pathname;
 const args = process.argv.slice(2);
 const hardcoded = args.includes("--hardcoded");
 const paths = args.filter((a) => !a.startsWith("--"));
-const roots = paths.length ? paths : ["apps/app", "packages/ui/src"];
+const roots = paths.length
+	? paths
+	: ["apps/app", "packages/ui/src", "apps/api/src"];
 
 const catalog: Record<string, string> = JSON.parse(
 	readFileSync(`${ROOT}packages/agro-i18n/src/pt-BR.json`, "utf8"),

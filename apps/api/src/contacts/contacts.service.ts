@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import {
 	type ContactBriefSections,
 	type Db,
@@ -218,7 +219,7 @@ export class ContactsService {
 		});
 
 		if (!contact) {
-			throw new NotFoundException(`No contact with id ${id}.`);
+			throw new NotFoundException(tr("No contact with id {id}.", { id }));
 		}
 
 		const relationship = await this.relationship(
@@ -273,7 +274,12 @@ export class ContactsService {
 			});
 			if (existing) {
 				throw new ConflictException(
-					`${[existing.firstName, existing.lastName].filter(Boolean).join(" ")} already uses ${email}.`,
+					tr("{join} already uses {email}.", {
+						join: [existing.firstName, existing.lastName]
+							.filter(Boolean)
+							.join(" "),
+						email,
+					}),
 				);
 			}
 		}
@@ -402,7 +408,7 @@ export class ContactsService {
 
 				if (!row) {
 					if (guard) return null;
-					throw new NotFoundException(`No contact with id ${id}.`);
+					throw new NotFoundException(tr("No contact with id {id}.", { id }));
 				}
 				if (
 					guard &&
@@ -556,7 +562,9 @@ export class ContactsService {
 				select: { id: true },
 			});
 			if (!company) {
-				throw new NotFoundException(`No company with id ${companyId}.`);
+				throw new NotFoundException(
+					tr("No company with id {companyId}.", { companyId }),
+				);
 			}
 		}
 
@@ -678,7 +686,7 @@ export class ContactsService {
 		});
 
 		if (!contact) {
-			throw new NotFoundException(`No contact with id ${id}.`);
+			throw new NotFoundException(tr("No contact with id {id}.", { id }));
 		}
 
 		const queued = await this.agent.contactCreated(
@@ -715,11 +723,15 @@ export class ContactsService {
 		});
 
 		if (!fact) {
-			throw new NotFoundException(`No fact with id ${input.factId}.`);
+			throw new NotFoundException(
+				tr("No fact with id {factId}.", { factId: input.factId }),
+			);
 		}
 
 		if (fact.status !== FactStatus.PROPOSED) {
-			throw new ConflictException("That suggestion has already been settled.");
+			throw new ConflictException(
+				tr("That suggestion has already been settled."),
+			);
 		}
 
 		const accepted = input.decision === "accept";
@@ -909,11 +921,11 @@ export class ContactsService {
 	private translate(cause: unknown, id: string): never {
 		if (cause instanceof PrismaNamespace.PrismaClientKnownRequestError) {
 			if (cause.code === "P2025") {
-				throw new NotFoundException(`No contact with id ${id}.`);
+				throw new NotFoundException(tr("No contact with id {id}.", { id }));
 			}
 			if (cause.code === "P2002") {
 				throw new ConflictException(
-					"Another contact already uses that email address.",
+					tr("Another contact already uses that email address."),
 				);
 			}
 		}

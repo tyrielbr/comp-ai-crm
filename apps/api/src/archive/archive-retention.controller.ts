@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Db } from "@crm/db";
 import { readArchiveRetentionDays } from "@crm/db/settings";
 import {
@@ -73,7 +74,7 @@ export class ArchiveRetentionController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run archive pruning.",
 			});
-			throw new ServiceUnavailableException("Pruning is not configured.");
+			throw new ServiceUnavailableException(tr("Pruning is not configured."));
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

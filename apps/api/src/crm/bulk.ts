@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Db } from "@crm/db";
 import { BadRequestException } from "@nestjs/common";
 import { z } from "zod";
@@ -31,7 +32,9 @@ export async function requireOwner(
 	});
 
 	if (!owner) {
-		throw new BadRequestException("That owner does not work here any more.");
+		throw new BadRequestException(
+			tr("That owner does not work here any more."),
+		);
 	}
 }
 
