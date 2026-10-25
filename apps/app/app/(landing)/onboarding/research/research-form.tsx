@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { CONTEXT_DEV_SIGNUP_URL } from "@crm/db/settings";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -43,12 +44,12 @@ export function ResearchForm() {
 		>
 			<FieldGroup>
 				<Field>
-					<FieldLabel htmlFor={keyId}>Context API key</FieldLabel>
+					<FieldLabel htmlFor={keyId}>{tr("Context API key")}</FieldLabel>
 					<Input
 						id={keyId}
 						name="apiKey"
 						type="password"
-						placeholder="Paste the key"
+						placeholder={tr("Paste the key")}
 						autoComplete="off"
 						autoCapitalize="off"
 						autoCorrect="off"
@@ -64,7 +65,7 @@ export function ResearchForm() {
 							rel="noreferrer"
 							className="underline underline-offset-4 hover:text-foreground"
 						>
-							Sign up here
+							{tr("Sign up here")}
 						</a>
 					</FieldDescription>
 				</Field>
@@ -72,7 +73,7 @@ export function ResearchForm() {
 
 			<Button type="submit" disabled={save.isPending}>
 				{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-				Continue
+				{tr("Continue")}
 			</Button>
 		</form>
 	);

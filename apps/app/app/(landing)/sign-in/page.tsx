@@ -92,7 +92,9 @@ async function SignIn({
 				<AuthHeading
 					title={tr("No way in yet")}
 					description={tr(
-						"This CRM has no sign-in method configured, so nobody can get in — including you.",
+						tr(
+							"This CRM has no sign-in method configured, so nobody can get in — including you.",
+						),
 					)}
 				/>
 

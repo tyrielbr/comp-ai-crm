@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { authClient } from "@crm/auth/client";
 import {
 	type MailboxProviderId,
@@ -23,12 +24,12 @@ type ProviderGrant = {
 
 const PROVIDERS = {
 	google: {
-		label: "Grant Google access",
+		label: tr("Grant Google access"),
 		scopes: [...SYNC_SCOPES],
 		Logo: GoogleLogo,
 	},
 	microsoft: {
-		label: "Grant Microsoft access",
+		label: tr("Grant Microsoft access"),
 		scopes: [...MICROSOFT_SYNC_SCOPES],
 		Logo: MicrosoftLogo,
 	},
@@ -43,7 +44,7 @@ export function GrantAccess({
 
 	function fail(message?: string) {
 		setPending(null);
-		toast.error(message ?? "Could not reach the provider.");
+		toast.error(message ?? tr("Could not reach the provider."));
 	}
 
 	async function handleGrant(provider: MailboxProviderId) {
@@ -83,7 +84,7 @@ export function GrantAccess({
 						) : (
 							<Logo data-icon="inline-start" className="size-4" />
 						)}
-						{single ? "Grant access" : label}
+						{single ? tr("Grant access") : label}
 					</Button>
 				);
 			})}
@@ -91,12 +92,14 @@ export function GrantAccess({
 			<Button
 				className="w-full"
 				onClick={() => {
-					signOutAndRedirect().catch(() => toast.error("Could not sign out."));
+					signOutAndRedirect().catch(() =>
+						toast.error(tr("Could not sign out.")),
+					);
 				}}
 				type="button"
 				variant="ghost"
 			>
-				Sign out
+				{tr("Sign out")}
 			</Button>
 		</div>
 	);

@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { workspaceSlug } from "@crm/db/workspace";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -60,7 +61,7 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 		>
 			<FieldGroup>
 				<Field>
-					<FieldLabel htmlFor={nameId}>Company name</FieldLabel>
+					<FieldLabel htmlFor={nameId}>{tr("Company name")}</FieldLabel>
 					<Input
 						id={nameId}
 						name="name"
@@ -103,12 +104,12 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 						/>
 					</InputGroup>
 					<FieldDescription>
-						Your team will use this address to open the CRM.
+						{tr("Your team will use this address to open the CRM.")}
 					</FieldDescription>
 				</Field>
 
 				<Field>
-					<FieldLabel htmlFor={websiteId}>Website</FieldLabel>
+					<FieldLabel htmlFor={websiteId}>{tr("Website")}</FieldLabel>
 					<InputGroup>
 						<InputGroupAddon>
 							<InputGroupText>https://</InputGroupText>
@@ -126,14 +127,14 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 						/>
 					</InputGroup>
 					<FieldDescription>
-						Read once, so every answer afterwards knows what you sell.
+						{tr("Read once, so every answer afterwards knows what you sell.")}
 					</FieldDescription>
 				</Field>
 			</FieldGroup>
 
 			<Button type="submit" disabled={save.isPending}>
 				{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-				Continue
+				{tr("Continue")}
 			</Button>
 		</form>
 	);

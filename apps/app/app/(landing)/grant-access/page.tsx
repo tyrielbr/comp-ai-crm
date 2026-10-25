@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { type MailboxProviderId, mailboxGrantsNeeded } from "@crm/auth/scopes";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
@@ -6,16 +7,18 @@ import { requireSession, signInAccounts } from "@/lib/session";
 import { GrantAccess } from "./grant-access";
 
 export const metadata: Metadata = {
-	title: "Grant access",
+	title: tr("Grant access"),
 };
 
 export const instant = false;
 
 const DESCRIPTION = {
-	google:
+	google: tr(
 		"This CRM reads your Gmail and Calendar so meetings and email threads show up on the right company. It is read-only — nothing is ever sent on your behalf.",
-	microsoft:
+	),
+	microsoft: tr(
 		"This CRM reads your Outlook mail so email threads show up on the right company. It is read-only — nothing is ever sent on your behalf.",
+	),
 } satisfies Record<MailboxProviderId, string>;
 
 const BOTH =
@@ -35,15 +38,16 @@ export default async function GrantAccessPage() {
 	return (
 		<AuthShell>
 			<AuthHeading
-				title="One more step"
+				title={tr("One more step")}
 				description={(only ? DESCRIPTION[only] : undefined) ?? BOTH}
 			/>
 
 			<GrantAccess providers={providers} />
 
 			<p className="text-center text-muted-foreground text-sm/5">
-				Only conversations with companies in the CRM are stored. Personal mail
-				is discarded without being saved.
+				{tr(
+					"Only conversations with companies in the CRM are stored. Personal mail is discarded without being saved.",
+				)}
 			</p>
 		</AuthShell>
 	);

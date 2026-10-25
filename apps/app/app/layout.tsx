@@ -1,5 +1,5 @@
 import "@crm/ui/globals.css";
-import { AGRO_LOCALE } from "@crm/agro-i18n";
+import { AGRO_LOCALE, tr } from "@crm/agro-i18n";
 import { Toaster } from "@crm/ui/components/sonner";
 import { TooltipProvider } from "@crm/ui/components/tooltip";
 import { cn } from "@crm/ui/lib/utils";
@@ -22,10 +22,10 @@ const fontMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: {
-		default: "Comp AI - CRM",
+		default: tr("Comp AI - CRM"),
 		template: "%s · Comp AI CRM",
 	},
-	description: "Customer Relationship Management for Comp AI",
+	description: tr("Customer Relationship Management for Comp AI"),
 	icons: {
 		icon: [
 			{ url: "/favicon.svg", type: "image/svg+xml" },
