@@ -236,7 +236,7 @@ export function FieldsList({
 										{template.label}
 										{template.options && template.options.length > 0
 											? ` · ${template.options.join(", ")}`
-											: ` · ${typeLabel(template.type)}`}
+											: ` · ${tr(typeLabel(template.type))}`}
 									</span>
 									<Button
 										variant="outline"
@@ -350,7 +350,7 @@ export function FieldsList({
 												variant="mono"
 												className="w-18 shrink-0 justify-center"
 											>
-												{field.typeLabel}
+												{tr(field.typeLabel)}
 											</Badge>
 
 											<DropdownMenu>

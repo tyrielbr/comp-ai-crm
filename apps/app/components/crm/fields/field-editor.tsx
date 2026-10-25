@@ -314,7 +314,7 @@ export function FieldEditor({
 							<SelectContent>
 								{FIELD_TYPES.map((type) => (
 									<SelectItem key={type} value={type}>
-										{TYPE_HINTS[type] ?? typeLabel(type)}
+										{TYPE_HINTS[type] ?? tr(typeLabel(type))}
 									</SelectItem>
 								))}
 							</SelectContent>

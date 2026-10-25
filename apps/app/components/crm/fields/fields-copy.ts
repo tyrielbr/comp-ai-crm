@@ -2,7 +2,7 @@ import { tr } from "@crm/agro-i18n";
 import type { RecordKind } from "@/components/crm/record-sheet/record-stack";
 import type { FieldEntity } from "./fields-entity";
 
-export const SHEET_TITLE = "Fields";
+export const SHEET_TITLE = tr("Fields");
 
 const SUBTITLE = {
 	company: tr("This shapes every company in your CRM."),
@@ -14,53 +14,58 @@ export function subtitleFor(kind: RecordKind): string {
 	return SUBTITLE[kind];
 }
 
-export const STANDARD_ROW = "Standard fields";
-export const STANDARD_NOTE = "reorder and hide only";
-export const SUGGESTED_ROW = "Suggested fields";
-export const SUGGESTED_NOTE = "one click to add";
-export const ADD = "Add";
-export const CUSTOM_GROUP = "Custom fields";
-export const DRAG_NOTE = "Drag to order";
-export const ARCHIVED_ROW = "Archived";
-export const ARCHIVED_NOTE = "values kept, hidden everywhere";
-export const NEW_FIELD = "New field";
-export const ORDER_NOTE = "Order here is the order on the sheet";
-export const MANUAL_ONLY = "Manual only";
-export const TABLE_NOTE = "also a column on the table";
-export const FILTER_NOTE = "also a filter";
+export const STANDARD_ROW = tr("Standard fields");
+export const STANDARD_NOTE = tr("reorder and hide only");
+export const SUGGESTED_ROW = tr("Suggested fields");
+export const SUGGESTED_NOTE = tr("one click to add");
+export const ADD = tr("Add");
+export const CUSTOM_GROUP = tr("Custom fields");
+export const DRAG_NOTE = tr("Drag to order");
+export const ARCHIVED_ROW = tr("Archived");
+export const ARCHIVED_NOTE = tr("values kept, hidden everywhere");
+export const NEW_FIELD = tr("New field");
+export const ORDER_NOTE = tr("Order here is the order on the sheet");
+export const MANUAL_ONLY = tr("Manual only");
+export const TABLE_NOTE = tr("also a column on the table");
+export const FILTER_NOTE = tr("also a filter");
 
-export const EMPTY_TITLE = "No custom fields yet";
-export const EMPTY_BODY =
-	"Create dynamic fields that your agents can research and pre-fill.";
+export const EMPTY_TITLE = tr("No custom fields yet");
+export const EMPTY_BODY = tr(
+	"Create dynamic fields that your agents can research and pre-fill.",
+);
 
-export const ERROR_TITLE = "We could not load your fields";
-export const ERROR_BODY =
-	"Your fields are still there. Try again in a moment, before you create anything new.";
-export const RETRY = "Try again";
+export const ERROR_TITLE = tr("We could not load your fields");
+export const ERROR_BODY = tr(
+	"Your fields are still there. Try again in a moment, before you create anything new.",
+);
+export const RETRY = tr("Try again");
 
-export const LABEL_LABEL = "Label";
-export const KEY_LABEL = "Key";
-export const KEY_HELP =
-	"What the API and your agents call it. Set from the label, fixed once saved — renaming the label later never breaks a caller.";
-export const AGENT_LABEL = "Let your agents fill this";
-export const AGENT_HELP =
-	"They propose a value with a source, and never overwrite yours.";
-export const BRIEF_LABEL = "What counts as an answer";
-export const BRIEF_HELP =
-	"Leave it empty and your agents work from the label and type alone.";
-export const TYPE_LABEL = "Type";
-export const OPTIONS_LABEL = "Options";
-export const ADD_OPTION = "Add option";
-export const ALL_FILLED = "Nothing left to fill";
+export const LABEL_LABEL = tr("Label");
+export const KEY_LABEL = tr("Key");
+export const KEY_HELP = tr(
+	"What the API and your agents call it. Set from the label, fixed once saved — renaming the label later never breaks a caller.",
+);
+export const AGENT_LABEL = tr("Let your agents fill this");
+export const AGENT_HELP = tr(
+	"They propose a value with a source, and never overwrite yours.",
+);
+export const BRIEF_LABEL = tr("What counts as an answer");
+export const BRIEF_HELP = tr(
+	"Leave it empty and your agents work from the label and type alone.",
+);
+export const TYPE_LABEL = tr("Type");
+export const OPTIONS_LABEL = tr("Options");
+export const ADD_OPTION = tr("Add option");
+export const ALL_FILLED = tr("Nothing left to fill");
 
 export function optionLabel(index: number): string {
-	return `Option ${index + 1}`;
+	return tr("Option {n}", { n: index + 1 });
 }
-export const ADD_FIELD = "Create field";
-export const CANCEL = "Cancel";
-export const SAVE = "Save changes";
-export const ARCHIVE = "Archive";
-export const FILL_REST = "Fill the rest";
+export const ADD_FIELD = tr("Create field");
+export const CANCEL = tr("Cancel");
+export const SAVE = tr("Save changes");
+export const ARCHIVE = tr("Archive");
+export const FILL_REST = tr("Fill the rest");
 
 const SHEET_PLACEMENT = {
 	COMPANY: tr("Show on the company sheet"),
