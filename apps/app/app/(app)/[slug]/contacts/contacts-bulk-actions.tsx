@@ -52,7 +52,9 @@ export function ContactsBulkActions({
 		trpc.contacts.bulkAssignOwner.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.contact();
-				reportBulk(result, (count) => `${contacts(count)} reassigned.`);
+				reportBulk(result, (count) =>
+					tr("{items} reassigned.", { items: contacts(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -63,7 +65,9 @@ export function ContactsBulkActions({
 		trpc.contacts.bulkSetCompany.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.contact();
-				reportBulk(result, (count) => `${contacts(count)} moved.`);
+				reportBulk(result, (count) =>
+					tr("{items} moved.", { items: contacts(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -74,9 +78,10 @@ export function ContactsBulkActions({
 		trpc.contacts.bulkEnrich.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.contact();
-				reportBulk(
-					result,
-					(count) => `Looking up ${contacts(count)} — the table will update.`,
+				reportBulk(result, (count) =>
+					tr("Looking up {items} — the table will update.", {
+						items: contacts(count),
+					}),
 				);
 				onDone();
 			},
@@ -88,7 +93,9 @@ export function ContactsBulkActions({
 		trpc.contacts.bulkArchive.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "contact", ids: variables.ids });
-				reportBulk(result, (count) => `${contacts(count)} archived.`);
+				reportBulk(result, (count) =>
+					tr("{items} archived.", { items: contacts(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -99,7 +106,9 @@ export function ContactsBulkActions({
 		trpc.contacts.bulkRestore.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.contact();
-				reportBulk(result, (count) => `${contacts(count)} restored.`);
+				reportBulk(result, (count) =>
+					tr("{items} restored.", { items: contacts(count) }),
+				);
 				onDone();
 			},
 			onError,
@@ -110,7 +119,9 @@ export function ContactsBulkActions({
 		trpc.contacts.bulkPurge.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "contact", ids: variables.ids });
-				reportBulk(result, (count) => `${contacts(count)} deleted forever.`);
+				reportBulk(result, (count) =>
+					tr("{items} deleted forever.", { items: contacts(count) }),
+				);
 				setConfirming(false);
 				onDone();
 			},
@@ -144,9 +155,11 @@ export function ContactsBulkActions({
 				<BulkDeleteDialog
 					open={confirming}
 					onOpenChange={setConfirming}
-					title={`Delete ${contacts(ids.length)} forever?`}
+					title={tr("Delete {items} forever?", { items: contacts(ids.length) })}
 					description={tr(
-						"Their email addresses are suppressed, so the inbox sync will not file them again. This cannot be undone.",
+						tr(
+							"Their email addresses are suppressed, so the inbox sync will not file them again. This cannot be undone.",
+						),
 					)}
 					onConfirm={() => purge.mutate({ ids })}
 				/>
@@ -168,7 +181,7 @@ export function ContactsBulkActions({
 		>
 			<BulkOwnerMenu
 				users={users.data ?? []}
-				unassignedLabel="Nobody"
+				unassignedLabel={tr("Nobody")}
 				onSelect={(ownerId) => assignOwner.mutate({ ids, ownerId })}
 			/>
 			<DropdownMenuSub>
