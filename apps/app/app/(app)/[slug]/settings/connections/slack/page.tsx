@@ -307,7 +307,12 @@ function MissingGrant({
 				<AlertTitle>
 					{privateChannels
 						? tr("Comp AI cannot reach private channels")
-						: `Slack held back ${missing.length} permission${missing.length === 1 ? "" : "s"}`}
+						: tr(
+								missing.length === 1
+									? "Slack held back {count} permission"
+									: "Slack held back {count} permissions",
+								{ count: missing.length },
+							)}
 				</AlertTitle>
 				<AlertDescription>
 					<span>{tr("Reconnect to ask again. You lose nothing.")}</span>

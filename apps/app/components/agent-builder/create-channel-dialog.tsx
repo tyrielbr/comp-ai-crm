@@ -76,7 +76,9 @@ export function CreateChannelDialog({
 						<p className="text-muted-foreground text-xs">
 							{slug && !valid
 								? tr("Use lowercase letters, numbers and dashes.")
-								: `Slack will call it #${slug || "renewals"}.`}
+								: tr("Slack will call it #{slug}.", {
+										slug: slug || "renovacoes",
+									})}
 						</p>
 					</div>
 

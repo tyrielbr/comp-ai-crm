@@ -96,7 +96,9 @@ export function SlackConnectButton({
 			{connectError ? (
 				<p role="alert" className="max-w-sm text-destructive text-xs">
 					{CONNECT_ERRORS.get(connectError) ??
-						`Slack could not be connected (${connectError.replaceAll("_", " ")}).`}
+						tr("Slack could not be connected ({error}).", {
+							error: connectError.replaceAll("_", " "),
+						})}
 				</p>
 			) : null}
 		</div>

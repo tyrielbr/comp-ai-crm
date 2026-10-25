@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { connection } from "next/server";
 import { bufferedProxyResponse } from "@/lib/api-proxy-response";
 import { API_URL } from "@/lib/env";
@@ -46,7 +47,7 @@ async function handler(request: Request): Promise<Response> {
 		);
 
 		return Response.json(
-			{ error: `The API at ${API_URL} is not reachable.` },
+			{ error: tr("The API at {url} is not reachable.", { url: API_URL }) },
 			{ status: 502 },
 		);
 	}

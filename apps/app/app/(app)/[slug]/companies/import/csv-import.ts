@@ -88,7 +88,10 @@ export function parseCsv(text: string): ParsedCsv {
 
 	const headers = headerRecord.map((header) => header.trim());
 	for (const [index, header] of headers.entries()) {
-		if (header === "") throw new Error(`Column ${index + 1} needs a header.`);
+		if (header === "")
+			throw new Error(
+				tr("Column {column} needs a header.", { column: index + 1 }),
+			);
 	}
 
 	if (dataRecords.length === 0) {

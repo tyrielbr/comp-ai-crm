@@ -59,8 +59,8 @@ export function toolLabel(item: LabelInput): string {
 
 		const action = input.data.tool.replaceAll("_", " ");
 		return item.pending
-			? `Asking ${vendor.name} to ${action}`
-			: `Asked ${vendor.name} to ${action}`;
+			? tr("Asking {vendor} to {action}", { vendor: vendor.name, action })
+			: tr("Asked {vendor} to {action}", { vendor: vendor.name, action });
 	}
 
 	if (item.tool === "save_agent_draft") {

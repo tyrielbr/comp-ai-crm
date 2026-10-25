@@ -61,10 +61,20 @@ git push origin agro
 
 ## Progresso da tradução
 
-- **Etapa 1 (feita):** infraestrutura; menu lateral e cabeçalho; tela de login;
-  listas de Negócios, Empresas e Contatos (títulos, busca, filtros, ordenação, colunas,
-  arquivados, ações em massa, paginação, visualizações salvas); etapas do funil.
-- **Etapa 2 (feita):** painel do negócio — cabeçalho (Valor, Previsão de fechamento, Na etapa há, Responsável, menu de ações) e aba Visão geral.
-- **Próximas etapas:** painel do negócio (abas Contatos,
-  Atividade, Agente); painéis de empresa e contato; tarefas; configurações; chat/agentes;
-  onboarding; mensagens de erro da API.
+Tradução completa da interface (catálogo com ~1.340 textos):
+
+- **Etapa 1:** infraestrutura; menu lateral e cabeçalho; login; listas de Negócios, Empresas e Contatos; etapas do funil.
+- **Etapa 2:** painel do negócio — cabeçalho e aba Visão geral.
+- **Etapa 3 (completa):** abas Contatos, Atividade e Agente; painéis de empresa e contato; criação e importação CSV;
+  campos personalizados; ações em massa; Tarefas; painel inicial; Configurações (geral, membros, moedas, SSO,
+  rastreamento, conexões, Slack, chaves de API); Chat e construtor de agentes; onboarding; toasts, diálogos e
+  estados vazios; componentes de UI compartilhados; tempo relativo ("agora", "há 5m") e datas em pt-BR;
+  mensagens de erro da API (`apps/api`, exceções com texto literal).
+
+**Ficou em inglês de propósito:**
+- Landing page pública do Comp AI (`apps/app/components/landing`, `app/(landing)/page.tsx`) — é marketing do projeto original.
+- Textos de log, `console.*`, documentação OpenAPI/Swagger e rotas de cron da API (só desenvolvedores veem).
+- Prompts enviados ao modelo pelo construtor de agentes (`lib/agent-handoff.ts`), para não alterar o comportamento do agente.
+- Dados vindos do banco/usuário (nomes, campos personalizados criados no CRM, nomes de moedas) e mensagens de serviços externos.
+
+**Testes:** com `NODE_ENV=test` o `tr()` devolve o texto original em inglês, então os testes do upstream continuam valendo.

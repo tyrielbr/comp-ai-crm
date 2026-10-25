@@ -32,7 +32,7 @@ const suspects: string[] = [];
 
 const TR = /\btr(?:Plural)?\(\s*(?:[^,"]+,\s*)?"((?:[^"\\]|\\.)*)"/g;
 const STAGE = /label: "([^"]+)", tone/g;
-const JSX_TEXT = />\s*([A-Z][A-Za-z ,.'’…?!—-]*[a-z.…?!])\s*</g;
+const JSX_TEXT = /(?<![=\w-])>\s*([A-Z][A-Za-z ,.'’…?!—-]*[a-z.…?!])\s*</g;
 const PROP =
 	/\b(?:header|label|title|placeholder|description|aria-label|allLabel|empty)(?:=|: )"([A-Z][^"]*[a-z][^"]*)"/g;
 
