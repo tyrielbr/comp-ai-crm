@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -18,7 +19,7 @@ import { dealsSearchParams } from "./deals-search-params";
 import { DealsTable } from "./deals-table";
 
 export const metadata: Metadata = {
-	title: "Deals",
+	title: tr("Deals"),
 };
 
 export default function DealsPage({
@@ -28,9 +29,9 @@ export default function DealsPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Deals</PageShellTitle>
+					<PageShellTitle>{tr("Deals")}</PageShellTitle>
 					<PageShellDescription>
-						The pipeline, and everything that has already closed.
+						{tr("The pipeline, and everything that has already closed.")}
 					</PageShellDescription>
 				</PageShellHeading>
 				<PageShellActions>

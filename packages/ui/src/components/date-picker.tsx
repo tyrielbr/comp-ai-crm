@@ -14,6 +14,7 @@ import { formatDay, fromDay, toDay } from "@crm/ui/lib/format";
 import { cn } from "@crm/ui/lib/utils";
 import type { VariantProps } from "class-variance-authority";
 import { useState } from "react";
+import { tr } from "@crm/agro-i18n";
 
 export function DatePicker({
 	id,
@@ -75,7 +76,7 @@ export function DatePicker({
 							className="w-full justify-start"
 							onClick={() => choose("")}
 						>
-							Clear
+							{tr("Clear")}
 						</Button>
 					</div>
 				) : null}

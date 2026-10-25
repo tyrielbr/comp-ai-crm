@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import { DealStage } from "@crm/db/enums";
 import type { StatusTone } from "@crm/ui/components/status-indicator";
 
@@ -35,7 +36,7 @@ export const LOSING_STAGES: readonly DealStage[] = [
 
 export const DEAL_STAGE_OPTIONS = ORDER.map((value) => ({
 	value,
-	label: PRESENTATION[value].label,
+	label: tr(PRESENTATION[value].label),
 }));
 
 const OPEN_STAGE_COLORS = [
@@ -54,9 +55,10 @@ export function dealStageColor(stage: DealStage): string {
 }
 
 export function dealStageLabel(stage: DealStage): string {
-	return PRESENTATION[stage].label;
+	return tr(PRESENTATION[stage].label);
 }
 
 export function dealStagePresentation(stage: DealStage) {
-	return PRESENTATION[stage];
+	const presentation = PRESENTATION[stage];
+	return { ...presentation, label: tr(presentation.label) };
 }

@@ -2,6 +2,7 @@
 
 import Bookmark from "@carbon/icons-react/es/Bookmark";
 import Close from "@carbon/icons-react/es/Close";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Dialog,
@@ -65,7 +66,7 @@ export function SavedViewsMenu({
 		trpc.savedViews.create.mutationOptions({
 			onSuccess: async () => {
 				await settle();
-				toast.success("View saved.");
+				toast.success(tr("View saved."));
 				closeDialog();
 			},
 			onError: (error) => toast.error(error.message),
@@ -76,7 +77,7 @@ export function SavedViewsMenu({
 		trpc.savedViews.delete.mutationOptions({
 			onSuccess: async () => {
 				await settle();
-				toast.success("View deleted.");
+				toast.success(tr("View deleted."));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -96,15 +97,17 @@ export function SavedViewsMenu({
 						className="justify-start sm:justify-center"
 					>
 						<Bookmark data-icon="inline-start" />
-						Views
+						{tr("Views")}
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="min-w-56">
 					<DropdownMenuItem onSelect={() => setDialogOpen(true)}>
-						Save current view…
+						{tr("Save current view…")}
 					</DropdownMenuItem>
 					{list.length > 0 && <DropdownMenuSeparator />}
-					{mine.length > 0 && <DropdownMenuLabel>My views</DropdownMenuLabel>}
+					{mine.length > 0 && (
+						<DropdownMenuLabel>{tr("My views")}</DropdownMenuLabel>
+					)}
 					{mine.map((view) => (
 						<ViewItem
 							key={view.id}
@@ -114,7 +117,7 @@ export function SavedViewsMenu({
 						/>
 					))}
 					{shared_.length > 0 && (
-						<DropdownMenuLabel>Shared with the team</DropdownMenuLabel>
+						<DropdownMenuLabel>{tr("Shared with the team")}</DropdownMenuLabel>
 					)}
 					{shared_.map((view) => (
 						<DropdownMenuItem
@@ -133,11 +136,11 @@ export function SavedViewsMenu({
 			>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Save this view</DialogTitle>
+						<DialogTitle>{tr("Save this view")}</DialogTitle>
 					</DialogHeader>
 					<div className="flex flex-col gap-4">
 						<Field>
-							<FieldLabel htmlFor="saved-view-name">Name</FieldLabel>
+							<FieldLabel htmlFor="saved-view-name">{tr("Name")}</FieldLabel>
 							<Input
 								id="saved-view-name"
 								value={name}
@@ -147,7 +150,7 @@ export function SavedViewsMenu({
 						</Field>
 						<Field orientation="horizontal">
 							<FieldLabel htmlFor="saved-view-shared">
-								Share with the team
+								{tr("Share with the team")}
 							</FieldLabel>
 							<Switch
 								id="saved-view-shared"
@@ -158,7 +161,7 @@ export function SavedViewsMenu({
 					</div>
 					<DialogFooter>
 						<Button variant="outline" onClick={closeDialog}>
-							Cancel
+							{tr("Cancel")}
 						</Button>
 						<Button
 							disabled={name.trim() === "" || create.isPending}
@@ -171,7 +174,7 @@ export function SavedViewsMenu({
 								})
 							}
 						>
-							Save
+							{tr("Save")}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

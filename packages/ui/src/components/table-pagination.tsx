@@ -5,8 +5,10 @@ import ChevronRight from "@carbon/icons-react/es/ChevronRight";
 import { Button } from "@crm/ui/components/button";
 import { Spinner } from "@crm/ui/components/spinner";
 import type { ReactNode } from "react";
+import { tr } from "@crm/agro-i18n";
+import { AGRO_INTL_LOCALE } from "@crm/agro-i18n/format";
 
-const numberFormat = new Intl.NumberFormat();
+const numberFormat = new Intl.NumberFormat(AGRO_INTL_LOCALE);
 
 export function TablePagination({
 	page,
@@ -34,10 +36,12 @@ export function TablePagination({
 				{loading && <Spinner />}
 				{meta ??
 					(total === 0
-						? "No results"
-						: `Showing ${numberFormat.format(rangeStart)}–${numberFormat.format(
-								rangeEnd,
-							)} of ${numberFormat.format(total)}`)}
+						? tr("No results")
+						: tr("Showing {start}–{end} of {total}", {
+								start: numberFormat.format(rangeStart),
+								end: numberFormat.format(rangeEnd),
+								total: numberFormat.format(total),
+							}))}
 			</span>
 			{totalPages > 1 && (
 				<div className="flex items-center gap-2">
@@ -48,7 +52,7 @@ export function TablePagination({
 						onClick={() => onPageChange(Math.max(1, page - 1))}
 					>
 						<ChevronLeft data-icon="inline-start" />
-						Previous
+						{tr("Previous")}
 					</Button>
 					<span className="text-muted-foreground text-xs tabular-nums">
 						{page} / {totalPages}
@@ -59,7 +63,7 @@ export function TablePagination({
 						disabled={page >= totalPages}
 						onClick={() => onPageChange(page + 1)}
 					>
-						Next
+						{tr("Next")}
 						<ChevronRight data-icon="inline-end" />
 					</Button>
 				</div>

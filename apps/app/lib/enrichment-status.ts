@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { EnrichmentStatus } from "@crm/db/enums";
 import type { StatusTone } from "@crm/ui/components/status-indicator";
 
@@ -22,13 +23,15 @@ export const ENRICHMENT_IDLE_POLL_MS = 30_000;
 
 export const ENRICHMENT_FACET_OPTIONS = (
 	Object.keys(PRESENTATION) as EnrichmentStatus[]
-).map((value) => ({ value, label: PRESENTATION[value].label }));
+).map((value) => ({ value, label: tr(PRESENTATION[value].label) }));
 
 export function enrichmentPresentation(
 	status: EnrichmentStatus,
 	queued: boolean,
 ) {
-	return status === "PENDING" && queued ? QUEUED : PRESENTATION[status];
+	const presentation =
+		status === "PENDING" && queued ? QUEUED : PRESENTATION[status];
+	return { ...presentation, label: tr(presentation.label) };
 }
 
 export function isEnriching(status: EnrichmentStatus, queued = false): boolean {

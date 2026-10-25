@@ -17,6 +17,7 @@
 		"clean": "rm -rf .turbo node_modules"
 	},
 	"dependencies": {
+		"@crm/agro-i18n": "workspace:*",
 		"@carbon/icons-react": "^11.82.0",
 		"@crm/db": "workspace:*",
 		"@dnd-kit/core": "^6.3.1",

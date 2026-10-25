@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import type { DataTableColumn } from "@crm/ui/components/data-table";
 import { EmptyCellValue } from "@crm/ui/components/empty-cell";
 import { formatDay } from "@crm/ui/lib/format";
@@ -18,7 +19,7 @@ function render(
 ) {
 	if (value === null || value === "") return <EmptyCellValue />;
 
-	if (type === "CHECKBOX") return value === true ? "Yes" : "No";
+	if (type === "CHECKBOX") return value === true ? tr("Yes") : tr("No");
 	if (type === "DATE") return formatDay(String(value));
 	if (type === "USER") {
 		const user = users.get(String(value));

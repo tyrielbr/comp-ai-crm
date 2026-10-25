@@ -5,6 +5,7 @@ import Light from "@carbon/icons-react/es/Light";
 import Logout from "@carbon/icons-react/es/Logout";
 import Menu from "@carbon/icons-react/es/Menu";
 import UserAvatar from "@carbon/icons-react/es/UserAvatar";
+import { tr } from "@crm/agro-i18n";
 import { Avatar, AvatarFallback, AvatarImage } from "@crm/ui/components/avatar";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -45,14 +46,14 @@ export function AppHeader({ user }: { user: User }) {
 					variant="ghost"
 					size="icon"
 					className="md:hidden"
-					aria-label="Open navigation"
+					aria-label={tr("Open navigation")}
 					onClick={() => setMobileNavOpen(true)}
 				>
 					<Menu />
 				</Button>
 				<Link
 					href={workspaceUrl()}
-					aria-label="Homepage"
+					aria-label={tr("Homepage")}
 					className="hidden size-8 items-center justify-center text-foreground md:flex"
 				>
 					<Logo className="size-5" />
@@ -67,7 +68,7 @@ export function AppHeader({ user }: { user: User }) {
 					user={user}
 					onSignOut={() => {
 						signOutAndRedirect().catch(() =>
-							toast.error("Could not sign out."),
+							toast.error(tr("Could not sign out.")),
 						);
 					}}
 				/>
@@ -96,7 +97,7 @@ export function AppHeaderFallback() {
 				</Avatar>
 			</div>
 			<span role="status" className="sr-only">
-				Loading workspace header…
+				{tr("Loading workspace header…")}
 			</span>
 		</header>
 	);
@@ -112,7 +113,7 @@ function UserMenu({ user, onSignOut }: { user: User; onSignOut: () => void }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					aria-label="Account menu"
+					aria-label={tr("Account menu")}
 					className="hover:bg-transparent aria-expanded:bg-transparent dark:hover:bg-transparent"
 				>
 					<Avatar className="size-7">
@@ -136,12 +137,12 @@ function UserMenu({ user, onSignOut }: { user: User; onSignOut: () => void }) {
 					}}
 				>
 					{isDark ? <Light /> : <Asleep />}
-					{isDark ? "Light mode" : "Dark mode"}
+					{isDark ? tr("Light mode") : tr("Dark mode")}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={onSignOut}>
 					<Logout />
-					Sign out
+					{tr("Sign out")}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

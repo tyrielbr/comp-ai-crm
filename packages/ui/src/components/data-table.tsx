@@ -54,6 +54,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
+import { tr } from "@crm/agro-i18n";
 
 export type DataTableColumn<TRow> = {
 	id: string;
@@ -200,13 +201,13 @@ function FacetSubmenu({
 						className="max-h-72"
 					>
 						<CommandInput
-							placeholder={`Search ${facet.label.toLowerCase()}…`}
+							placeholder={tr("Search {label}…", { label: facet.label.toLowerCase() })}
 							value={facet.search}
 							onValueChange={facet.onSearchChange}
 							onKeyDown={(event) => event.stopPropagation()}
 						/>
 						<CommandList>
-							<CommandEmpty>{facet.empty ?? "Nothing matches."}</CommandEmpty>
+							<CommandEmpty>{facet.empty ?? tr("Nothing matches.")}</CommandEmpty>
 							<CommandGroup>
 								{facet.options.map((option) => {
 									const checked = selected.includes(option.value);
@@ -236,7 +237,7 @@ function FacetSubmenu({
 						{selected.length > 0 && (
 							<>
 								<DropdownMenuItem onSelect={() => onChange([])}>
-									Clear
+									{tr("Clear")}
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
 							</>
@@ -314,7 +315,7 @@ export function DataTable<TRow, TSub = unknown>({
 			: tabs?.options.find((option) => option.value === query.tab);
 	const activeTabLabel = activeTabOption
 		? activeTabOption.label
-		: (tabs?.allLabel ?? "All");
+		: (tabs?.allLabel ?? tr("All"));
 
 	const deferredRows = useDeferredValue(rows);
 	const anyExpandable =
@@ -367,7 +368,7 @@ export function DataTable<TRow, TSub = unknown>({
 							size="sm"
 							onClick={() => selection.state.clear()}
 						>
-							Clear
+							{tr("Clear")}
 						</Button>
 					</div>
 				</div>
@@ -391,7 +392,7 @@ export function DataTable<TRow, TSub = unknown>({
 					>
 						<span className="flex items-center gap-2">
 							<Filter />
-							Filters
+							{tr("Filters")}
 							{activeFilterCount > 0 && (
 								<span className="tabular-nums opacity-60">
 									({activeFilterCount})
@@ -465,7 +466,7 @@ export function DataTable<TRow, TSub = unknown>({
 										className="justify-start sm:justify-center"
 									>
 										<Filter data-icon="inline-start" />
-										Filters
+										{tr("Filters")}
 										{activeFacetFilterCount > 0 && (
 											<span className="tabular-nums opacity-60">
 												({activeFacetFilterCount})
@@ -494,18 +495,18 @@ export function DataTable<TRow, TSub = unknown>({
 										className="justify-start sm:justify-center"
 									>
 										<ArrowsVertical data-icon="inline-start" />
-										Sort
+										{tr("Sort")}
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align="end" className="min-w-48">
-									<DropdownMenuLabel>Sort by</DropdownMenuLabel>
+									<DropdownMenuLabel>{tr("Sort by")}</DropdownMenuLabel>
 									<DropdownMenuRadioGroup
 										value={query.sort}
 										onValueChange={query.setSort}
 									>
 										{anyExpandable && (
 											<DropdownMenuRadioItem value="detail">
-												Detail
+												{tr("Detail")}
 											</DropdownMenuRadioItem>
 										)}
 										{sortableColumns.map((column) => (
@@ -522,10 +523,10 @@ export function DataTable<TRow, TSub = unknown>({
 										}
 									>
 										<DropdownMenuRadioItem value="asc">
-											Ascending
+											{tr("Ascending")}
 										</DropdownMenuRadioItem>
 										<DropdownMenuRadioItem value="desc">
-											Descending
+											{tr("Descending")}
 										</DropdownMenuRadioItem>
 									</DropdownMenuRadioGroup>
 								</DropdownMenuContent>
@@ -540,14 +541,14 @@ export function DataTable<TRow, TSub = unknown>({
 										className="justify-start sm:justify-center"
 									>
 										<Column data-icon="inline-start" />
-										Columns
+										{tr("Columns")}
 										<span className="tabular-nums opacity-60">
 											({visibleColumns.length})
 										</span>
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align="end" className="min-w-48">
-									<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+									<DropdownMenuLabel>{tr("Toggle columns")}</DropdownMenuLabel>
 									{hideable.map((column) => (
 										<DropdownMenuCheckboxItem
 											key={column.id}
@@ -581,7 +582,7 @@ export function DataTable<TRow, TSub = unknown>({
 				overlay={
 					deferredRows.length === 0 ? (
 						<div className="absolute inset-x-0 top-11 bottom-0 flex items-center justify-center px-4 py-8 text-center text-muted-foreground">
-							{loading ? <Spinner /> : (empty ?? "No results found.")}
+							{loading ? <Spinner /> : (empty ?? tr("No results found."))}
 						</div>
 					) : null
 				}
@@ -602,7 +603,7 @@ export function DataTable<TRow, TSub = unknown>({
 										selection.state.toggleAll(checked === true)
 									}
 									disabled={deferredRows.length === 0}
-									aria-label="Select every row on this page"
+									aria-label={tr("Select every row on this page")}
 								/>
 							</TableHead>
 						)}
@@ -701,7 +702,7 @@ export function DataTable<TRow, TSub = unknown>({
 												aria-label={
 													selection.rowLabel
 														? `Select ${selection.rowLabel(row)}`
-														: "Select row"
+														: tr("Select row")
 												}
 											/>
 										</TableCell>

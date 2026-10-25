@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -22,7 +23,7 @@ import {
 } from "./import-companies-link";
 
 export const metadata: Metadata = {
-	title: "Companies",
+	title: tr("Companies"),
 };
 
 export default function CompaniesPage({
@@ -33,9 +34,9 @@ export default function CompaniesPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Companies</PageShellTitle>
+					<PageShellTitle>{tr("Companies")}</PageShellTitle>
 					<PageShellDescription>
-						Every account in the pipeline.
+						{tr("Every account in the pipeline.")}
 					</PageShellDescription>
 				</PageShellHeading>
 				<PageShellActions>

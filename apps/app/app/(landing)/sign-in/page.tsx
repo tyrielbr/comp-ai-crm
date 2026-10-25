@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { MailboxProviderId } from "@crm/auth/scopes";
 import type { Metadata } from "next";
 import { redirect, unstable_rethrow } from "next/navigation";
@@ -9,7 +10,7 @@ import { SocialSignIn } from "./social-sign-in";
 import { type SsoProvider, SsoSignIn } from "./sso-sign-in";
 
 export const metadata: Metadata = {
-	title: "Sign in",
+	title: tr("Sign in"),
 };
 
 type SignInOptions = {
@@ -46,8 +47,8 @@ export default function SignInPage({ searchParams }: PageProps<"/sign-in">) {
 			<Suspense
 				fallback={
 					<AuthHeading
-						title="Welcome back"
-						description="Sign in with your account to continue."
+						title={tr("Welcome back")}
+						description={tr("Sign in with your account to continue.")}
 					/>
 				}
 			>
@@ -89,8 +90,10 @@ async function SignIn({
 		return (
 			<>
 				<AuthHeading
-					title="No way in yet"
-					description="This CRM has no sign-in method configured, so nobody can get in — including you."
+					title={tr("No way in yet")}
+					description={tr(
+						"This CRM has no sign-in method configured, so nobody can get in — including you.",
+					)}
 				/>
 
 				<p className="text-center text-muted-foreground text-sm/5">
@@ -106,8 +109,8 @@ async function SignIn({
 	return (
 		<>
 			<AuthHeading
-				title="Welcome back"
-				description="Sign in with your account to continue."
+				title={tr("Welcome back")}
+				description={tr("Sign in with your account to continue.")}
 			/>
 
 			{showSso ? <SsoSignIn providers={providers} /> : null}

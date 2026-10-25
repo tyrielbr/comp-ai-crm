@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { signIn } from "@crm/auth/client";
 import { Button } from "@crm/ui/components/button";
 import { Spinner } from "@crm/ui/components/spinner";
@@ -26,7 +27,7 @@ export function SsoSignIn({ providers }: { providers: SsoProvider[] }) {
 		});
 
 		if (error) {
-			toast.error(error.message ?? "Could not reach the sign-in service.");
+			toast.error(error.message ?? tr("Could not reach the sign-in service."));
 			setPending(null);
 		}
 	}

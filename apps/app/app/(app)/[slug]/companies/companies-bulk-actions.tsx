@@ -3,6 +3,7 @@
 import Archive from "@carbon/icons-react/es/Archive";
 import Renew from "@carbon/icons-react/es/Renew";
 import Undo from "@carbon/icons-react/es/Undo";
+import { tr } from "@crm/agro-i18n";
 import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
@@ -109,7 +110,7 @@ export function CompaniesBulkActions({
 					<DropdownMenuGroup>
 						<DropdownMenuItem onSelect={() => restore.mutate({ ids })}>
 							<Undo />
-							Restore
+							{tr("Restore")}
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 					<DropdownMenuSeparator />
@@ -118,7 +119,7 @@ export function CompaniesBulkActions({
 							variant="destructive"
 							onSelect={() => setConfirming(true)}
 						>
-							Delete forever
+							{tr("Delete forever")}
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 				</BulkActionsMenu>
@@ -127,7 +128,7 @@ export function CompaniesBulkActions({
 					open={confirming}
 					onOpenChange={setConfirming}
 					title={`Delete ${companies(ids.length)} forever?`}
-					description="This cannot be undone."
+					description={tr("This cannot be undone.")}
 					onConfirm={() => purge.mutate({ ids })}
 				/>
 			</>
@@ -147,14 +148,14 @@ export function CompaniesBulkActions({
 			<DropdownMenuGroup>
 				<DropdownMenuItem onSelect={() => enrich.mutate({ ids })}>
 					<Renew />
-					Re-enrich
+					{tr("Re-enrich")}
 				</DropdownMenuItem>
 			</DropdownMenuGroup>
 			<DropdownMenuSeparator />
 			<DropdownMenuGroup>
 				<DropdownMenuItem onSelect={() => archive.mutate({ ids })}>
 					<Archive />
-					Archive
+					{tr("Archive")}
 				</DropdownMenuItem>
 			</DropdownMenuGroup>
 		</BulkActionsMenu>

@@ -3,6 +3,7 @@
 import Archive from "@carbon/icons-react/es/Archive";
 import Renew from "@carbon/icons-react/es/Renew";
 import Undo from "@carbon/icons-react/es/Undo";
+import { tr } from "@crm/agro-i18n";
 import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
@@ -126,7 +127,7 @@ export function ContactsBulkActions({
 					<DropdownMenuGroup>
 						<DropdownMenuItem onSelect={() => restore.mutate({ ids })}>
 							<Undo />
-							Restore
+							{tr("Restore")}
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 					<DropdownMenuSeparator />
@@ -135,7 +136,7 @@ export function ContactsBulkActions({
 							variant="destructive"
 							onSelect={() => setConfirming(true)}
 						>
-							Delete forever
+							{tr("Delete forever")}
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 				</BulkActionsMenu>
@@ -144,7 +145,9 @@ export function ContactsBulkActions({
 					open={confirming}
 					onOpenChange={setConfirming}
 					title={`Delete ${contacts(ids.length)} forever?`}
-					description="Their email addresses are suppressed, so the inbox sync will not file them again. This cannot be undone."
+					description={tr(
+						"Their email addresses are suppressed, so the inbox sync will not file them again. This cannot be undone.",
+					)}
 					onConfirm={() => purge.mutate({ ids })}
 				/>
 			</>
@@ -169,7 +172,7 @@ export function ContactsBulkActions({
 				onSelect={(ownerId) => assignOwner.mutate({ ids, ownerId })}
 			/>
 			<DropdownMenuSub>
-				<DropdownMenuSubTrigger>Move to company</DropdownMenuSubTrigger>
+				<DropdownMenuSubTrigger>{tr("Move to company")}</DropdownMenuSubTrigger>
 				<DropdownMenuSubContent
 					className="w-64 p-0"
 					onFocus={(event) => {
@@ -191,14 +194,14 @@ export function ContactsBulkActions({
 			<DropdownMenuGroup>
 				<DropdownMenuItem onSelect={() => enrich.mutate({ ids })}>
 					<Renew />
-					Re-enrich
+					{tr("Re-enrich")}
 				</DropdownMenuItem>
 			</DropdownMenuGroup>
 			<DropdownMenuSeparator />
 			<DropdownMenuGroup>
 				<DropdownMenuItem onSelect={() => archive.mutate({ ids })}>
 					<Archive />
-					Archive
+					{tr("Archive")}
 				</DropdownMenuItem>
 			</DropdownMenuGroup>
 		</BulkActionsMenu>

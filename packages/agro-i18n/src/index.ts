@@ -1,0 +1,36 @@
+/**
+ * Camada add-on Agro: tradução pt-BR.
+ *
+ * A chave é o próprio texto em inglês do upstream. Se a chave não estiver no
+ * catálogo, o texto em inglês aparece — assim strings novas do upstream nunca
+ * quebram a tela, apenas ficam em inglês até serem adicionadas ao catálogo.
+ *
+ * Síncrono e sem provider: funciona em Server Components, Client Components e
+ * módulos comuns (ex.: lib/deal-stage.ts).
+ */
+import ptBR from "./pt-BR.json";
+
+export const AGRO_LOCALE = "pt-BR" as const;
+
+const catalog: Record<string, string> = ptBR;
+
+type Vars = Record<string, string | number>;
+
+/** Traduz `source` (texto em inglês). Suporta interpolação `{nome}`. */
+export function tr(source: string, vars?: Vars): string {
+	const text = catalog[source] || source;
+	if (!vars) return text;
+	return text.replace(/\{(\w+)\}/g, (match, name: string) =>
+		name in vars ? String(vars[name]) : match,
+	);
+}
+
+/** Plural simples: escolhe singular/plural pela contagem e interpola `{count}`. */
+export function trPlural(
+	count: number,
+	singular: string,
+	plural: string,
+	vars?: Vars,
+): string {
+	return tr(count === 1 ? singular : plural, { count, ...vars });
+}

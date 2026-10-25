@@ -1,3 +1,4 @@
+import { tr } from "@crm/agro-i18n";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
@@ -18,7 +19,7 @@ import { ContactsTable } from "./contacts-table";
 import { CreateContactSheet } from "./create-contact-sheet";
 
 export const metadata: Metadata = {
-	title: "Contacts",
+	title: tr("Contacts"),
 };
 
 export default function ContactsPage({
@@ -28,8 +29,10 @@ export default function ContactsPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Contacts</PageShellTitle>
-					<PageShellDescription>Everyone in the pipeline.</PageShellDescription>
+					<PageShellTitle>{tr("Contacts")}</PageShellTitle>
+					<PageShellDescription>
+						{tr("Everyone in the pipeline.")}
+					</PageShellDescription>
 				</PageShellHeading>
 				<PageShellActions>
 					<CreateContactSheet />

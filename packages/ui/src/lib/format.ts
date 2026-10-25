@@ -1,3 +1,4 @@
+import { AGRO_INTL_LOCALE } from "@crm/agro-i18n/format";
 export function formatCount(
 	count: number,
 	noun: string,
@@ -39,7 +40,7 @@ export function formatMoney(cents: number, currency = "usd"): string {
 	const whole = cents % 100 === 0;
 	const digits = fractionDigits(code);
 
-	return new Intl.NumberFormat(undefined, {
+	return new Intl.NumberFormat(AGRO_INTL_LOCALE, {
 		style: "currency",
 		currency: code,
 		minimumFractionDigits: whole ? 0 : Math.min(2, digits),
@@ -48,7 +49,7 @@ export function formatMoney(cents: number, currency = "usd"): string {
 }
 
 export function formatMoneyCompact(cents: number, currency = "usd"): string {
-	return new Intl.NumberFormat(undefined, {
+	return new Intl.NumberFormat(AGRO_INTL_LOCALE, {
 		style: "currency",
 		currency: displayCurrencyCode(currency),
 		notation: "compact",

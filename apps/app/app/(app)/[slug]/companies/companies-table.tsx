@@ -1,6 +1,7 @@
 "use client";
 
 import Archive from "@carbon/icons-react/es/Archive";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	DataTable,
@@ -41,7 +42,7 @@ type CompanyRow = RouterOutputs["companies"]["list"]["rows"][number];
 const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	{
 		id: "name",
-		header: "Company",
+		header: tr("Company"),
 		sortable: true,
 		hideable: false,
 		width: "w-[26%]",
@@ -60,7 +61,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "domain",
-		header: "Domain",
+		header: tr("Domain"),
 		sortable: true,
 		width: "w-[16%]",
 		hideBelow: "md",
@@ -73,7 +74,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "industry",
-		header: "Industry",
+		header: tr("Industry"),
 		sortable: true,
 		width: "w-[16%]",
 		hideBelow: "lg",
@@ -86,7 +87,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "owner",
-		header: "Owner",
+		header: tr("Owner"),
 		sortable: true,
 		width: "w-[16%]",
 		hideBelow: "md",
@@ -94,7 +95,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "contacts",
-		header: "Contacts",
+		header: tr("Contacts"),
 		sortable: true,
 		align: "right",
 		width: "w-[9%]",
@@ -103,7 +104,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "deals",
-		header: "Open deals",
+		header: tr("Open deals"),
 		sortable: true,
 		align: "right",
 		width: "w-[9%]",
@@ -111,8 +112,8 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "createdAt",
-		header: "Created",
-		label: "Created date",
+		header: tr("Created"),
+		label: tr("Created date"),
 		sortable: true,
 		align: "right",
 		width: "w-[10%]",
@@ -125,7 +126,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "lastActivity",
-		header: "Last activity",
+		header: tr("Last activity"),
 		sortable: true,
 		align: "right",
 		width: "w-[12%]",
@@ -142,8 +143,8 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "enrichment",
-		header: "Enrichment",
-		label: "Enrichment status",
+		header: tr("Enrichment"),
+		label: tr("Enrichment status"),
 		defaultHidden: true,
 		width: "w-[14%]",
 		cell: (row) => (
@@ -154,8 +155,8 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 
 const ARCHIVED_COLUMN: DataTableColumn<CompanyRow> = {
 	id: "archivedAt",
-	header: "Archived",
-	label: "Archived date",
+	header: tr("Archived"),
+	label: tr("Archived date"),
 	sortable: true,
 	align: "right",
 	width: "w-[12%]",
@@ -200,9 +201,9 @@ export function CompaniesTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "owner",
-			label: "Owner",
+			label: tr("Owner"),
 			options: [
-				{ value: "unassigned", label: "Unassigned" },
+				{ value: "unassigned", label: tr("Unassigned") },
 				...(users.data ?? []).map((user) => ({
 					value: user.id,
 					label: user.name,
@@ -211,21 +212,21 @@ export function CompaniesTable() {
 		},
 		{
 			id: "industry",
-			label: "Industry",
+			label: tr("Industry"),
 			options: Object.keys(facetCounts?.industry ?? {})
 				.sort()
 				.map((value) => ({ value, label: value })),
 		},
 		{
 			id: "enrichment",
-			label: "Enrichment",
+			label: tr("Enrichment"),
 			options: ENRICHMENT_FACET_OPTIONS.filter(
 				(option) => (facetCounts?.enrichment?.[option.value] ?? 0) > 0,
 			),
 		},
 		{
 			id: "activity",
-			label: "Activity",
+			label: tr("Activity"),
 			options: ACTIVITY_FACET_OPTIONS.filter(
 				(option) => (facetCounts?.activity?.[option.value] ?? 0) > 0,
 			),
@@ -245,7 +246,9 @@ export function CompaniesTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search companies by name or domain…" />}
+			search={
+				<ListSearch placeholder={tr("Search companies by name or domain…")} />
+			}
 			actions={
 				<>
 					<SavedViewsMenu entity="COMPANY" table={table} />
@@ -256,7 +259,7 @@ export function CompaniesTable() {
 						onClick={() => setArchived(!input.archived)}
 					>
 						<Archive data-icon="inline-start" />
-						Archived
+						{tr("Archived")}
 					</Button>
 				</>
 			}
@@ -282,8 +285,8 @@ export function CompaniesTable() {
 			onRowClick={(row) => openRecord({ kind: "company", id: row.id })}
 			empty={
 				input.archived
-					? "No archived companies."
-					: "No companies match this view."
+					? tr("No archived companies.")
+					: tr("No companies match this view.")
 			}
 		/>
 	);

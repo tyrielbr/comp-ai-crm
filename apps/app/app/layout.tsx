@@ -1,4 +1,5 @@
 import "@crm/ui/globals.css";
+import { AGRO_LOCALE } from "@crm/agro-i18n";
 import { Toaster } from "@crm/ui/components/sonner";
 import { TooltipProvider } from "@crm/ui/components/tooltip";
 import { cn } from "@crm/ui/lib/utils";
@@ -42,7 +43,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html
-			lang="en"
+			lang={AGRO_LOCALE}
 			suppressHydrationWarning
 			className={cn(fontSans.variable, fontMono.variable, "h-full antialiased")}
 		>

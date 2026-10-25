@@ -2,6 +2,7 @@
 
 import Archive from "@carbon/icons-react/es/Archive";
 import Undo from "@carbon/icons-react/es/Undo";
+import { tr } from "@crm/agro-i18n";
 import type { DealStage } from "@crm/db/enums";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -127,7 +128,7 @@ export function DealsBulkActions({
 					<DropdownMenuGroup>
 						<DropdownMenuItem onSelect={() => restore.mutate({ ids })}>
 							<Undo />
-							Restore
+							{tr("Restore")}
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 					<DropdownMenuSeparator />
@@ -136,7 +137,7 @@ export function DealsBulkActions({
 							variant="destructive"
 							onSelect={() => setConfirming(true)}
 						>
-							Delete forever
+							{tr("Delete forever")}
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 				</BulkActionsMenu>
@@ -145,7 +146,9 @@ export function DealsBulkActions({
 					open={confirming}
 					onOpenChange={setConfirming}
 					title={`Delete ${deals(ids.length)} forever?`}
-					description="Everything filed against them — activity, notes, the amounts in your pipeline — goes too. This cannot be undone."
+					description={tr(
+						"Everything filed against them — activity, notes, the amounts in your pipeline — goes too. This cannot be undone.",
+					)}
 					onConfirm={() => purge.mutate({ ids })}
 				/>
 			</>
@@ -165,7 +168,7 @@ export function DealsBulkActions({
 					}
 				/>
 				<DropdownMenuSub>
-					<DropdownMenuSubTrigger>Change stage</DropdownMenuSubTrigger>
+					<DropdownMenuSubTrigger>{tr("Change stage")}</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent className="max-h-72 overflow-y-auto">
 						<DropdownMenuGroup>
 							{DEAL_STAGE_OPTIONS.map((option) => (
@@ -189,7 +192,7 @@ export function DealsBulkActions({
 				<DropdownMenuGroup>
 					<DropdownMenuItem onSelect={() => archive.mutate({ ids })}>
 						<Archive />
-						Archive
+						{tr("Archive")}
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</BulkActionsMenu>
@@ -210,8 +213,9 @@ export function DealsBulkActions({
 								: `Mark ${deals(ids.length)} as unqualified`}
 						</DialogTitle>
 						<DialogDescription>
-							The same reason goes on every one of them, so keep it to what they
-							have in common.
+							{tr(
+								"The same reason goes on every one of them, so keep it to what they have in common.",
+							)}
 						</DialogDescription>
 					</DialogHeader>
 
@@ -225,12 +229,12 @@ export function DealsBulkActions({
 						}}
 					>
 						<Field>
-							<FieldLabel htmlFor={reasonId}>Reason</FieldLabel>
+							<FieldLabel htmlFor={reasonId}>{tr("Reason")}</FieldLabel>
 							<Textarea
 								id={reasonId}
 								value={reason}
 								onChange={(event) => setReason(event.target.value)}
-								placeholder="Budget pulled for the quarter"
+								placeholder={tr("Budget pulled for the quarter")}
 								rows={3}
 							/>
 						</Field>
@@ -243,7 +247,7 @@ export function DealsBulkActions({
 							disabled={setStage.isPending || reason.trim() === ""}
 						>
 							{setStage.isPending ? <Spinner /> : null}
-							Save
+							{tr("Save")}
 						</Button>
 						<Button
 							variant="outline"
@@ -252,7 +256,7 @@ export function DealsBulkActions({
 								setReason("");
 							}}
 						>
-							Cancel
+							{tr("Cancel")}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

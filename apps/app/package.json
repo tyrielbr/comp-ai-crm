@@ -12,6 +12,7 @@
 		"lint": "biome check ."
 	},
 	"dependencies": {
+		"@crm/agro-i18n": "workspace:*",
 		"@carbon/icons-react": "^11.82.0",
 		"@crm/auth": "workspace:*",
 		"@crm/db": "workspace:*",

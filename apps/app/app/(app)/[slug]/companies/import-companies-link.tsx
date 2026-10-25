@@ -1,4 +1,5 @@
 import Upload from "@carbon/icons-react/es/Upload";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { Icon } from "@crm/ui/components/icon";
 import Link from "next/link";
@@ -14,7 +15,7 @@ export async function ImportCompaniesLink({
 		<Button asChild variant="outline">
 			<Link href={workspaceUrl(slug, "/companies/import")}>
 				<Icon icon={Upload} data-icon="inline-start" />
-				Import CSV
+				{tr("Import CSV")}
 			</Link>
 		</Button>
 	);
@@ -24,7 +25,7 @@ export function ImportCompaniesLinkFallback() {
 	return (
 		<Button variant="outline" disabled>
 			<Icon icon={Upload} data-icon="inline-start" />
-			Import CSV
+			{tr("Import CSV")}
 		</Button>
 	);
 }

@@ -7,6 +7,7 @@ import Partnership from "@carbon/icons-react/es/Partnership";
 import Settings from "@carbon/icons-react/es/Settings";
 import Task from "@carbon/icons-react/es/Task";
 import UserMultiple from "@carbon/icons-react/es/UserMultiple";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import type { CarbonIcon } from "@crm/ui/components/icon";
 import { Icon } from "@crm/ui/components/icon";
@@ -41,25 +42,30 @@ type RailItem = {
 };
 
 const ITEMS: RailItem[] = [
-	{ title: "Overview", href: "/", icon: Dashboard, match: "exact" },
+	{ title: tr("Overview"), href: "/", icon: Dashboard, match: "exact" },
 	{
-		title: "Chat",
+		title: tr("Chat"),
 		href: "/chat",
 		icon: Bot,
 		iconClassName: "size-5",
 		match: "prefix",
 		related: ["/agents"],
 	},
-	{ title: "Companies", href: "/companies", icon: Building, match: "prefix" },
 	{
-		title: "Contacts",
+		title: tr("Companies"),
+		href: "/companies",
+		icon: Building,
+		match: "prefix",
+	},
+	{
+		title: tr("Contacts"),
 		href: "/contacts",
 		icon: UserMultiple,
 		match: "prefix",
 	},
-	{ title: "Deals", href: "/deals", icon: Partnership, match: "prefix" },
-	{ title: "Tasks", href: "/tasks", icon: Task, match: "prefix" },
-	{ title: "Settings", href: "/settings", icon: Settings, match: "prefix" },
+	{ title: tr("Deals"), href: "/deals", icon: Partnership, match: "prefix" },
+	{ title: tr("Tasks"), href: "/tasks", icon: Task, match: "prefix" },
+	{ title: tr("Settings"), href: "/settings", icon: Settings, match: "prefix" },
 ];
 
 function isActive(item: RailItem, pathname: string): boolean {
@@ -139,7 +145,7 @@ function MobileRailLink({
 				aria-current={active ? "page" : undefined}
 				onClick={onNavigate}
 				transitionTypes={[
-					item.title === "Chat" ? "nav-forward" : "nav-lateral",
+					item.title === tr("Chat") ? "nav-forward" : "nav-lateral",
 				]}
 			>
 				<Icon icon={item.icon} className={item.iconClassName} />
@@ -189,7 +195,7 @@ function MobileRailIconLink({
 export function AppIconRailFallback() {
 	return (
 		<nav
-			aria-label="Primary"
+			aria-label={tr("Primary")}
 			aria-busy="true"
 			className="hidden w-14 shrink-0 flex-col items-center gap-1 border-r py-3 md:flex [view-transition-name:app-rail]"
 		>
@@ -226,13 +232,13 @@ export function AppIconRail() {
 		[workspaceUrl],
 	);
 	const inChat = items.some(
-		(item) => item.title === "Chat" && isActive(item, pathname),
+		(item) => item.title === tr("Chat") && isActive(item, pathname),
 	);
 
 	return (
 		<>
 			<nav
-				aria-label="Primary"
+				aria-label={tr("Primary")}
 				className="hidden w-14 shrink-0 flex-col items-center gap-1 border-r py-3 md:flex [view-transition-name:app-rail]"
 			>
 				{items.map((item) => (
@@ -253,16 +259,16 @@ export function AppIconRail() {
 						className="w-5/6 max-w-sm flex-row gap-0 p-0"
 					>
 						<SheetHeader className="sr-only">
-							<SheetTitle>Navigation and agent chats</SheetTitle>
+							<SheetTitle>{tr("Navigation and agent chats")}</SheetTitle>
 						</SheetHeader>
 						<nav
-							aria-label="Primary"
+							aria-label={tr("Primary")}
 							className="flex w-14 shrink-0 flex-col items-center gap-1 border-r py-3"
 						>
 							<Button
 								variant="ghost"
 								size="icon"
-								aria-label="Close navigation"
+								aria-label={tr("Close navigation")}
 								onClick={() => setOpen(false)}
 							>
 								<Icon icon={Close} />
@@ -286,10 +292,10 @@ export function AppIconRail() {
 				) : (
 					<SheetContent side="left" className="w-64 gap-0 p-0">
 						<SheetHeader>
-							<SheetTitle>Navigation</SheetTitle>
+							<SheetTitle>{tr("Navigation")}</SheetTitle>
 						</SheetHeader>
 						<nav
-							aria-label="Primary"
+							aria-label={tr("Primary")}
 							className="flex flex-1 flex-col gap-1 p-2"
 						>
 							{items.map((item) => (

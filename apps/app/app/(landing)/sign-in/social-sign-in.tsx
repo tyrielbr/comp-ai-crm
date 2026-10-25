@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { signIn } from "@crm/auth/client";
 import type { MailboxProviderId } from "@crm/auth/scopes";
 import GoogleLogo from "@crm/ui/components/brand-logos/google";
@@ -16,8 +17,8 @@ type ProviderChoice = {
 };
 
 const PROVIDERS = {
-	google: { label: "Continue with Google", Logo: GoogleLogo },
-	microsoft: { label: "Continue with Microsoft", Logo: MicrosoftLogo },
+	google: { label: tr("Continue with Google"), Logo: GoogleLogo },
+	microsoft: { label: tr("Continue with Microsoft"), Logo: MicrosoftLogo },
 } as const satisfies Record<MailboxProviderId, ProviderChoice>;
 
 export function SocialSignIn({ provider }: { provider: MailboxProviderId }) {
@@ -27,7 +28,7 @@ export function SocialSignIn({ provider }: { provider: MailboxProviderId }) {
 
 	function fail(message?: string) {
 		setPending(false);
-		toast.error(message ?? "Could not reach the sign-in service.");
+		toast.error(message ?? tr("Could not reach the sign-in service."));
 	}
 
 	async function handleClick() {

@@ -1,6 +1,7 @@
 "use client";
 
 import Archive from "@carbon/icons-react/es/Archive";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	DataTable,
@@ -34,7 +35,7 @@ type DealRow = RouterOutputs["deals"]["list"]["rows"][number];
 const COLUMNS: DataTableColumn<DealRow>[] = [
 	{
 		id: "name",
-		header: "Deal",
+		header: tr("Deal"),
 		sortable: true,
 		hideable: false,
 		width: "w-[24%]",
@@ -42,21 +43,21 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "company",
-		header: "Company",
+		header: tr("Company"),
 		sortable: true,
 		width: "w-[18%]",
 		cell: (row) => <CompanyCell company={row.company} />,
 	},
 	{
 		id: "stage",
-		header: "Stage",
+		header: tr("Stage"),
 		sortable: true,
 		width: "w-[18%]",
 		cell: (row) => <DealStageMenu dealId={row.id} stage={row.stage} />,
 	},
 	{
 		id: "amount",
-		header: "Amount",
+		header: tr("Amount"),
 		sortable: true,
 		align: "right",
 		width: "w-[12%]",
@@ -72,7 +73,7 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "owner",
-		header: "Owner",
+		header: tr("Owner"),
 		sortable: true,
 		width: "w-[14%]",
 		hideBelow: "md",
@@ -80,7 +81,7 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "expectedCloseDate",
-		header: "Close date",
+		header: tr("Close date"),
 		sortable: true,
 		width: "w-[12%]",
 		hideBelow: "lg",
@@ -95,8 +96,8 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "createdAt",
-		header: "Created",
-		label: "Created date",
+		header: tr("Created"),
+		label: tr("Created date"),
 		sortable: true,
 		align: "right",
 		width: "w-[10%]",
@@ -109,7 +110,7 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "lastActivity",
-		header: "Last activity",
+		header: tr("Last activity"),
 		sortable: true,
 		align: "right",
 		width: "w-[12%]",
@@ -128,8 +129,8 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 
 const ARCHIVED_COLUMN: DataTableColumn<DealRow> = {
 	id: "archivedAt",
-	header: "Archived",
-	label: "Archived date",
+	header: tr("Archived"),
+	label: tr("Archived date"),
 	sortable: true,
 	align: "right",
 	width: "w-[12%]",
@@ -186,7 +187,7 @@ export function DealsTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "owner",
-			label: "Owner",
+			label: tr("Owner"),
 			options: (users.data ?? []).flatMap((user) =>
 				(facetCounts?.owner?.[user.id] ?? 0) > 0
 					? [{ value: user.id, label: user.name }]
@@ -195,14 +196,14 @@ export function DealsTable() {
 		},
 		{
 			id: "stage",
-			label: "Stage",
+			label: tr("Stage"),
 			options: DEAL_STAGE_OPTIONS.filter(
 				(option) => (facetCounts?.stage?.[option.value] ?? 0) > 0,
 			),
 		},
 		{
 			id: "closing",
-			label: "Closing",
+			label: tr("Closing"),
 			options: CLOSING_OPTIONS.flatMap((option) =>
 				(facetCounts?.closing?.[option.value] ?? 0) > 0
 					? [{ value: option.value, label: option.label }]
@@ -230,7 +231,9 @@ export function DealsTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search deals by name or company…" />}
+			search={
+				<ListSearch placeholder={tr("Search deals by name or company…")} />
+			}
 			actions={
 				<Button
 					variant={input.archived ? "contrast" : "outline"}
@@ -239,7 +242,7 @@ export function DealsTable() {
 					onClick={() => toggleArchived(!input.archived)}
 				>
 					<Archive data-icon="inline-start" />
-					Archived
+					{tr("Archived")}
 				</Button>
 			}
 			columns={columns}
@@ -249,10 +252,10 @@ export function DealsTable() {
 			facets={facets}
 			tabs={{
 				id: "status",
-				allLabel: "All deals",
+				allLabel: tr("All deals"),
 				options: [
-					{ value: "open", label: "Open" },
-					{ value: "closed", label: "Closed" },
+					{ value: "open", label: tr("Open") },
+					{ value: "closed", label: tr("Closed") },
 				],
 			}}
 			selection={{
@@ -271,7 +274,9 @@ export function DealsTable() {
 			onRowHover={(row) => prefetchRecord({ kind: "deal", id: row.id })}
 			onRowClick={(row) => openRecord({ kind: "deal", id: row.id })}
 			empty={
-				input.archived ? "No archived deals." : "No deals match this view."
+				input.archived
+					? tr("No archived deals.")
+					: tr("No deals match this view.")
 			}
 			meta={
 				input.archived || openPipelineCents === null ? undefined : (
