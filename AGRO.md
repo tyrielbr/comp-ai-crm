@@ -64,6 +64,7 @@ git push origin agro
 - **Etapa 1 (feita):** infraestrutura; menu lateral e cabeçalho; tela de login;
   listas de Negócios, Empresas e Contatos (títulos, busca, filtros, ordenação, colunas,
   arquivados, ações em massa, paginação, visualizações salvas); etapas do funil.
-- **Próximas etapas:** painel do negócio (cabeçalho e abas Visão geral, Contatos,
+- **Etapa 2 (feita):** painel do negócio — cabeçalho (Valor, Previsão de fechamento, Na etapa há, Responsável, menu de ações) e aba Visão geral.
+- **Próximas etapas:** painel do negócio (abas Contatos,
   Atividade, Agente); painéis de empresa e contato; tarefas; configurações; chat/agentes;
   onboarding; mensagens de erro da API.

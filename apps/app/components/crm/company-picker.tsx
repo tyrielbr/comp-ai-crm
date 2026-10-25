@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Combobox, type ComboboxOption } from "@crm/ui/components/combobox";
 import {
 	Command,
@@ -21,7 +22,7 @@ export function CompanyPicker({
 	id,
 	value,
 	onValueChange,
-	placeholder = "Choose a company",
+	placeholder = tr("Choose a company"),
 	none,
 	selected,
 	disabled,
@@ -79,7 +80,9 @@ export function CompanyPicker({
 			disabled={disabled}
 			placeholder={placeholder}
 			searchPlaceholder="Search companies…"
-			empty={companies.isFetching ? "Searching…" : "No company matches."}
+			empty={
+				companies.isFetching ? tr("Searching…") : tr("No company matches.")
+			}
 			search={text}
 			onSearchChange={setText}
 			stale={stale}
@@ -117,14 +120,14 @@ export function CompanyMenuSearch({
 		>
 			<CommandInput
 				ref={inputRef}
-				placeholder="Search companies…"
+				placeholder={tr("Search companies…")}
 				value={text}
 				onValueChange={setText}
 				autoFocus
 			/>
 			<CommandList>
 				<CommandEmpty>
-					{companies.isFetching ? "Searching…" : "No company matches."}
+					{companies.isFetching ? tr("Searching…") : tr("No company matches.")}
 				</CommandEmpty>
 				<CommandGroup>
 					{none && !query.trim() ? (
@@ -158,7 +161,7 @@ export function CompanyMenuSearch({
 }
 
 export function InlineCompanyField({
-	label = "Company",
+	label = tr("Company"),
 	value,
 	onSave,
 	saving = false,

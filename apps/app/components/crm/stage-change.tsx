@@ -1,6 +1,7 @@
 "use client";
 
 import ChevronDown from "@carbon/icons-react/es/ChevronDown";
+import { tr } from "@crm/agro-i18n";
 import type { DealStage } from "@crm/db/enums";
 import { Button } from "@crm/ui/components/button";
 import {
@@ -135,7 +136,7 @@ export function CloseReasonDialog() {
 	};
 
 	const setStage = useStageMutation(() => {
-		toast.success("Deal closed.");
+		toast.success(tr("Deal closed."));
 		close();
 	});
 
@@ -147,12 +148,18 @@ export function CloseReasonDialog() {
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>
-						{stage === "CLOSED_LOST" ? "Close as lost" : "Mark as unqualified"}
+						{stage === "CLOSED_LOST"
+							? tr("Close as lost")
+							: tr("Mark as unqualified")}
 					</DialogTitle>
 					<DialogDescription>
 						{stage === "CLOSED_LOST"
-							? "What did we lose it to? This is the only place that answer gets recorded."
-							: "Why is this not a fit? It goes on the timeline so nobody re-runs the same deal."}
+							? tr(
+									"What did we lose it to? This is the only place that answer gets recorded.",
+								)
+							: tr(
+									"Why is this not a fit? It goes on the timeline so nobody re-runs the same deal.",
+								)}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -166,12 +173,12 @@ export function CloseReasonDialog() {
 					}}
 				>
 					<Field>
-						<FieldLabel htmlFor={reasonId}>Reason</FieldLabel>
+						<FieldLabel htmlFor={reasonId}>{tr("Reason")}</FieldLabel>
 						<Textarea
 							id={reasonId}
 							value={reason}
 							onChange={(event) => setReason(event.target.value)}
-							placeholder="Went with an incumbent vendor"
+							placeholder={tr("Went with an incumbent vendor")}
 							rows={3}
 						/>
 					</Field>
@@ -184,10 +191,10 @@ export function CloseReasonDialog() {
 						disabled={setStage.isPending || reason.trim() === ""}
 					>
 						{setStage.isPending ? <Spinner /> : null}
-						Save
+						{tr("Save")}
 					</Button>
 					<Button variant="outline" onClick={close}>
-						Cancel
+						{tr("Cancel")}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

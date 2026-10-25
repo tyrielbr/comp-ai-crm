@@ -1,5 +1,6 @@
 "use client";
 
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import { DatePicker } from "@crm/ui/components/date-picker";
 import { EmptyCellValue } from "@crm/ui/components/empty-cell";
@@ -326,7 +327,7 @@ export function InlineSelectField({
 	options,
 	onSave,
 	saving = false,
-	placeholder = "None",
+	placeholder = tr("None"),
 }: {
 	label: string;
 	value: string;

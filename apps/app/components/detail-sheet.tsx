@@ -2,6 +2,7 @@
 
 import ArrowLeft from "@carbon/icons-react/es/ArrowLeft";
 import Close from "@carbon/icons-react/es/Close";
+import { tr } from "@crm/agro-i18n";
 import { Button } from "@crm/ui/components/button";
 import {
 	Empty,
@@ -109,7 +110,7 @@ export function DetailSheetHeader({
 								<span className="sr-only">Back</span>
 							</Button>
 						</TooltipTrigger>
-						<TooltipContent>Back</TooltipContent>
+						<TooltipContent>{tr("Back")}</TooltipContent>
 					</Tooltip>
 				) : null}
 
@@ -319,7 +320,7 @@ export function DetailSheetPending({
 					)}
 				/>
 				<span className="font-medium text-xs">
-					{running ? "Agent is researching" : "Not known yet"}
+					{running ? tr("Agent is researching") : tr("Not known yet")}
 				</span>
 			</div>
 			<p className="text-pretty text-muted-foreground text-xs/5">

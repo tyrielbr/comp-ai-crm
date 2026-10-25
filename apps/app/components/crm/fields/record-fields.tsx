@@ -1,6 +1,7 @@
 "use client";
 
 import Settings from "@carbon/icons-react/es/Settings";
+import { tr } from "@crm/agro-i18n";
 import type { FieldValueJson } from "@crm/db/fields";
 import { Button } from "@crm/ui/components/button";
 import { Checkbox } from "@crm/ui/components/checkbox";
@@ -50,10 +51,10 @@ export function FieldsCog({ kind }: { kind: RecordKind }) {
 			<TooltipTrigger asChild>
 				<Button variant="ghost" size="icon-sm" onClick={() => open(kind)}>
 					<Icon icon={Settings} />
-					<span className="sr-only">Fields</span>
+					<span className="sr-only">{tr("Fields")}</span>
 				</Button>
 			</TooltipTrigger>
-			<TooltipContent>Fields</TooltipContent>
+			<TooltipContent>{tr("Fields")}</TooltipContent>
 		</Tooltip>
 	);
 }
@@ -72,7 +73,7 @@ export function RecordFields({
 
 	const userOptionsFor = (value: string) => {
 		const options = [
-			{ value: NONE, label: UNASSIGNED },
+			{ value: NONE, label: tr(UNASSIGNED) },
 			...(users.data ?? []).map((user) => ({
 				value: user.id,
 				label: user.name,
@@ -80,7 +81,7 @@ export function RecordFields({
 		];
 
 		if (users.data && !options.some((option) => option.value === value)) {
-			options.push({ value, label: FORMER_MEMBER });
+			options.push({ value, label: tr(FORMER_MEMBER) });
 		}
 
 		return options;
@@ -139,7 +140,7 @@ export function RecordFields({
 								label={field.label}
 								value={field.value === null ? NONE : String(field.value)}
 								options={[
-									{ value: NONE, label: "None" },
+									{ value: NONE, label: tr("None") },
 									...field.options.map((option) => ({
 										value: option.id,
 										label: option.label,
@@ -160,7 +161,7 @@ export function RecordFields({
 								label={field.label}
 								value={current}
 								options={userOptionsFor(current)}
-								placeholder={UNASSIGNED}
+								placeholder={tr(UNASSIGNED)}
 								saving={busy}
 								onSave={(next) => save(next === NONE ? null : next)}
 							/>

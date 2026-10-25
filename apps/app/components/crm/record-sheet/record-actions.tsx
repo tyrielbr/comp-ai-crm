@@ -4,6 +4,7 @@ import Archive from "@carbon/icons-react/es/Archive";
 import OverflowMenuVertical from "@carbon/icons-react/es/OverflowMenuVertical";
 import TrashCan from "@carbon/icons-react/es/TrashCan";
 import Undo from "@carbon/icons-react/es/Undo";
+import { tr } from "@crm/agro-i18n";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -52,7 +53,9 @@ function useArchiveRecord(record: RecordRef) {
 	const handlers = {
 		onSuccess: (archived: { name: string }) => {
 			toast.success(
-				`${archived.name || `The ${NOUN[record.kind]}`} was archived.`,
+				tr("{name} was archived.", {
+					name: archived.name || tr(NOUN[record.kind]),
+				}),
 			);
 			void cache[record.kind](record.id);
 		},
@@ -71,7 +74,9 @@ function useRestoreRecord(record: RecordRef) {
 	const handlers = {
 		onSuccess: (restored: { name: string }) => {
 			toast.success(
-				`${restored.name || `The ${NOUN[record.kind]}`} was restored.`,
+				tr("{name} was restored.", {
+					name: restored.name || tr(NOUN[record.kind]),
+				}),
 			);
 			void cache[record.kind](record.id);
 		},
@@ -91,7 +96,9 @@ function usePurgeRecord(record: RecordRef) {
 	const handlers = {
 		onSuccess: (purged: { name: string }) => {
 			toast.success(
-				`${purged.name || `The ${NOUN[record.kind]}`} was deleted forever.`,
+				tr("{name} was deleted forever.", {
+					name: purged.name || tr(NOUN[record.kind]),
+				}),
 			);
 			void cache.removed(record);
 			close();
@@ -128,7 +135,7 @@ export function RecordActions({
 				<DropdownMenuTrigger asChild>
 					<Button variant="ghost" size="icon-sm" disabled={pending}>
 						<Icon icon={OverflowMenuVertical} />
-						<span className="sr-only">More actions</span>
+						<span className="sr-only">{tr("More actions")}</span>
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="min-w-44">
@@ -138,14 +145,14 @@ export function RecordActions({
 								onSelect={() => restore.mutate({ id: record.id })}
 							>
 								<Icon icon={Undo} />
-								Restore {NOUN[record.kind]}
+								{tr("Restore {noun}", { noun: tr(NOUN[record.kind]) })}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								variant="destructive"
 								onSelect={() => setConfirming(true)}
 							>
 								<Icon icon={TrashCan} />
-								Delete {NOUN[record.kind]} forever
+								{tr("Delete {noun} forever", { noun: tr(NOUN[record.kind]) })}
 							</DropdownMenuItem>
 						</>
 					) : (
@@ -153,7 +160,7 @@ export function RecordActions({
 							onSelect={() => archive.mutate({ id: record.id })}
 						>
 							<Icon icon={Archive} />
-							Archive {NOUN[record.kind]}
+							{tr("Archive {noun}", { noun: tr(NOUN[record.kind]) })}
 						</DropdownMenuItem>
 					)}
 				</DropdownMenuContent>
@@ -162,17 +169,19 @@ export function RecordActions({
 			<AlertDialog open={confirming} onOpenChange={setConfirming}>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>Delete {name} forever?</AlertDialogTitle>
+						<AlertDialogTitle>
+							{tr("Delete {name} forever?", { name })}
+						</AlertDialogTitle>
 						<AlertDialogDescription>{consequence}</AlertDialogDescription>
 					</AlertDialogHeader>
 
 					<AlertDialogFooter>
-						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogCancel>{tr("Cancel")}</AlertDialogCancel>
 						<AlertDialogAction
 							variant="destructive"
 							onClick={() => purge.mutate({ id: record.id })}
 						>
-							Delete forever
+							{tr("Delete forever")}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>
