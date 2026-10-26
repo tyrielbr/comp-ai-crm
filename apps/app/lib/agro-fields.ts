@@ -13,7 +13,7 @@ export const HIDDEN_WHEN_EMPTY = {
 export const HIDDEN_WHEN_EMPTY_LABELS = {
 	COMPANY: ["Domain", "Website", "Country"],
 	CONTACT: ["LinkedIn", "X", "GitHub"],
-	DEAL: [],
+	DEAL: [] as string[],
 } satisfies Record<"COMPANY" | "CONTACT" | "DEAL", readonly string[]>;
 
 type Entity = keyof typeof HIDDEN_WHEN_EMPTY;
