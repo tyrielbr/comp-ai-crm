@@ -12,7 +12,6 @@ import {
 } from "@crm/ui/components/command";
 import { Spinner } from "@crm/ui/components/spinner";
 import { useSearchInput } from "@crm/ui/hooks/use-search-input";
-import { cn } from "@crm/ui/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { type Ref, useId, useState } from "react";
 import { PROPERTY_LABEL, PROPERTY_ROW } from "@/components/detail-sheet";
@@ -178,7 +177,7 @@ export function InlineCompanyField({
 	const id = useId();
 
 	return (
-		<div className={cn(PROPERTY_ROW, "items-center")}>
+		<div className={PROPERTY_ROW}>
 			<label htmlFor={id} className={PROPERTY_LABEL}>
 				{label}
 			</label>

@@ -331,7 +331,7 @@ function ContactOverview({ contact }: { contact: Contact }) {
 				title={tr("Details")}
 				action={<FieldsCog kind="contact" />}
 			>
-				<DetailSheetProperties>
+				<DetailSheetProperties columns={3}>
 					<InlineField
 						label={tr("First name")}
 						value={contact.firstName}

@@ -26,3 +26,30 @@ export function showStandardField(
 	const hidden = HIDDEN_WHEN_EMPTY[entity] as readonly string[];
 	return !hidden.includes(key) || Boolean(value && value.trim());
 }
+
+/** Agro: campos personalizados agrupados na seção "Propriedade e CAR" dos painéis. */
+export const CAR_GROUP_TITLE = "Propriedade e CAR";
+
+const CAR_FIELD_LABELS = [
+	"localização (pino)",
+	"código car",
+	"área car (ha)",
+	"situação do car",
+	"confiança do vínculo car",
+	"código ibge",
+	"pivôs",
+	"pivôs (ha)",
+];
+
+const fold = (text: string) =>
+	text
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.trim()
+		.toLowerCase();
+
+const CAR_FOLDED = new Set(CAR_FIELD_LABELS.map(fold));
+
+export function isCarField(label: string): boolean {
+	return CAR_FOLDED.has(fold(label));
+}

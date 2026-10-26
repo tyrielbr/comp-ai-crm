@@ -52,7 +52,7 @@ function SheetContent({
 	className,
 	...props
 }: React.ComponentProps<"div"> & {
-	side?: "top" | "right" | "bottom" | "left";
+	side?: "top" | "right" | "bottom" | "left" | "center";
 	size?: SheetSize;
 	showCloseButton?: boolean;
 	onOpenAutoFocus?: (event: Event) => void;

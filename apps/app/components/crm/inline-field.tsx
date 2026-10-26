@@ -19,7 +19,7 @@ import { cn } from "@crm/ui/lib/utils";
 import { useId, useState } from "react";
 import { PROPERTY_LABEL, PROPERTY_ROW } from "@/components/detail-sheet";
 
-const ROW = cn(PROPERTY_ROW, "items-center");
+const ROW = PROPERTY_ROW;
 const LABEL = PROPERTY_LABEL;
 const CONTROL =
 	"h-8 w-full justify-start px-2 font-normal hover:border-input hover:bg-muted/40 border border-transparent";
@@ -134,8 +134,8 @@ export function InlineField({
 	}
 
 	return (
-		<div className={cn(ROW, "items-start")}>
-			<label htmlFor={id} className={cn(LABEL, "pt-2")}>
+		<div className={ROW}>
+			<label htmlFor={id} className={LABEL}>
 				{label}
 			</label>
 			<div className="min-w-0">

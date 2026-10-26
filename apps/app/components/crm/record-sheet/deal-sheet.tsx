@@ -323,7 +323,7 @@ function DealOverview({ deal }: { deal: Deal }) {
 				title={tr("Details")}
 				action={<FieldsCog kind="deal" />}
 			>
-				<DetailSheetProperties>
+				<DetailSheetProperties columns={3}>
 					<InlineField
 						label={tr("Name")}
 						value={deal.name}

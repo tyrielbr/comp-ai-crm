@@ -8,7 +8,7 @@ import { Dialog as SheetPrimitive } from "radix-ui";
 import type * as React from "react";
 
 const sheetContentVariants = cva(
-	"fixed z-50 flex flex-col bg-popover bg-clip-padding text-xs/relaxed text-popover-foreground shadow-lg duration-300 ease-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-open:animate-in data-[side=bottom]:data-open:slide-in-from-bottom-full data-[side=left]:data-open:slide-in-from-left-full data-[side=right]:data-open:slide-in-from-right-full data-[side=top]:data-open:slide-in-from-top-full data-closed:animate-out data-[side=bottom]:data-closed:slide-out-to-bottom-full data-[side=left]:data-closed:slide-out-to-left-full data-[side=right]:data-closed:slide-out-to-right-full data-[side=top]:data-closed:slide-out-to-top-full",
+	"fixed z-50 flex flex-col bg-popover bg-clip-padding text-xs/relaxed text-popover-foreground shadow-lg duration-300 ease-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-open:animate-in data-[side=bottom]:data-open:slide-in-from-bottom-full data-[side=left]:data-open:slide-in-from-left-full data-[side=right]:data-open:slide-in-from-right-full data-[side=top]:data-open:slide-in-from-top-full data-closed:animate-out data-[side=bottom]:data-closed:slide-out-to-bottom-full data-[side=left]:data-closed:slide-out-to-left-full data-[side=right]:data-closed:slide-out-to-right-full data-[side=top]:data-closed:slide-out-to-top-full data-[side=center]:top-1/2 data-[side=center]:left-1/2 data-[side=center]:h-[90vh] data-[side=center]:w-[calc(100vw-2rem)] data-[side=center]:max-w-[1200px] data-[side=center]:-translate-x-1/2 data-[side=center]:-translate-y-1/2 data-[side=center]:overflow-hidden data-[side=center]:rounded-lg data-[side=center]:border data-[side=center]:duration-150 data-[side=center]:sm:w-[90vw] data-[side=center]:data-open:fade-in-0 data-[side=center]:data-open:zoom-in-95 data-[side=center]:data-closed:fade-out-0 data-[side=center]:data-closed:zoom-out-95",
 	{
 		variants: {
 			size: {
@@ -76,7 +76,7 @@ function SheetContent({
 	showCloseButton = true,
 	...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
-	side?: "top" | "right" | "bottom" | "left";
+	side?: "top" | "right" | "bottom" | "left" | "center";
 	size?: SheetSize;
 	showCloseButton?: boolean;
 }) {

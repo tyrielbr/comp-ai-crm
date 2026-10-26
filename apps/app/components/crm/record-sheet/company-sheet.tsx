@@ -341,6 +341,91 @@ function CompanyOverview({ company }: { company: Company }) {
 
 	return (
 		<DetailSheetBody>
+			<DetailSheetSection
+				title={tr("Details")}
+				action={<FieldsCog kind="company" />}
+			>
+				<DetailSheetProperties columns={3}>
+					<InlineField
+						label={tr("Name")}
+						value={company.name}
+						saving={isSaving("name")}
+						onSave={(name) => name && save({ name })}
+					/>
+					{showStandardField("COMPANY", "domain", company.domain) ? (
+						<InlineField
+							label={tr("Domain")}
+							value={company.domain}
+							type="url"
+							placeholder="fazendaexemplo.com.br"
+							saving={isSaving("domain")}
+							onSave={(domain) => save({ domain })}
+						/>
+					) : null}
+					{showStandardField("COMPANY", "website", company.website) ? (
+						<InlineField
+							label={tr("Website")}
+							value={company.website}
+							type="url"
+							placeholder="https://fazendaexemplo.com.br"
+							saving={isSaving("website")}
+							onSave={(website) => save({ website })}
+						/>
+					) : null}
+					<InlineField
+						label={tr("Phone")}
+						value={company.phone}
+						type="tel"
+						saving={isSaving("phone")}
+						onSave={(phone) => save({ phone })}
+					/>
+					<InlineField
+						label={tr("Email")}
+						value={company.email}
+						type="email"
+						saving={isSaving("email")}
+						onSave={(email) => save({ email })}
+					/>
+					<InlineField
+						label={tr("City")}
+						value={company.city}
+						saving={isSaving("city")}
+						onSave={(city) => save({ city })}
+					/>
+					{showStandardField("COMPANY", "country", company.country) ? (
+						<InlineField
+							label={tr("Country")}
+							value={company.country}
+							saving={isSaving("country")}
+							onSave={(country) => save({ country })}
+						/>
+					) : null}
+					<InlineSelectField
+						label={tr("Owner")}
+						value={company.owner?.id ?? UNASSIGNED}
+						options={[
+							{ value: UNASSIGNED, label: tr("Unassigned") },
+							...(users.data ?? []).map((user) => ({
+								value: user.id,
+								label: user.name,
+							})),
+						]}
+						onSave={(ownerId) =>
+							save({ ownerId: ownerId === UNASSIGNED ? null : ownerId })
+						}
+					/>
+					<RecordFields
+						fields={company.fields}
+						saving={isSavingField}
+						onSave={saveFields}
+					/>
+				</DetailSheetProperties>
+				<DetailSheetPending
+					fields={pendingFields(company)}
+					running={isEnriching(company.enrichmentStatus, company.queued)}
+				/>
+			</DetailSheetSection>
+
 			<DetailSheetSplit>
 				<DetailSheetMain>
 					{company.description ? (
@@ -353,92 +438,6 @@ function CompanyOverview({ company }: { company: Company }) {
 				</DetailSheetMain>
 
 				<DetailSheetRail>
-					<DetailSheetSection
-						title={tr("Details")}
-						action={<FieldsCog kind="company" />}
-					>
-						<DetailSheetProperties columns={1}>
-							<InlineField
-								label={tr("Name")}
-								value={company.name}
-								saving={isSaving("name")}
-								onSave={(name) => name && save({ name })}
-							/>
-							{showStandardField("COMPANY", "domain", company.domain) ? (
-								<InlineField
-									label={tr("Domain")}
-									value={company.domain}
-									type="url"
-									placeholder="fazendaexemplo.com.br"
-									saving={isSaving("domain")}
-									onSave={(domain) => save({ domain })}
-								/>
-							) : null}
-							{showStandardField("COMPANY", "website", company.website) ? (
-								<InlineField
-									label={tr("Website")}
-									value={company.website}
-									type="url"
-									placeholder="https://fazendaexemplo.com.br"
-									saving={isSaving("website")}
-									onSave={(website) => save({ website })}
-								/>
-							) : null}
-							<InlineField
-								label={tr("Phone")}
-								value={company.phone}
-								type="tel"
-								saving={isSaving("phone")}
-								onSave={(phone) => save({ phone })}
-							/>
-							<InlineField
-								label={tr("Email")}
-								value={company.email}
-								type="email"
-								saving={isSaving("email")}
-								onSave={(email) => save({ email })}
-							/>
-							<InlineField
-								label={tr("City")}
-								value={company.city}
-								saving={isSaving("city")}
-								onSave={(city) => save({ city })}
-							/>
-							{showStandardField("COMPANY", "country", company.country) ? (
-								<InlineField
-									label={tr("Country")}
-									value={company.country}
-									saving={isSaving("country")}
-									onSave={(country) => save({ country })}
-								/>
-							) : null}
-							<InlineSelectField
-								label={tr("Owner")}
-								value={company.owner?.id ?? UNASSIGNED}
-								options={[
-									{ value: UNASSIGNED, label: tr("Unassigned") },
-									...(users.data ?? []).map((user) => ({
-										value: user.id,
-										label: user.name,
-									})),
-								]}
-								onSave={(ownerId) =>
-									save({ ownerId: ownerId === UNASSIGNED ? null : ownerId })
-								}
-							/>
-							<RecordFields
-								fields={company.fields}
-								saving={isSavingField}
-								onSave={saveFields}
-							/>
-						</DetailSheetProperties>
-					</DetailSheetSection>
-
-					<DetailSheetPending
-						fields={pendingFields(company)}
-						running={isEnriching(company.enrichmentStatus, company.queued)}
-					/>
-
 					{hasCompanyLinks(company) ? (
 						<DetailSheetSection title={tr("Links")}>
 							<CompanySocials company={company} />

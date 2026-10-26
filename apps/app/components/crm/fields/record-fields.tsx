@@ -23,6 +23,7 @@ import {
 	useFieldsSheet,
 } from "@/components/crm/record-sheet/record-stack";
 import { DetailSheetProperty } from "@/components/detail-sheet";
+import { CAR_GROUP_TITLE, isCarField } from "@/lib/agro-fields";
 import { useTRPC } from "@/lib/trpc/client";
 
 type RecordFieldOption = { id: string; label: string };
@@ -87,11 +88,26 @@ export function RecordFields({
 		return options;
 	};
 
+	const visible = fields.filter((field) => field.showOnSheet);
+	const sorted = [
+		...visible.filter((field) => !isCarField(field.label)),
+		...visible.filter((field) => isCarField(field.label)),
+	];
+	const firstCar = sorted.find((field) => isCarField(field.label))?.id;
+
 	return (
 		<>
-			{fields
-				.filter((field) => field.showOnSheet)
-				.map((field) => {
+			{sorted.map((field) => {
+				const heading =
+					field.id === firstCar ? (
+						<h4
+							key={`${field.id}-group`}
+							className="col-span-full mt-2 border-t pt-3 font-medium text-muted-foreground text-xs uppercase tracking-wider"
+						>
+							{CAR_GROUP_TITLE}
+						</h4>
+					) : null;
+				const item = (() => {
 					const save = (value: FieldValueJson) =>
 						onSave({ [field.key]: value });
 					const busy = saving(field.key);
@@ -186,7 +202,9 @@ export function RecordFields({
 							onSave={save}
 						/>
 					);
-				})}
+				})();
+				return heading ? [heading, item] : item;
+			})}
 		</>
 	);
 }

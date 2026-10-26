@@ -42,9 +42,10 @@ const GUTTER = "px-5";
 export const SECTION_TITLE =
 	"font-medium text-muted-foreground text-xs uppercase tracking-wider";
 
-export const PROPERTY_ROW = "grid grid-cols-[6.5rem_minmax(0,1fr)] gap-2";
+export const PROPERTY_ROW = "flex min-w-0 flex-col gap-0.5";
 
-export const PROPERTY_LABEL = "truncate text-muted-foreground text-xs";
+export const PROPERTY_LABEL =
+	"text-pretty break-words font-medium text-muted-foreground text-xs";
 
 const PROPERTY_CELL = "border border-transparent py-1";
 
@@ -67,7 +68,7 @@ export function DetailSheet({
 		<Sheet open={open} onOpenChange={onOpenChange}>
 			<SheetContent
 				ref={content}
-				side="right"
+				side="center"
 				size={size}
 				showCloseButton={false}
 				onOpenAutoFocus={(event) => {
@@ -291,10 +292,16 @@ export function DetailSheetProperties({
 	columns = 2,
 }: {
 	children: ReactNode;
-	columns?: 1 | 2;
+	columns?: 1 | 2 | 3;
 }) {
 	return (
-		<div className={cn("grid gap-x-8", columns === 2 && "sm:grid-cols-2")}>
+		<div
+			className={cn(
+				"grid gap-x-6 gap-y-3",
+				columns >= 2 && "sm:grid-cols-2",
+				columns === 3 && "lg:grid-cols-3",
+			)}
+		>
 			{children}
 		</div>
 	);
@@ -340,10 +347,8 @@ export function DetailSheetProperty({
 	children: ReactNode;
 }) {
 	return (
-		<div className={cn(PROPERTY_ROW, "items-start", wide && "sm:col-span-2")}>
-			<span className={cn(PROPERTY_LABEL, PROPERTY_CELL, "text-xs/5")}>
-				{label}
-			</span>
+		<div className={cn(PROPERTY_ROW, wide && "col-span-full")}>
+			<span className={cn(PROPERTY_LABEL, "text-xs/5")}>{label}</span>
 			<div className={cn(PROPERTY_CELL, "min-w-0 px-2 text-xs/5")}>
 				{children}
 			</div>
