@@ -112,7 +112,7 @@ export default defineTool({
 			? valorIndicativo(lead.planoSugerido, lead.areaHa)
 			: null;
 
-		const companyValues: Record<string, string | number | boolean | null> = {
+		const companyValues = {
 			[chaveDoCampo("Tipo de cliente")]: lead.tipoCliente || null,
 			[chaveDoCampo("Tipo de pessoa")]: lead.tipoPessoa || null,
 			[chaveDoCampo("Culturas")]: lead.culturas || null,
@@ -144,7 +144,7 @@ export default defineTool({
 			[chaveDoCampo("Dono da conta")]: lead.donoConta ?? null,
 			[chaveDoCampo("Responsavel do conflito")]:
 				lead.responsavelConflito ?? null,
-		};
+		} satisfies Record<string, string | number | boolean | null>;
 
 		const escritos: string[] = [];
 		const recusados: { key: string; reason: string }[] = [];
@@ -161,12 +161,12 @@ export default defineTool({
 		}
 
 		if (input.dealId) {
-			const dealValues: Record<string, string | number | null> = {
+			const dealValues = {
 				[chaveDoCampo("Plano do negocio")]: lead.planoSugerido || null,
 				[chaveDoCampo("Valor indicativo BRL")]: valor,
 				[chaveDoCampo("Texto do valor indicativo")]:
 					valor === null ? null : FRASE,
-			};
+			} satisfies Record<string, string | number | null>;
 			for (const [key, value] of Object.entries(dealValues)) {
 				const result = await writeField({
 					entity: "DEAL",

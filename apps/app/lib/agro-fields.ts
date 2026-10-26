@@ -10,11 +10,11 @@ export const HIDDEN_WHEN_EMPTY = {
 } as const satisfies Record<"COMPANY" | "CONTACT" | "DEAL", readonly string[]>;
 
 /** Rótulos (em inglês, como em standard-fields.ts) dos campos acima, para o painel "Campos". */
-export const HIDDEN_WHEN_EMPTY_LABELS: Record<string, readonly string[]> = {
+export const HIDDEN_WHEN_EMPTY_LABELS = {
 	COMPANY: ["Domain", "Website", "Country"],
 	CONTACT: ["LinkedIn", "X", "GitHub"],
 	DEAL: [],
-};
+} satisfies Record<"COMPANY" | "CONTACT" | "DEAL", readonly string[]>;
 
 type Entity = keyof typeof HIDDEN_WHEN_EMPTY;
 
