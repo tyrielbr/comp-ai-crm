@@ -94,7 +94,9 @@ export function derivar(lead: Lead): void {
 		(soma, linha) => soma + Number(linha.areaTotalHa ?? 0),
 		0,
 	);
-	lead.irrigacao = linhas.some((linha) => Number(linha.areaIrrigadaHa ?? 0) > 0);
+	lead.irrigacao = linhas.some(
+		(linha) => Number(linha.areaIrrigadaHa ?? 0) > 0,
+	);
 	lead.contratoCustomizado = lead.areaHa > LIMITE_CUSTOM_HA;
 }
 
@@ -184,17 +186,23 @@ export function triagemPronta(lead: Lead): boolean {
 		lead.origemConhecimento === INDICACAO_AMIGO ||
 		lead.origemConhecimento === INDICACAO_PRESTADOR
 	) {
-		if (!texto(lead.indicadorNome) || !texto(lead.indicadorContato)) return false;
-		if (!texto(lead.indicadorRelacionamento) || !lead.indicadorDesde) return false;
+		if (!texto(lead.indicadorNome) || !texto(lead.indicadorContato))
+			return false;
+		if (!texto(lead.indicadorRelacionamento) || !lead.indicadorDesde)
+			return false;
 	}
-	if (lead.tipoCliente === "consultoria" && lead.numClientesConsultoria == null) {
+	if (
+		lead.tipoCliente === "consultoria" &&
+		lead.numClientesConsultoria == null
+	) {
 		return false;
 	}
 	return linhas.every(linhaCompleta);
 }
 
 export function limparIndicacaoSeMidia(lead: Lead): void {
-	if (!MIDIAS.includes(lead.origemConhecimento as (typeof MIDIAS)[number])) return;
+	if (!MIDIAS.includes(lead.origemConhecimento as (typeof MIDIAS)[number]))
+		return;
 	lead.indicadorNome = "";
 	lead.indicadorContato = "";
 	lead.indicadorRelacionamento = "";
@@ -262,6 +270,7 @@ export function definirDono(
 		lead.responsavelConflito = gerente || felipe;
 		return "empate";
 	}
-	lead.donoConta = hunter < parceiro ? lead.hunterAtribuido : lead.parceiroOrigem;
+	lead.donoConta =
+		hunter < parceiro ? lead.hunterAtribuido : lead.parceiroOrigem;
 	return "definido";
 }

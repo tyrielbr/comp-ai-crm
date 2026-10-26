@@ -91,8 +91,7 @@ export function regiaoPorRotulo(rotulo: string): RegiaoComercial | null {
 	const alvo = rotulo.trim().toLowerCase();
 	return (
 		REGIOES.find(
-			(regiao) =>
-				regiao.label.toLowerCase() === alvo || regiao.slug === alvo,
+			(regiao) => regiao.label.toLowerCase() === alvo || regiao.slug === alvo,
 		) ?? null
 	);
 }

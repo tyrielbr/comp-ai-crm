@@ -91,7 +91,8 @@ export const CAMPOS_AGRO: readonly CampoAgro[] = [
 		label: "Regiao comercial",
 		type: "SELECT",
 		options: REGIOES.map((regiao) => regiao.label),
-		agentBrief: "Regiao comercial da fazenda. Hunter e Parceiro vem dessa lista.",
+		agentBrief:
+			"Regiao comercial da fazenda. Hunter e Parceiro vem dessa lista.",
 	},
 	{
 		entity: "COMPANY",
@@ -147,7 +148,8 @@ export const CAMPOS_AGRO: readonly CampoAgro[] = [
 		entity: "COMPANY",
 		label: "Contrato customizado",
 		type: "CHECKBOX",
-		agentBrief: "Ligado quando a area total passa de 2767 ha. Nao encerra a triagem.",
+		agentBrief:
+			"Ligado quando a area total passa de 2767 ha. Nao encerra a triagem.",
 	},
 	{
 		entity: "COMPANY",

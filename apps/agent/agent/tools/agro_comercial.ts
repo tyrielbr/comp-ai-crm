@@ -6,8 +6,8 @@ import {
 	type Lead,
 	leadVazio,
 	limparIndicacaoSeMidia,
-	podeInformarValor,
 	type Propriedade,
+	podeInformarValor,
 	resolverContato,
 	triagemPronta,
 	valorIndicativo,
@@ -29,8 +29,7 @@ const propriedade = z.object({
 	estruturaDistinta: z.enum(["sim", "nao"]).optional(),
 });
 
-const FRASE =
-	"Valor indicativo, nao e proposta. O consultor fecha o numero.";
+const FRASE = "Valor indicativo, nao e proposta. O consultor fecha o numero.";
 
 export default defineTool({
 	description:
@@ -117,7 +116,8 @@ export default defineTool({
 			[chaveDoCampo("Tipo de cliente")]: lead.tipoCliente || null,
 			[chaveDoCampo("Tipo de pessoa")]: lead.tipoPessoa || null,
 			[chaveDoCampo("Culturas")]: lead.culturas || null,
-			[chaveDoCampo("Atividades secundarias")]: lead.atividadesSecundarias || null,
+			[chaveDoCampo("Atividades secundarias")]:
+				lead.atividadesSecundarias || null,
 			[chaveDoCampo("Equipe tecnica")]: lead.possuiEquipeTecnica || null,
 			[chaveDoCampo("Origem do conhecimento")]: lead.origemConhecimento || null,
 			[chaveDoCampo("Nome de quem indicou")]: lead.indicadorNome || null,
@@ -125,11 +125,15 @@ export default defineTool({
 			[chaveDoCampo("Relacionamento com quem indicou")]:
 				lead.indicadorRelacionamento || null,
 			[chaveDoCampo("Indicacao desde")]: lead.indicadorDesde || null,
-			[chaveDoCampo("Regiao comercial")]: cadastrada?.label ?? lead.regiao ?? null,
+			[chaveDoCampo("Regiao comercial")]:
+				cadastrada?.label ?? lead.regiao ?? null,
 			[chaveDoCampo("Regioes de atuacao")]: lead.regioesAtuacao || null,
-			[chaveDoCampo("Melhor horario de contato")]: lead.melhorHorarioContato || null,
-			[chaveDoCampo("Quantidade de propriedades")]: lead.qtdPropriedades ?? null,
-			[chaveDoCampo("Clientes da consultoria")]: lead.numClientesConsultoria ?? null,
+			[chaveDoCampo("Melhor horario de contato")]:
+				lead.melhorHorarioContato || null,
+			[chaveDoCampo("Quantidade de propriedades")]:
+				lead.qtdPropriedades ?? null,
+			[chaveDoCampo("Clientes da consultoria")]:
+				lead.numClientesConsultoria ?? null,
 			[chaveDoCampo("Propriedades")]: JSON.stringify(lead.propriedades),
 			[chaveDoCampo("Area total ha")]: lead.areaHa,
 			[chaveDoCampo("Irrigacao")]: lead.irrigacao,
@@ -138,7 +142,8 @@ export default defineTool({
 			[chaveDoCampo("Confianca do plano")]: lead.confiancaPlano || null,
 			[chaveDoCampo("Responsavel do contato")]: responsavel,
 			[chaveDoCampo("Dono da conta")]: lead.donoConta ?? null,
-			[chaveDoCampo("Responsavel do conflito")]: lead.responsavelConflito ?? null,
+			[chaveDoCampo("Responsavel do conflito")]:
+				lead.responsavelConflito ?? null,
 		};
 
 		const escritos: string[] = [];
@@ -159,7 +164,8 @@ export default defineTool({
 			const dealValues: Record<string, string | number | null> = {
 				[chaveDoCampo("Plano do negocio")]: lead.planoSugerido || null,
 				[chaveDoCampo("Valor indicativo BRL")]: valor,
-				[chaveDoCampo("Texto do valor indicativo")]: valor === null ? null : FRASE,
+				[chaveDoCampo("Texto do valor indicativo")]:
+					valor === null ? null : FRASE,
 			};
 			for (const [key, value] of Object.entries(dealValues)) {
 				const result = await writeField({
