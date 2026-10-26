@@ -144,6 +144,7 @@ export const AGENT_TOOLS = [
 	"web_fetch",
 	"web_search",
 	"write_brief",
+	"agro_comercial",
 	"write_workspace_profile",
 ] as const;
 

@@ -110,6 +110,7 @@ const VERBS: ToolVerbs = {
 	manage_fields: tr("Changed what the CRM tracks"),
 	mcp: tr("Used an approved connected tool"),
 	archive_field: tr("Asked to retire a field"),
+	agro_comercial: tr("Applied the commercial rules"),
 
 	load_skill: tr("Read its instructions for this"),
 	web_search: tr("Searched the web"),
