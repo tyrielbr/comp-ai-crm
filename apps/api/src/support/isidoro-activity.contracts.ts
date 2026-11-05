@@ -35,7 +35,27 @@ export const isidoroActivityInput = z.object({
 
 export type IsidoroActivityInput = z.infer<typeof isidoroActivityInput>;
 
+export type IsidoroActivityRequest = {
+	idempotencyKey?: string;
+	user?: {
+		tenantId?: string;
+		userId?: string;
+		name?: string;
+		email?: string;
+	};
+	problem?: {
+		description?: string;
+	};
+	context?: {
+		module?: string;
+		conversationId?: string;
+		severity?: string;
+	};
+};
+
 export type IsidoroActivityResult = {
-	activityId: string;
-	status: "created";
+	ticketId: string;
+	ticketNumber: number;
+	slaDueAt: string;
+	status: "created" | "existing";
 };
