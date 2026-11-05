@@ -22,6 +22,7 @@ import {
 	type BridgeKeyVerifier,
 } from "./bridge-key.verifier";
 import {
+	type IsidoroActivityInput,
 	type IsidoroActivityResult,
 	isidoroActivityInput,
 } from "./isidoro-activity.contracts";
@@ -53,7 +54,7 @@ export class IsidoroActivitiesController {
 	@ApiForbiddenResponse({ description: "The bridge key did not match." })
 	@ApiServiceUnavailableResponse({ description: "The bridge is not set up." })
 	async create(
-		@Body() body: unknown,
+		@Body() body: IsidoroActivityInput,
 		@Headers("authorization") authorization?: string,
 	): Promise<IsidoroActivityResult> {
 		this.verifier.assert(authorization);

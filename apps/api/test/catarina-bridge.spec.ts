@@ -3,15 +3,19 @@ import {
 	ForbiddenException,
 	ServiceUnavailableException,
 } from "@nestjs/common";
+import type { ActivityCreateInput } from "../src/activities/activities.contracts";
 import { BridgeKeyVerifier } from "../src/support/bridge-key.verifier";
 import { CrmSupportActivityGateway } from "../src/support/crm-support-activity.gateway";
 import { IsidoroActivitiesController } from "../src/support/isidoro-activities.controller";
-import { isidoroActivityInput } from "../src/support/isidoro-activity.contracts";
+import {
+	type IsidoroActivityInput,
+	isidoroActivityInput,
+} from "../src/support/isidoro-activity.contracts";
 import type { SupportActivityGateway } from "../src/support/support-activity.gateway";
 
 const KEY = "test-bridge-key-0123456789abcdef";
 
-const validPayload = {
+const validPayload: IsidoroActivityInput = {
 	idempotencyKey: "isidoro-update-123",
 	user: { tenantId: "tenant-1", userId: "user-1", email: "joao@fazenda.test" },
 	problem: {
@@ -117,7 +121,10 @@ describe("IsidoroActivitiesController", () => {
 			gateway,
 		);
 		await expect(
-			controller.create({ problem: {} }, `Bearer ${KEY}`),
+			controller.create(
+				{ problem: {} } as IsidoroActivityInput,
+				`Bearer ${KEY}`,
+			),
 		).rejects.toMatchObject({ status: 400 });
 		expect(gateway.createSupportActivity).not.toHaveBeenCalled();
 	});
@@ -140,7 +147,11 @@ describe("IsidoroActivitiesController", () => {
 
 describe("CrmSupportActivityGateway", () => {
 	it("creates a CRM TASK on the configured company as the bridge user", async () => {
-		const create = mock(async () => ({ id: "act-42" }));
+		const create = mock(
+			async (_activity: ActivityCreateInput, _actingUserId: string) => ({
+				id: "act-42",
+			}),
+		);
 		const gateway = new CrmSupportActivityGateway({ create } as never, {
 			companyId: "company-support",
 			actingUserId: "user-catarina",
@@ -150,10 +161,10 @@ describe("CrmSupportActivityGateway", () => {
 		const result = await gateway.createSupportActivity(input);
 
 		expect(result).toEqual({ activityId: "act-42" });
-		const [activity, actingUserId] = create.mock.calls[0] as unknown as [
-			Record<string, unknown>,
-			string,
-		];
+		const call = create.mock.calls[0];
+		expect(call).toBeDefined();
+		if (!call) return;
+		const [activity, actingUserId] = call;
 		expect(actingUserId).toBe("user-catarina");
 		expect(activity).toMatchObject({
 			type: "TASK",
