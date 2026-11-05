@@ -22,13 +22,13 @@ import {
 	type BridgeKeyVerifier,
 } from "./bridge-key.verifier";
 import {
-	type IsidoroActivityInput,
+	type IsidoroActivityRequest,
 	type IsidoroActivityResult,
 	isidoroActivityInput,
 } from "./isidoro-activity.contracts";
 import {
-	SUPPORT_ACTIVITY_GATEWAY,
-	type SupportActivityGateway,
+	SUPPORT_TICKET_GATEWAY,
+	type SupportTicketGateway,
 } from "./support-activity.gateway";
 
 @ApiTags("Support — Catarina")
@@ -41,20 +41,25 @@ import {
 export class IsidoroActivitiesController {
 	constructor(
 		@Inject(BRIDGE_KEY_VERIFIER) private readonly verifier: BridgeKeyVerifier,
-		@Inject(SUPPORT_ACTIVITY_GATEWAY)
-		private readonly gateway: SupportActivityGateway,
+		@Inject(SUPPORT_TICKET_GATEWAY)
+		private readonly tickets: SupportTicketGateway,
 	) {}
 
 	@Post("isidoro-activities")
 	@HttpCode(201)
 	@AllowAnonymous()
-	@ApiOperation({ summary: "Create a support activity requested by Isidoro" })
-	@ApiCreatedResponse({ description: "The CRM activity was created." })
+	@ApiOperation({
+		summary: "Open a technical support ticket requested by Isidoro",
+	})
+	@ApiCreatedResponse({
+		description:
+			"The support ticket was opened, or the same key already had one.",
+	})
 	@ApiBadRequestResponse({ description: "The payload is invalid." })
 	@ApiForbiddenResponse({ description: "The bridge key did not match." })
 	@ApiServiceUnavailableResponse({ description: "The bridge is not set up." })
 	async create(
-		@Body() body: IsidoroActivityInput,
+		@Body() body: IsidoroActivityRequest,
 		@Headers("authorization") authorization?: string,
 	): Promise<IsidoroActivityResult> {
 		this.verifier.assert(authorization);
@@ -70,9 +75,12 @@ export class IsidoroActivitiesController {
 			});
 		}
 
-		const { activityId } = await this.gateway.createSupportActivity(
-			parsed.data,
-		);
-		return { activityId, status: "created" };
+		const opened = await this.tickets.openTicket(parsed.data);
+		return {
+			ticketId: opened.ticketId,
+			ticketNumber: opened.ticketNumber,
+			slaDueAt: opened.slaDueAt.toISOString(),
+			status: opened.status,
+		};
 	}
 }
