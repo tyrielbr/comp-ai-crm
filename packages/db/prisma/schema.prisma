@@ -27,6 +27,7 @@ model User {
   ownedContacts  Contact[]           @relation("ContactOwner")
   ownedDeals     Deal[]              @relation("DealOwner")
   activities     Activity[]          @relation("ActivityAuthor")
+  supportTickets SupportTicket[]      @relation("SupportTicketAuthor")
   mailboxSyncs   MailboxSync[]
   factDecisions  ContactFact[]       @relation("FactDecider")
   conversations  AgentConversation[] @relation("ConversationOwner")
@@ -453,6 +454,7 @@ model Company {
   conversations  AgentConversation[]
   deals          Deal[]
   activities     Activity[]
+  supportTickets SupportTicket[]
   emailThreads   EmailThread[]
   calendarEvents CalendarEvent[]
   fieldValues    FieldValue[]
@@ -1275,6 +1277,37 @@ model Activity {
   @@index([dueAt])
   @@index([createdById])
   @@map("activity")
+}
+
+model SupportTicket {
+  id             String   @id @default(cuid())
+  number         Int      @unique @default(autoincrement())
+  idempotencyKey String   @unique
+  subject        String
+  body           String
+  slaDueAt       DateTime
+
+  tenantId       String
+  isidoroUserId  String
+  requesterName  String?
+  requesterEmail String?
+  module         String?
+  conversationId String?
+  severity       String?
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  createdById String
+  createdBy   User   @relation("SupportTicketAuthor", fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([companyId])
+  @@index([slaDueAt])
+  @@index([createdById])
+  @@map("supportTicket")
 }
 
 enum GoogleSyncStatus {
