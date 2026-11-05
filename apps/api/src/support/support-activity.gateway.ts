@@ -1,10 +1,8 @@
 import type { IsidoroActivityInput } from "./isidoro-activity.contracts";
+import type { OpenedSupportTicket } from "./support-ticket.service";
 
-export const SUPPORT_ACTIVITY_GATEWAY = Symbol("SUPPORT_ACTIVITY_GATEWAY");
+export const SUPPORT_TICKET_GATEWAY = Symbol("SUPPORT_TICKET_GATEWAY");
 
-/** Port: anything that can turn an Isidoro request into a CRM support activity. */
-export interface SupportActivityGateway {
-	createSupportActivity(
-		input: IsidoroActivityInput,
-	): Promise<{ activityId: string }>;
+export interface SupportTicketGateway {
+	openTicket(input: IsidoroActivityInput): Promise<OpenedSupportTicket>;
 }
