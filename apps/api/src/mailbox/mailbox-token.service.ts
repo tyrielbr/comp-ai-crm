@@ -83,6 +83,7 @@ export class MailboxTokenService {
 		try {
 			const account = await this.db.account.findFirst({
 				where: { userId, providerId },
+				orderBy: { updatedAt: "desc" },
 				select: { id: true },
 			});
 			if (!account) {
