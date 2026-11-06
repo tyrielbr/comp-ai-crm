@@ -33,7 +33,7 @@ import {
 const socialProviders: NonNullable<BetterAuthOptions["socialProviders"]> = {};
 const slackOAuth = env.slack;
 const slackRedirectUri = new URL(
-	"/api/auth/oauth2/callback/slack",
+	"/api/auth/callback/slack",
 	env.apiUrl,
 ).toString();
 
@@ -139,7 +139,14 @@ export const auth = betterAuth({
 								authorizationUrlParams: {
 									user_scope: SLACK_USER_SCOPES.join(","),
 								},
-								getToken: async ({ code }) => {
+								getToken: async ({ code, codeVerifier }) => {
+									const body = new URLSearchParams({
+										client_id: slackOAuth.clientId,
+										client_secret: slackOAuth.clientSecret,
+										code,
+										redirect_uri: slackRedirectUri,
+									});
+									if (codeVerifier) body.set("code_verifier", codeVerifier);
 									const response = await fetch(
 										"https://slack.com/api/oauth.v2.access",
 										{
@@ -147,12 +154,7 @@ export const auth = betterAuth({
 											headers: {
 												"content-type": "application/x-www-form-urlencoded",
 											},
-											body: new URLSearchParams({
-												client_id: slackOAuth.clientId,
-												client_secret: slackOAuth.clientSecret,
-												code,
-												redirect_uri: slackRedirectUri,
-											}),
+											body,
 										},
 									);
 									const grant = schemas.slack.oauthAccess.parse(

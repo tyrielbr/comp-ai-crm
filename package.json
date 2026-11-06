@@ -43,7 +43,7 @@
 		}
 	},
 	"overrides": {
-		"@better-auth/core": "1.6.33",
+		"@better-auth/core": "1.7.7",
 		"@nestjs/swagger>js-yaml": "5.4.2",
 		"auth>@mrleebo/prisma-ast": "0.16.0",
 		"eve>undici": "8.12.2",
