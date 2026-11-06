@@ -19,7 +19,6 @@ const CONNECT_MANAGER_ROLES = WORKSPACE_ROLES.filter((role) =>
 );
 
 const SLACK_CONNECT_START_PATHS = ["/link-social", "/sign-in/social"];
-const OAUTH_CALLBACK_PREFIX = "/callback/";
 const OAUTH_CALLBACK_PATTERN = "/callback/:id";
 
 const connectStartBody = z.object({ provider: z.string() });
@@ -76,9 +75,13 @@ function completesSlackConnect(
 	path: string,
 	params: JsonValue | undefined,
 ): boolean {
-	const callback =
-		path === OAUTH_CALLBACK_PATTERN || path.startsWith(OAUTH_CALLBACK_PREFIX);
-	if (!callback) return false;
+	if (
+		path !== OAUTH_CALLBACK_PATTERN &&
+		path !== `/callback/${SLACK_PROVIDER_ID}`
+	) {
+		return false;
+	}
 	const parsed = callbackParams.safeParse(params);
-	return parsed.success && parsed.data.id === SLACK_PROVIDER_ID;
+	if (parsed.success) return parsed.data.id === SLACK_PROVIDER_ID;
+	return path === `/callback/${SLACK_PROVIDER_ID}`;
 }
