@@ -142,6 +142,25 @@ export class EnvironmentVariables {
 	@IsOptional()
 	@IsString()
 	CRM_TELEMETRY_DISABLED?: string;
+
+	@IsOptional()
+	@IsString()
+	@MinLength(32, {
+		message: "CATARINA_BRIDGE_API_KEY must be at least 32 characters.",
+	})
+	CATARINA_BRIDGE_API_KEY?: string;
+
+	@IsOptional()
+	@IsString()
+	CATARINA_SUPPORT_COMPANY_ID?: string;
+
+	@IsOptional()
+	@IsString()
+	CATARINA_BRIDGE_USER_ID?: string;
+
+	@IsOptional()
+	@IsString()
+	SUPPORT_TICKET_SLA_HOURS?: string;
 }
 
 export type RawEnvironment = Record<string, string | undefined>;
