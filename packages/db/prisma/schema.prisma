@@ -27,6 +27,8 @@ model User {
   ownedContacts  Contact[]           @relation("ContactOwner")
   ownedDeals     Deal[]              @relation("DealOwner")
   activities     Activity[]          @relation("ActivityAuthor")
+  supportTicketsAuthored SupportTicket[] @relation("SupportTicketAuthor")
+  supportTicketsAssigned SupportTicket[] @relation("SupportTicketAssignee")
   mailboxSyncs   MailboxSync[]
   factDecisions  ContactFact[]       @relation("FactDecider")
   conversations  AgentConversation[] @relation("ConversationOwner")
@@ -453,6 +455,7 @@ model Company {
   conversations  AgentConversation[]
   deals          Deal[]
   activities     Activity[]
+  supportTickets SupportTicket[]
   emailThreads   EmailThread[]
   calendarEvents CalendarEvent[]
   fieldValues    FieldValue[]
@@ -1275,6 +1278,60 @@ model Activity {
   @@index([dueAt])
   @@index([createdById])
   @@map("activity")
+}
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum SupportTicketSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model SupportTicket {
+  id             String               @id @default(cuid())
+  number         Int                  @unique @default(autoincrement())
+  idempotencyKey String
+  tenantId       String
+  status         SupportTicketStatus  @default(OPEN)
+  closedAt       DateTime?
+  subject        String
+  body           String
+  slaDueAt       DateTime
+
+  isidoroUserId  String
+  requesterName  String?
+  requesterEmail String?
+  module         String?
+  conversationId String?
+  severity       SupportTicketSeverity?
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  assigneeId String?
+  assignee   User?   @relation("SupportTicketAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+
+  createdById String
+  createdBy   User   @relation("SupportTicketAuthor", fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, idempotencyKey])
+  @@index([tenantId])
+  @@index([isidoroUserId])
+  @@index([status, slaDueAt])
+  @@index([assigneeId])
+  @@index([companyId])
+  @@index([createdById])
+  @@map("supportTicket")
 }
 
 enum GoogleSyncStatus {
